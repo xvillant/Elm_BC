@@ -1,0 +1,234 @@
+html {
+  height: 100%;
+}
+
+
+body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: Garamond, serif;
+}
+
+
+.footer {
+  bottom: 0%;
+  color: #000;
+  height: 80px;
+  position: relative;
+  background-color: #dedede;
+  width: 100%;
+  text-align: center;
+  border-top: 2px;
+  border-top-style: solid;
+  border-color: #ccc;
+  font-family: Monospace;
+  font-size: 14px;
+}
+
+.header{
+  background-color: #dedede;
+  color: white;
+  height: 80px;
+  display: block;
+  border-bottom: 2px;
+  border-bottom-style: solid;
+  border-color: #ccc;
+}
+
+.inner-header{
+  width: 1000px;
+  height: 100%;
+  display: block;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #dedede;
+}
+
+.logo-container{
+  height: 100%;
+  display: table;
+  float: left;
+  margin-top: 10px;
+  margin-left: 10px;
+  font-family: Monospace;
+  color: #000;
+  font-size: 25px;
+}
+
+.navigation{
+  float: right;
+  height: 100%;
+  margin-top: 10px;
+}
+
+.link{
+  display: table;
+  height: 100%;
+  float: left;
+  margin: 0 20px;
+}
+
+.navbar-elements{
+  display: table-cell;
+  vertical-align: middle;
+  height: 100%;
+  color: #000;
+  font-size: 22px;
+}
+
+a{text-decoration: none;}
+
+.navbar-elements:hover{
+  color: #4CAF50;
+}
+
+.page { 
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+  flex: 1;
+}
+
+.notfound_center{
+
+  margin: auto;
+  margin-top: 15%;
+  width: 50%;
+  text-align: center;
+  font-size: 50px;
+}
+
+.centered{
+  text-align: center;
+}
+
+ul{
+  list-style-type: none;
+  padding: 0;
+}
+
+.post_name{
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+
+
+h1.title_page{
+ font-size: 56px;
+ margin: 10px;
+}
+
+.fab {
+  color: black;
+  font-size: 18px;
+}
+
+.formFieldClasses{
+  margin: 20px;
+  border-radius: 20px;
+}
+
+.submit_button{
+    background-color: #4CAF50;
+    border: 1px solid;
+    border-radius: 20px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    outline: 0;
+    display: inline-block;
+}
+
+.submit_button:hover{
+  background-color: white;
+  color: black;
+}
+
+input{
+  width: 500px;
+  height: 40px;
+  outline: 0;
+  border: none;
+  border-bottom: solid 1px rgb(218, 218, 218);
+  font-size: 15px;
+  line-height: none;
+  padding-left: 20px;
+}
+
+input:focus{
+  border-color: #4CAF50;
+}
+
+.warning_form{
+  margin-top: 50px;
+  height: 45px;
+  font-size: 25px;
+  font-weight: bold;
+  color: rgb(255, 75, 75);
+}
+
+.not_registered_link{
+  text-decoration: underline;
+  color: black;
+  font-size: 20px;
+}
+.not_registered_link:hover{
+  color: #4CAF50;
+}
+
+.profile_attr{
+  margin: 20px 0px;
+  font-weight: 900;
+}
+
+.profile_name_x{
+  color: #4CAF50;
+  font-size: 20px;
+  font-weight: 900;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.line_after_recipes{
+  width: 100%;
+  border-bottom: solid 1px black;
+  padding-top: 10px;
+}
+
+.recipes_titles{
+  letter-spacing: 5px;
+  font-weight: 900;
+}
+
+.recipe_names {
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.buttonsdiv{
+  margin: 0 5px;
+  background-color: #4CAF50;
+  border: 1px solid;
+  border-radius: 20px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  outline: 0;
+  display: inline-block;
+}
+
+.buttonsdiv:hover{
+  background-color: white;
+  color: black;
+}
+
+.comment_list{
+  width: 100%;
+  word-wrap: break-word;
+}
+
+textarea{resize: none;}
