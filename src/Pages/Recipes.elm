@@ -2,7 +2,7 @@ module Pages.Recipes exposing (Model, Msg, Params, page)
 
 import Api.Data exposing (..)
 import Html exposing (..)
-import Html.Attributes exposing (class, href, placeholder, style, type_)
+import Html.Attributes exposing (class, href, placeholder, style, type_, src)
 import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
 import Json.Decode as D exposing (..)
@@ -140,8 +140,7 @@ viewPosts posts =
 
         Loading ->
             div [ class "centered" ]
-                [ h1 [ class "title_page" ] [ text "Loading..." ]
-                ]
+                [ img [ src "assets/loading.gif" ] [] ]
 
         Success actualPosts ->
             div [ class "centered" ]

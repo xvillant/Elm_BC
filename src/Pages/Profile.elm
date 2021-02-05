@@ -1,5 +1,6 @@
 module Pages.Profile exposing (Model, Msg, Params, page)
 
+import Api.Data exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Http exposing (..)
@@ -32,7 +33,7 @@ type alias Params =
 
 
 type alias Model =
-    { profile : Profile
+    { profile : Data Profile
     , warning : String
     }
 
@@ -47,10 +48,10 @@ type alias Profile =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( { profile = { id = 0, username = "", email = "", bio = "" }
+    ( { profile = Loading
       , warning = ""
       }
-    , getUserRequest
+    , getUserRequest { onResponse = ReceivedUser }
     )
 
 
@@ -59,20 +60,14 @@ init shared { params } =
 
 
 type Msg
-    = ReceivedUser (Result Http.Error Profile)
+    = ReceivedUser (Data Profile)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         ReceivedUser response ->
-            case response of
-                Ok value ->
-                    ( { model | profile = value }, Cmd.none )
-
-                Err err ->
-                    ( { model | warning = "Something went wrong!" }, Cmd.none )
-
+            ( { model | profile = response }, Cmd.none )
 
 
 save : Model -> Shared.Model -> Shared.Model
@@ -98,32 +93,49 @@ view : Model -> Document Msg
 view model =
     { title = "Profile"
     , body =
-        [ div [ class "centered" ]
-            [ h1 [ class "title_page" ] [ text "Profile" ]
-            , div [ class "profile_attr" ]
-                [ p [ class "profile_name" ] [ text "username: " ]
-                , p [ class "profile_name_x" ] [ text model.profile.username ]
-                ]
-            , div [ class "profile_attr" ]
-                [ p [ class "profile_name" ] [ text "email: " ]
-                , p [ class "profile_name_x" ] [ text model.profile.email ]
-                ]
-            , div [ class "profile_attr" ]
-                [ p [ class "profile_name" ] [ text "bio: " ]
-                , p [ class "profile_name_x" ] [ text model.profile.bio ]
-                ]
-            , div [ class "warning_form" ]
-                [ text model.warning ]
-            ]
+        [ viewProfile model.profile
+        , div [ class "warning_form" ]
+            [ text model.warning ]
         ]
     }
 
 
-getUserRequest : Cmd Msg
-getUserRequest =
+viewProfile : Data Profile -> Html Msg
+viewProfile profile =
+    case profile of
+        NotAsked ->
+            text ""
+
+        Loading ->
+            div [ class "centered" ]
+                [ img [ src "assets/loading.gif" ] [] ]
+
+        Success value ->
+            div [ class "centered" ]
+                [ h1 [ class "title_page" ] [ text "Profile" ]
+                , div [ class "profile_attr" ]
+                    [ p [ class "profile_name" ] [ text "username: " ]
+                    , p [ class "profile_name_x" ] [ text value.username ]
+                    ]
+                , div [ class "profile_attr" ]
+                    [ p [ class "profile_name" ] [ text "email: " ]
+                    , p [ class "profile_name_x" ] [ text value.email ]
+                    ]
+                , div [ class "profile_attr" ]
+                    [ p [ class "profile_name" ] [ text "bio: " ]
+                    , p [ class "profile_name_x" ] [ text value.bio ]
+                    ]
+                ]
+
+        Api.Data.Failure _ ->
+            viewFetchError "profile" "Something went wrong!"
+
+
+getUserRequest : { onResponse : Data Profile -> Msg } -> Cmd Msg
+getUserRequest options =
     Http.get
         { url = Server.url ++ "users/1"
-        , expect = Http.expectJson ReceivedUser userDecoder
+        , expect = Api.Data.expectJson options.onResponse userDecoder
         }
 
 
@@ -134,3 +146,15 @@ userDecoder =
         (field "username" D.string)
         (field "email" D.string)
         (field "bio" D.string)
+
+
+viewFetchError : String -> String -> Html Msg
+viewFetchError items errorMessage =
+    let
+        errorHeading =
+            "Couldn't fetch " ++ items ++ "."
+    in
+    div [ class "centered" ]
+        [ h1 [ class "title_comment" ] [ text errorHeading ]
+        , text ("Error: " ++ errorMessage)
+        ]

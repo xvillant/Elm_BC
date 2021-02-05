@@ -1,6 +1,7 @@
 module Pages.Article exposing (Model, Msg, Params, page)
 
 import Api.Data exposing (..)
+import Browser.Navigation as Nav
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
@@ -13,7 +14,6 @@ import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
-import Browser.Navigation as Nav
 
 
 page : Page Params Model Msg
@@ -32,12 +32,11 @@ page =
 -- INIT
 
 
-type alias Params =
-    ()
+type alias Params = ()
 
 
 type alias Model =
-    { article : Article
+    { article : Data Article
     , comments : Data (List Comment)
     , comment : Comment
     , warning : String
@@ -61,12 +60,12 @@ type alias Comment =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( { article = { id = 0, name = "", ingredients = [], recipe = "" }
+    ( { article = Loading
       , comment = { userid = 0, comment = "", recipeid = 0 }
       , comments = Loading
       , warning = ""
       }
-    , Cmd.batch [ getArticleRequest, getCommentsRequest { onResponse = CommentsReceived } ]
+    , Cmd.batch [ getArticleRequest { onResponse = ReceivedArticle }, getCommentsRequest { onResponse = CommentsReceived } ]
     )
 
 
@@ -75,7 +74,7 @@ init shared { params } =
 
 
 type Msg
-    = ReceivedArticle (Result Http.Error Article)
+    = ReceivedArticle (Data Article)
     | CommentsReceived (Data (List Comment))
     | FetchComments
     | AddComment String
@@ -87,12 +86,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         ReceivedArticle response ->
-            case response of
-                Ok value ->
-                    ( { model | article = value }, Cmd.none )
-
-                Err err ->
-                    ( { model | warning = "Something went wrong!" }, Cmd.none )
+            ( { model | article = response }, Cmd.none )
 
         CommentsReceived response ->
             ( { model | comments = response }, Cmd.none )
@@ -142,39 +136,18 @@ view : Model -> Document Msg
 view model =
     { title = "Article"
     , body =
-        [ div [ class "centered" ]
-            [ h1 [ class "title_page" ] [ text "Article" ]
-            , div [ class "profile_attr" ]
-                [ p [ class "profile_name" ] [ text "recipe name: " ]
-                , p [ class "profile_name_x" ] [ text model.article.name ]
-                ]
-            , div [ class "profile_attr" ]
-                [ p [ class "profile_name" ] [ text "ingredients: " ]
-                , p [ class "profile_name_x" ] [ text <| String.join ", " model.article.ingredients ]
-                ]
-            , div [ class "profile_attr" ]
-                [ p [ class "profile_name" ] [ text "recipe: " ]
-                , p [ class "profile_name_x" ] [ text model.article.recipe ]
-                ]
-            , div [ class "warning_form" ]
-                [ text model.warning ]
-            , div [ class "comment-text" ]
-                [ textarea [ placeholder "Type your comment here...", cols 70, rows 10, onInput AddComment ] []
-                ]
-            , div [ class "comment-button" ]
-                [ button [ class "submit_button", onClick SubmitComment ] [ text "Share comment" ]
-                ]
-            , viewComments model.comments
-            ]
+        [ viewArticle model.article
+        , div [ class "warning_form" ] [ text model.warning ]
+        , viewComments model.comments
         ]
     }
 
 
-getArticleRequest : Cmd Msg
-getArticleRequest =
+getArticleRequest : { onResponse : Data Article -> Msg } -> Cmd Msg
+getArticleRequest options =
     Http.get
         { url = Server.url ++ "posts/6"
-        , expect = Http.expectJson ReceivedArticle postDecoder
+        , expect = Api.Data.expectJson options.onResponse postDecoder
         }
 
 
@@ -216,8 +189,7 @@ viewComments comments =
 
         Loading ->
             div [ class "centered" ]
-                [ h1 [ class "title_comment" ] [ text "Loading..." ]
-                ]
+                [ img [ src "assets/loading.gif" ] [] ]
 
         Success actualComments ->
             div [ class "centered" ]
@@ -228,14 +200,14 @@ viewComments comments =
                 ]
 
         Api.Data.Failure _ ->
-            viewFetchError "Something went wrong!"
+            viewFetchError "comments" "Something went wrong!"
 
 
-viewFetchError : String -> Html Msg
-viewFetchError errorMessage =
+viewFetchError : String -> String -> Html Msg
+viewFetchError items errorMessage =
     let
         errorHeading =
-            "Couldn't fetch comments."
+            "Couldn't fetch " ++ items ++ "."
     in
     div [ class "centered" ]
         [ h1 [ class "title_comment" ] [ text errorHeading ]
@@ -268,3 +240,40 @@ postComment comment =
         , body = Http.jsonBody <| encodeComment comment
         , expect = Http.expectJson CommentResponse commentDecoder
         }
+
+
+viewArticle : Data Article -> Html Msg
+viewArticle article =
+    case article of
+        NotAsked ->
+            text ""
+
+        Loading ->
+            div [ class "centered" ]
+                [ img [ src "assets/loading.gif" ] [] ]
+        Success value ->
+            div [ class "centered" ]
+                [ h1 [ class "title_page" ] [ text "Article" ]
+                , div [ class "profile_attr" ]
+                    [ p [ class "profile_name" ] [ text "recipe name: " ]
+                    , p [ class "profile_name_x" ] [ text value.name ]
+                    ]
+                , div [ class "profile_attr" ]
+                    [ p [ class "profile_name" ] [ text "ingredients: " ]
+                    , p [ class "profile_name_x" ] [ text <| String.join ", " value.ingredients ]
+                    ]
+                , div [ class "profile_attr" ]
+                    [ p [ class "profile_name" ] [ text "recipe: " ]
+                    , p [ class "profile_name_x" ] [ text value.recipe ]
+                    ]
+                , div [ class "comment-text" ]
+                    [ textarea [ placeholder "Type your comment here...", cols 70, rows 10, onInput AddComment ] []
+                    ]
+                , div [ class "comment-button" ]
+                    [ button [ class "submit_button", onClick SubmitComment ] [ text "Share comment" ]
+                    ]
+                ]
+                
+
+        Api.Data.Failure _ ->
+            viewFetchError "article" "Something went wrong!"
