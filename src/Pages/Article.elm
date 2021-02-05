@@ -80,7 +80,7 @@ type Msg
     | FetchComments
     | AddComment String
     | SubmitComment
-    | CommentResponse (Result Http.Error String)
+    | CommentResponse (Result Http.Error Comment)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -266,5 +266,5 @@ postComment comment =
     Http.post
         { url = Server.url ++ "comments/"
         , body = Http.jsonBody <| encodeComment comment
-        , expect = Http.expectJson CommentResponse (field "comment" D.string)
+        , expect = Http.expectJson CommentResponse commentDecoder
         }

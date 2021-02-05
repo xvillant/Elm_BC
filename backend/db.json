@@ -2,7 +2,7 @@
   "users": [
     {
       "email": "Drogba11144@gmail.com",
-      "password": "$2a$10$z9UjJgif6DaX2BPPnxmZLOdzQcOHf3GOBQ/zzIIcqKkF/.ki/W.LS",
+      "password": "$2a$10$MMtHlr8pKZFxuZp/y6eZQO2lz0QxGLIOx3wdhaLxkW2khK9gQZac2",
       "username": "xvillant",
       "bio": "",
       "id": 1
@@ -10,169 +10,67 @@
   ],
   "posts": [
     {
-      "id": 1,
-      "name": "Chicken Breast",
+      "name": "Alkohol",
       "ingredients": [
-        "chicken breast",
-        "pork",
-        "potkan"
+        "sdas",
+        "dasd",
+        " dasdad"
       ],
-      "recipe": "The main task is ...",
-      "userId": 1
+      "recipe": "daskldasjdlasdjasldjasldjkasdkljaldkas",
+      "id": 1
     },
     {
-      "id": 2,
-      "name": "Cheese Maccaroni",
+      "name": "Budis voda",
       "ingredients": [
-        "1 package elbow macaroni",
-        "½ teaspoon salt",
-        "¾ cup butter, softened - divided",
-        "1 cup sour cream",
-        "1 tablespoon cream cheese, softened",
-        "1 package shredded sharp Cheddar cheese",
-        "1 egg yolk",
-        "2 tablespoons all-purpose flour",
-        "½ teaspoon salt",
-        "½ teaspoon ground cayenne pepper",
-        "1 cup milk",
-        "1 package shredded mild Cheddar cheese"
+        "das",
+        "dasd",
+        "dlkk"
       ],
-      "recipe": "Preheat oven to 375 degrees F (190 degrees C). Line a 9x13-inch baking dish with parchment paper. Bring a large pot of water to a boil. Cook elbow macaroni in the boiling water, stirring occasionally until almost cooked through and firm to the bite, about 7 minutes. Drain and transfer to a large bowl. Sprinkle macaroni with 1/2 teaspoon salt and stir 1/2 cup butter into the pasta. Mix 1/4 cup butter, sour cream, cream cheese, sharp Cheddar cheese, and egg yolk together in a bowl. Stir flour, 1/2 teaspoon salt, cayenne pepper, and milk into the sour cream mixture. Spread 1/4 cup sour cream sauce over bottom of prepared baking dish. Stir remaining sour cream sauce into macaroni. Pour macaroni into baking dish atop sauce layer; sprinkle mild Cheddar cheese over the casserole. Bake in the preheated oven until heated through and cheese topping has melted, about 15 minutes.",
-      "userId": 1
-    },
-    {
-      "id": 3,
-      "name": "Cheese Maccaroni",
-      "ingredients": [
-        "1 package elbow macaroni",
-        "½ teaspoon salt",
-        "¾ cup butter, softened - divided",
-        "1 cup sour cream",
-        "1 tablespoon cream cheese, softened",
-        "1 package shredded sharp Cheddar cheese",
-        "1 egg yolk",
-        "2 tablespoons all-purpose flour",
-        "½ teaspoon salt",
-        "½ teaspoon ground cayenne pepper",
-        "1 cup milk",
-        "1 package shredded mild Cheddar cheese"
-      ],
-      "recipe": "Preheat oven to 375 degrees F (190 degrees C). Line a 9x13-inch baking dish with parchment paper. Bring a large pot of water to a boil. Cook elbow macaroni in the boiling water, stirring occasionally until almost cooked through and firm to the bite, about 7 minutes. Drain and transfer to a large bowl. Sprinkle macaroni with 1/2 teaspoon salt and stir 1/2 cup butter into the pasta. Mix 1/4 cup butter, sour cream, cream cheese, sharp Cheddar cheese, and egg yolk together in a bowl. Stir flour, 1/2 teaspoon salt, cayenne pepper, and milk into the sour cream mixture. Spread 1/4 cup sour cream sauce over bottom of prepared baking dish. Stir remaining sour cream sauce into macaroni. Pour macaroni into baking dish atop sauce layer; sprinkle mild Cheddar cheese over the casserole. Bake in the preheated oven until heated through and cheese topping has melted, about 15 minutes.",
-      "userId": 1
-    },
-    {
-      "id": 2,
-      "name": "Cheese Maccaroni",
-      "ingredients": [
-        "1 package elbow macaroni",
-        "½ teaspoon salt",
-        "¾ cup butter, softened - divided",
-        "1 cup sour cream",
-        "1 tablespoon cream cheese, softened",
-        "1 package shredded sharp Cheddar cheese",
-        "1 egg yolk",
-        "2 tablespoons all-purpose flour",
-        "½ teaspoon salt",
-        "½ teaspoon ground cayenne pepper",
-        "1 cup milk",
-        "1 package shredded mild Cheddar cheese"
-      ],
-      "recipe": "Preheat oven to 375 degrees F (190 degrees C). Line a 9x13-inch baking dish with parchment paper. Bring a large pot of water to a boil. Cook elbow macaroni in the boiling water, stirring occasionally until almost cooked through and firm to the bite, about 7 minutes. Drain and transfer to a large bowl. Sprinkle macaroni with 1/2 teaspoon salt and stir 1/2 cup butter into the pasta. Mix 1/4 cup butter, sour cream, cream cheese, sharp Cheddar cheese, and egg yolk together in a bowl. Stir flour, 1/2 teaspoon salt, cayenne pepper, and milk into the sour cream mixture. Spread 1/4 cup sour cream sauce over bottom of prepared baking dish. Stir remaining sour cream sauce into macaroni. Pour macaroni into baking dish atop sauce layer; sprinkle mild Cheddar cheese over the casserole. Bake in the preheated oven until heated through and cheese topping has melted, about 15 minutes.",
-      "userId": 1
-    },
-    {
-      "id": 2,
-      "name": "Cheese Maccaroni",
-      "ingredients": [
-        "1 package elbow macaroni",
-        "½ teaspoon salt",
-        "¾ cup butter, softened - divided",
-        "1 cup sour cream",
-        "1 tablespoon cream cheese, softened",
-        "1 package shredded sharp Cheddar cheese",
-        "1 egg yolk",
-        "2 tablespoons all-purpose flour",
-        "½ teaspoon salt",
-        "½ teaspoon ground cayenne pepper",
-        "1 cup milk",
-        "1 package shredded mild Cheddar cheese"
-      ],
-      "recipe": "Preheat oven to 375 degrees F (190 degrees C). Line a 9x13-inch baking dish with parchment paper. Bring a large pot of water to a boil. Cook elbow macaroni in the boiling water, stirring occasionally until almost cooked through and firm to the bite, about 7 minutes. Drain and transfer to a large bowl. Sprinkle macaroni with 1/2 teaspoon salt and stir 1/2 cup butter into the pasta. Mix 1/4 cup butter, sour cream, cream cheese, sharp Cheddar cheese, and egg yolk together in a bowl. Stir flour, 1/2 teaspoon salt, cayenne pepper, and milk into the sour cream mixture. Spread 1/4 cup sour cream sauce over bottom of prepared baking dish. Stir remaining sour cream sauce into macaroni. Pour macaroni into baking dish atop sauce layer; sprinkle mild Cheddar cheese over the casserole. Bake in the preheated oven until heated through and cheese topping has melted, about 15 minutes.",
-      "userId": 1
-    },
-    {
-      "id": 2,
-      "name": "Cheese Maccaroni",
-      "ingredients": [
-        "1 package elbow macaroni",
-        "½ teaspoon salt",
-        "¾ cup butter, softened - divided",
-        "1 cup sour cream",
-        "1 tablespoon cream cheese, softened",
-        "1 package shredded sharp Cheddar cheese",
-        "1 egg yolk",
-        "2 tablespoons all-purpose flour",
-        "½ teaspoon salt",
-        "½ teaspoon ground cayenne pepper",
-        "1 cup milk",
-        "1 package shredded mild Cheddar cheese"
-      ],
-      "recipe": "Preheat oven to 375 degrees F (190 degrees C). Line a 9x13-inch baking dish with parchment paper. Bring a large pot of water to a boil. Cook elbow macaroni in the boiling water, stirring occasionally until almost cooked through and firm to the bite, about 7 minutes. Drain and transfer to a large bowl. Sprinkle macaroni with 1/2 teaspoon salt and stir 1/2 cup butter into the pasta. Mix 1/4 cup butter, sour cream, cream cheese, sharp Cheddar cheese, and egg yolk together in a bowl. Stir flour, 1/2 teaspoon salt, cayenne pepper, and milk into the sour cream mixture. Spread 1/4 cup sour cream sauce over bottom of prepared baking dish. Stir remaining sour cream sauce into macaroni. Pour macaroni into baking dish atop sauce layer; sprinkle mild Cheddar cheese over the casserole. Bake in the preheated oven until heated through and cheese topping has melted, about 15 minutes.",
-      "userId": 1
-    },
-    {
-      "name": "Gyros v pite",
-      "ingredients": [
-        "kuracie prsia",
-        " gyros v prasku",
-        " hej"
-      ],
-      "recipe": "naklepeme a dkjlasjdsalkdjaslkdjaskldaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\nnaklepeme a dkjlasjdsalkdjaslkdjaskldaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\nnaklepeme a dkjlasjdsalkdjaslkdjaskldaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\na pridame",
-      "id": 4,
-      "userId": 1
-    },
-    {
-      "name": "cauko ako sa mas",
-      "ingredients": [
-        "maso",
-        "zemiaky",
-        "salat"
-      ],
-      "recipe": "sdamksdjklsjkjldljksddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddssqwijdqiwjdoqwdj",
-      "id": 5,
-      "userId": 1
-    },
-    {
-      "name": "Cinska palacinta",
-      "ingredients": [
-        "muka",
-        "sol",
-        "voda"
-      ],
-      "recipe": "dawjkldlasdjklasjkldasjkldjklasjkdlaslkdajsdjlasjdsakdjklasjdlasjkldljasjldlaskdjkasldjaskdjasldjlas",
-      "id": 6,
-      "userId": 1
+      "recipe": "sdadsljaskd",
+      "id": 2
     },
     {
       "name": "Zelenka",
       "ingredients": [
-        "ssss",
-        "sasd"
+        "dsadsa",
+        "kdkaskd"
       ],
-      "recipe": "dasdasdasdasdasdsdasd",
-      "id": 7,
-      "userId": 1
+      "recipe": "dasdasdasd",
+      "id": 3
     },
     {
-      "name": "Anyuka receptje",
+      "name": "Harac",
       "ingredients": [
-        "hus",
-        "zoldseg",
-        "csikó"
+        "dasd",
+        "daasd",
+        "adasd"
       ],
-      "recipe": "megpiritsuk es letesszuk",
-      "id": 8,
-      "userId": 1
+      "recipe": "dasjkdjasjdlasjdlasjk",
+      "id": 4
+    },
+    {
+      "name": "Ciklamen",
+      "ingredients": [
+        "kura"
+      ],
+      "recipe": "dasdasdasdas",
+      "id": 5
+    },
+    {
+      "name": "Kecske",
+      "ingredients": [
+        "kura"
+      ],
+      "recipe": "dasdasdsad",
+      "id": 6
+    },
+    {
+      "name": "Azu",
+      "ingredients": [
+        "kura"
+      ],
+      "recipe": "dasdasdasdas",
+      "id": 7
     }
   ],
   "comments": [
@@ -199,6 +97,24 @@
       "userid": 0,
       "recipeid": 6,
       "id": 4
+    },
+    {
+      "comment": "dobre to je",
+      "userid": 0,
+      "recipeid": 6,
+      "id": 5
+    },
+    {
+      "comment": "cauko celkom fajn to je",
+      "userid": 0,
+      "recipeid": 6,
+      "id": 6
+    },
+    {
+      "comment": "najlepsie",
+      "userid": 0,
+      "recipeid": 6,
+      "id": 7
     }
   ]
 }

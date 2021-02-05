@@ -77,12 +77,22 @@ body {
   height: 100%;
   color: #000;
   font-size: 22px;
+  letter-spacing: 2px;
 }
 
 a{text-decoration: none;}
 
 .navbar-elements:hover{
   color: #4CAF50;
+}
+
+.active_link{
+  display: table-cell;
+  vertical-align: middle;
+  height: 100%;
+  color: #4CAF50;
+  font-size: 22px;
+  letter-spacing: 2px;
 }
 
 .page { 
@@ -231,4 +241,27 @@ input:focus{
   word-wrap: break-word;
 }
 
-textarea{resize: none;}
+textarea{
+  resize: none;
+  outline: 0;
+  border-radius: 8px;
+  border-width: 2px;
+  border-style: dashed;
+}
+
+
+
+.search_input{
+  margin: 20px 0;
+  border: 1px solid;
+  border-radius: 20px;
+}
+
+.search_input::-webkit-search-cancel-button{
+  margin-right: 10px;
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  background: url(assets/cancel-button.svg);
+  color: black;
+}

@@ -2,13 +2,12 @@ module Pages.Recipes exposing (Model, Msg, Params, page)
 
 import Api.Data exposing (..)
 import Html exposing (..)
-import Html.Attributes exposing (class, href)
-import Html.Events exposing (onClick)
+import Html.Attributes exposing (class, href, placeholder, style, type_)
+import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
 import Json.Decode as D exposing (..)
 import Json.Decode.Pipeline exposing (required)
-import Pages.Article
-import Server exposing (url)
+import Server
 import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
@@ -54,37 +53,44 @@ type alias Post =
 
 
 type alias Model =
-    { posts : Data (List Post) }
+    { posts : Data (List Post)
+    , search : String
+    , sorting : String
+    , order : String
+    }
 
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( initialModel, getContentRequest "newest" "asc" { onResponse = PostsReceived } )
+    ( initialModel, getContentRequest "id" "desc" "" { onResponse = PostsReceived } )
 
 
 initialModel : Model
 initialModel =
-    { posts = Loading }
+    { posts = Loading, search = "", sorting = "id", order = "desc"}
 
 
 
 -- UPDATE
 
 
-type Msg
-    = FetchPosts String String
-    | PostsReceived (Data (List Post))
+type Msg =
+    PostsReceived (Data (List Post))
+    | Search String
+    | ChangeSorting String String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        FetchPosts sorting order ->
-            ( { model | posts = Loading }, getContentRequest sorting order { onResponse = PostsReceived } )
-
         PostsReceived response ->
             ( { model | posts = response }, Cmd.none )
 
+        Search searched ->
+            ( { model | search = searched }, getContentRequest model.sorting model.order model.search { onResponse = PostsReceived } )
+
+        ChangeSorting sorting order ->
+            ( { model | sorting = sorting, order = order }, getContentRequest model.sorting model.order model.search { onResponse = PostsReceived } )
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
@@ -97,17 +103,17 @@ subscriptions model =
 
 view : Model -> Document Msg
 view model =
-    { title = "Forum"
+    { title = "Recipes"
     , body =
         [ viewPosts model.posts
         ]
     }
 
 
-getContentRequest : String -> String -> { onResponse : Data (List Post) -> Msg } -> Cmd Msg
-getContentRequest sorting order options =
+getContentRequest : String -> String -> String -> { onResponse : Data (List Post) -> Msg } -> Cmd Msg
+getContentRequest sorting order searched options =
     Http.get
-        { url = Server.url ++ "posts?_sort=" ++ sorting ++ "&_order=" ++ order
+        { url = Server.url ++ "posts?_sort=" ++ sorting ++ "&_order="++ order ++"&q=" ++ searched
         , expect = Api.Data.expectJson options.onResponse postsDecoder
         }
 
@@ -140,9 +146,9 @@ viewPosts posts =
         Success actualPosts ->
             div [ class "centered" ]
                 [ h1 [ class "title_page" ] [ text "Recipes" ]
-                , button [ class "buttonsdiv", onClick <| FetchPosts "newest" "desc" ] [ text "Latest posts" ]
-                , button [ class "buttonsdiv", onClick <| FetchPosts "name" "desc" ] [ text "Sort by name" ]
-                , button [ class "buttonsdiv", onClick <| FetchPosts "views" "asc" ] [ text "Sort by popular" ]
+                , button [ class "buttonsdiv", onClick <| ChangeSorting "id" "desc" ] [ text "Latest posts" ]
+                , button [ class "buttonsdiv", onClick <| ChangeSorting "name" "asc" ] [ text "Sort by name" ]
+                , input [ class "search_input", type_ "search", placeholder "Search...", onInput Search ] []
                 , div [ class "line_after_recipes" ] []
                 , div [ class "articles_list" ]
                     (List.map viewPost actualPosts)
@@ -176,6 +182,6 @@ viewPost post =
         , li [ class "recipe_names" ]
             [ text post.recipe ]
         , br [] []
-        , a [ href ("/article/" ++ String.fromInt post.id) ] [ button [ class "submit_button" ] [ text "Comment" ] ]
+        , a [ href ("article/" ++ String.fromInt post.id) ] [ button [ class "submit_button" ] [ text "Comment" ] ]
         , div [ class "line_after_recipes" ] []
         ]

@@ -8,9 +8,11 @@ module Shared exposing
     , view
     )
 
+import Api.User exposing (User)
 import Browser.Navigation exposing (Key)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Json.Decode as D
 import Spa.Document exposing (Document)
 import Spa.Generated.Route as Route
 import Url exposing (Url)
@@ -21,18 +23,25 @@ import Url exposing (Url)
 
 
 type alias Flags =
-    ()
+    D.Value
 
 
 type alias Model =
     { url : Url
     , key : Key
+    , user : Maybe User
     }
 
 
 init : Flags -> Url -> Key -> ( Model, Cmd Msg )
-init flags url key =
-    ( Model url key
+init json url key =
+    let
+        user =
+            json
+                |> D.decodeValue (D.field "user" Api.User.decoder)
+                |> Result.toMaybe
+    in
+    ( Model url key user
     , Cmd.none
     )
 
@@ -68,7 +77,7 @@ view :
 view { page, toMsg } model =
     { title = page.title
     , body =
-        [ viewHeader
+        [ viewHeader model
         , div [ class "page" ] page.body
         , viewFooter
         ]
@@ -88,57 +97,84 @@ viewFooter =
         ]
 
 
-viewHeader : Html msg
-viewHeader =
+viewHeader : Model -> Html msg
+viewHeader model =
+    case model.user of
+        Just user ->
+            viewHeaderLoggedIn model user
+        Nothing ->
+            viewAll model
+
+
+viewHeaderLoggedIn : Model -> User -> Html msg
+viewHeaderLoggedIn model user =
     header
         [ class "header" ]
         [ div
             [ class "inner-header" ]
             [ div
                 [ class "logo-container" ]
-                [ img [ src "/assets/recipelogo.svg", width 50 ] [], text "RECIPES" ]
+                [ img [ src "/assets/recipelogo.svg", width 50, height 50 ] [], text "RECIPES" ]
             , ul
                 [ class "navigation" ]
                 [ a
                     [ class "link", href (Route.toString Route.Top) ]
                     [ li
-                        [ class "navbar-elements" ]
+                        [ case model.url.path of
+                            "/" ->
+                                class "active_link"
+
+                            _ ->
+                                class "navbar-elements"
+                        ]
                         [ text "home" ]
                     ]
                 , a
                     [ class "link", href (Route.toString Route.Recipes) ]
                     [ li
-                        [ class "navbar-elements" ]
+                        [ case model.url.path of
+                            "/recipes" ->
+                                class "active_link"
+
+                            _ ->
+                                class "navbar-elements"
+                        ]
                         [ text "recipes" ]
                     ]
                 , a
                     [ class "link", href (Route.toString Route.Profile) ]
                     [ li
-                        [ class "navbar-elements" ]
+                        [ case model.url.path of
+                            "/profile" ->
+                                class "active_link"
+
+                            _ ->
+                                class "navbar-elements"
+                        ]
                         [ text "profile" ]
-                    ]
-                , a
-                    [ class "link", href (Route.toString Route.Register) ]
-                    [ li
-                        [ class "navbar-elements" ]
-                        [ text "sign up" ]
-                    ]
-                , a
-                    [ class "link", href (Route.toString Route.Login) ]
-                    [ li
-                        [ class "navbar-elements" ]
-                        [ text "sign in" ]
                     ]
                 , a
                     [ class "link", href (Route.toString Route.Article) ]
                     [ li
-                        [ class "navbar-elements" ]
+                        [ case model.url.path of
+                            "/article" ->
+                                class "active_link"
+
+                            _ ->
+                                class "navbar-elements"
+                        ]
                         [ text "article" ]
                     ]
                 , a
                     [ class "link", href (Route.toString Route.New) ]
                     [ li
-                        [ class "navbar-elements" ]
+                        [ case model.url.path of
+                            "/new" ->
+                                class "active_link"
+
+                            _ ->
+                                class "navbar-elements"
+                        ]
                         [ text "new article" ]
                     ]
                 ]
@@ -146,5 +182,167 @@ viewHeader =
         ]
 
 
+viewHeaderNotLoggedIn : Model -> Html msg
+viewHeaderNotLoggedIn model =
+    header
+        [ class "header" ]
+        [ div
+            [ class "inner-header" ]
+            [ div
+                [ class "logo-container" ]
+                [ img [ src "/assets/recipelogo.svg", width 50, height 50 ] [], text "RECIPES" ]
+            , ul
+                [ class "navigation" ]
+                [ a
+                    [ class "link", href (Route.toString Route.Top) ]
+                    [ li
+                        [ case model.url.path of
+                            "/" ->
+                                class "active_link"
+
+                            _ ->
+                                class "navbar-elements"
+                        ]
+                        [ text "home" ]
+                    ]
+                , a
+                    [ class "link", href (Route.toString Route.Register) ]
+                    [ li
+                        [ case model.url.path of
+                            "/register" ->
+                                class "active_link"
+
+                            _ ->
+                                class "navbar-elements"
+                        ]
+                        [ text "sign up" ]
+                    ]
+                , a
+                    [ class "link", href (Route.toString Route.Login) ]
+                    [ li
+                        [ case model.url.path of
+                            "/login" ->
+                                class "active_link"
+
+                            _ ->
+                                class "navbar-elements"
+                        ]
+                        [ text "sign in" ]
+                    ]
+                ]
+            ]
+        ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 --     a [ class "link", href (Route.toString Route.NotFound) ] [ text "Not found" ]
+viewAll : Model -> Html msg
+viewAll model =
+        header
+        [ class "header" ]
+        [ div
+            [ class "inner-header" ]
+            [ div
+                [ class "logo-container" ]
+                [ img [ src "/assets/recipelogo.svg", width 50, height 50 ] [], text "RECIPES" ]
+            , ul
+                [ class "navigation" ]
+                [ a
+                    [ class "link", href (Route.toString Route.Top) ]
+                    [ li
+                        [ case model.url.path of
+                            "/" ->
+                                class "active_link"
+
+                            _ ->
+                                class "navbar-elements"
+                        ]
+                        [ text "home" ]
+                    ]
+                , a
+                    [ class "link", href (Route.toString Route.Recipes) ]
+                    [ li
+                        [ case model.url.path of
+                            "/recipes" ->
+                                class "active_link"
+
+                            _ ->
+                                class "navbar-elements"
+                        ]
+                        [ text "recipes" ]
+                    ]
+                , a
+                    [ class "link", href (Route.toString Route.Profile) ]
+                    [ li
+                        [ case model.url.path of
+                            "/profile" ->
+                                class "active_link"
+
+                            _ ->
+                                class "navbar-elements"
+                        ]
+                        [ text "profile" ]
+                    ]
+                , a
+                    [ class "link", href (Route.toString Route.Register) ]
+                    [ li
+                        [ case model.url.path of
+                            "/register" ->
+                                class "active_link"
+
+                            _ ->
+                                class "navbar-elements"
+                        ]
+                        [ text "sign up" ]
+                    ]
+                , a
+                    [ class "link", href (Route.toString Route.Login) ]
+                    [ li
+                        [ case model.url.path of
+                            "/login" ->
+                                class "active_link"
+
+                            _ ->
+                                class "navbar-elements"
+                        ]
+                        [ text "sign in" ]
+                    ]
+                , a
+                    [ class "link", href (Route.toString Route.Article) ]
+                    [ li
+                        [ case model.url.path of
+                            "/article" ->
+                                class "active_link"
+
+                            _ ->
+                                class "navbar-elements"
+                        ]
+                        [ text "article" ]
+                    ]
+                , a
+                    [ class "link", href (Route.toString Route.New) ]
+                    [ li
+                        [ case model.url.path of
+                            "/new" ->
+                                class "active_link"
+
+                            _ ->
+                                class "navbar-elements"
+                        ]
+                        [ text "new article" ]
+                    ]
+                ]
+            ]
+        ]

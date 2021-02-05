@@ -1,18 +1,20 @@
 module Pages.Login exposing (Model, Msg, Params, page)
 
+import Api.User exposing (User)
+import Browser.Navigation as Nav exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import Shared
-import Spa.Document exposing (Document)
-import Spa.Page as Page exposing (Page)
-import Spa.Url as Url exposing (Url)
-import Spa.Generated.Route as Route
 import Http exposing (..)
-import Server
 import Json.Decode as D exposing (..)
 import Json.Encode as E exposing (..)
-import Browser.Navigation as Nav exposing (..)
+import Server
+import Shared
+import Spa.Document exposing (Document)
+import Spa.Generated.Route as Route
+import Spa.Page as Page exposing (Page)
+import Spa.Url as Url exposing (Url)
+import Api.Data as Data
 
 
 page : Page Params Model Msg
@@ -45,7 +47,11 @@ type alias Model =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( {email = "", password = "", warning = "", key = shared.key}, Cmd.none )
+    ( { email = "", password = "", warning = "",
+    key = shared.key
+    }
+    , Cmd.none
+    )
 
 
 
@@ -73,10 +79,11 @@ update msg model =
 
         Response response ->
             case response of
-                Ok value -> 
-                    ({model | warning = "Successfully logged in!"}, Nav.pushUrl model.key "/recipes")
+                Ok value ->
+                    ( { model | warning = "Successfully logged in!" }, Nav.pushUrl model.key "/recipes" )
+
                 Err err ->
-                    ({model | warning = httpErrorString err}, Cmd.none)
+                    ( { model | warning = httpErrorString err }, Cmd.none )
 
 
 httpErrorString : Http.Error -> String
@@ -101,6 +108,7 @@ httpErrorString error =
 
         _ ->
             "Something went wrong!"
+
 
 save : Model -> Shared.Model -> Shared.Model
 save model shared =
@@ -152,10 +160,11 @@ view model =
             , div [ class "warning_form" ]
                 [ text model.warning ]
             , div [ class "not_registered" ]
-                [ a [class "not_registered_link", href (Route.toString Route.Register)][ text "Don't have an account?" ] ]
+                [ a [ class "not_registered_link", href (Route.toString Route.Register) ] [ text "Don't have an account?" ] ]
             ]
         ]
     }
+
 
 loginRequest : Model -> Cmd Msg
 loginRequest model =
@@ -167,8 +176,8 @@ loginRequest model =
 
 
 encodeLogin : Model -> E.Value
-encodeLogin model = 
-    E.object [
-        ("email", E.string model.email),
-        ("password", E.string model.password)
-    ]
+encodeLogin model =
+    E.object
+        [ ( "email", E.string model.email )
+        , ( "password", E.string model.password )
+        ]
