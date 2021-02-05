@@ -178,6 +178,7 @@ input:focus{
   height: 45px;
   font-size: 25px;
   font-weight: bold;
+  text-align: center;
   color: rgb(255, 75, 75);
 }
 
@@ -248,8 +249,6 @@ textarea{
   border-width: 2px;
   border-style: dashed;
 }
-
-
 
 .search_input{
   margin: 20px 0;

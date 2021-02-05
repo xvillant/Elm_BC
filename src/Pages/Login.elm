@@ -1,6 +1,5 @@
 module Pages.Login exposing (Model, Msg, Params, page)
 
-import Api.User exposing (User)
 import Browser.Navigation as Nav exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -14,7 +13,6 @@ import Spa.Document exposing (Document)
 import Spa.Generated.Route as Route
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
-import Api.Data as Data
 
 
 page : Page Params Model Msg
@@ -47,9 +45,11 @@ type alias Model =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( { email = "", password = "", warning = "",
-    key = shared.key
-    }
+    ( { email = ""
+      , password = ""
+      , warning = ""
+      , key = shared.key
+      }
     , Cmd.none
     )
 
@@ -75,7 +75,14 @@ update msg model =
             ( { model | password = password }, Cmd.none )
 
         Submit ->
-            ( model, loginRequest model )
+            if String.length model.email == 0 then
+                ( { model | warning = "Type your email!" }, Cmd.none )
+
+            else if String.length model.password == 0 then
+                ( { model | warning = "Type your password!" }, Cmd.none )
+
+            else
+                ( model, loginRequest model )
 
         Response response ->
             case response of
@@ -101,7 +108,7 @@ httpErrorString error =
         BadStatus response ->
             case response of
                 400 ->
-                    "Not existing user or bad password!"
+                    "Wrong email or password!"
 
                 _ ->
                     "Something went wrong!"

@@ -140,7 +140,7 @@ viewPosts posts =
 
         Loading ->
             div [ class "centered" ]
-                [ img [ src "assets/loading.gif" ] [] ]
+                [ img [ src "assets/loadin.gif" ] [] ]
 
         Success actualPosts ->
             div [ class "centered" ]
