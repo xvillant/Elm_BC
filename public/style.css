@@ -250,10 +250,19 @@ textarea{
   border-style: dashed;
 }
 
-.search_input{
+
+.search_input {
   margin: 20px 0;
-  border: 1px solid;
+  background-image: url(assets/search-logo.svg);
+  background-size: 30px;
+  background-position: 10px center;
+  background-repeat: no-repeat;
+  border: 1px solid #ccc;
   border-radius: 20px;
+
+  padding: 10px 5px 10px 20px;
+  text-indent: 20px;
+
 }
 
 .search_input::-webkit-search-cancel-button{
