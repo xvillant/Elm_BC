@@ -142,7 +142,7 @@ viewHeaderLoggedIn model user =
                         [ text "recipes" ]
                     ]
                 , a
-                    [ class "link", href (Route.toString Route.Profile) ]
+                    [ class "link", href "/profile/1" ]
                     [ li
                         [ case model.url.path of
                             "/profile" ->
@@ -153,7 +153,7 @@ viewHeaderLoggedIn model user =
                         ]
                         [ text "profile" ]
                     ]
-                , a
+                {--, a
                     [ class "link", href (Route.toString Route.Article) ]
                     [ li
                         [ case model.url.path of
@@ -164,7 +164,7 @@ viewHeaderLoggedIn model user =
                                 class "navbar-elements"
                         ]
                         [ text "article" ]
-                    ]
+                    ]--}
                 , a
                     [ class "link", href (Route.toString Route.New) ]
                     [ li
@@ -284,7 +284,7 @@ viewAll model =
                         [ text "recipes" ]
                     ]
                 , a
-                    [ class "link", href (Route.toString Route.Profile) ]
+                    [ class "link", href "/profile/1" ]
                     [ li
                         [ case model.url.path of
                             "/profile" ->
@@ -319,7 +319,7 @@ viewAll model =
                         ]
                         [ text "sign in" ]
                     ]
-                , a
+                {--, a
                     [ class "link", href (Route.toString Route.Article) ]
                     [ li
                         [ case model.url.path of
@@ -330,7 +330,7 @@ viewAll model =
                                 class "navbar-elements"
                         ]
                         [ text "article" ]
-                    ]
+                    ]--}
                 , a
                     [ class "link", href (Route.toString Route.New) ]
                     [ li

@@ -79,6 +79,39 @@
       ],
       "recipe": "dasdasdasdasd",
       "id": 8
+    },
+    {
+      "name": "Patkány",
+      "ingredients": [
+        "kura"
+      ],
+      "recipe": "potkan je potkan",
+      "id": 9
+    },
+    {
+      "name": "Orsi kecskéje",
+      "ingredients": [
+        "kura",
+        "kecske"
+      ],
+      "recipe": "Kura posmazime a dame vyhladnut",
+      "id": 10
+    },
+    {
+      "name": "dsad",
+      "ingredients": [
+        "dasdsad"
+      ],
+      "recipe": "dasdas",
+      "id": 11
+    },
+    {
+      "name": "Jajky",
+      "ingredients": [
+        "kura"
+      ],
+      "recipe": "dasdsadasdas",
+      "id": 12
     }
   ],
   "comments": [
