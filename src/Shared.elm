@@ -287,7 +287,7 @@ viewAll model =
                     [ class "link", href "/profile/1" ]
                     [ li
                         [ case model.url.path of
-                            "/profile" ->
+                            "/profile/1" ->
                                 class "active_link"
 
                             _ ->

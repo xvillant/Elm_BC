@@ -112,6 +112,34 @@
       ],
       "recipe": "dasdsadasdas",
       "id": 12
+    },
+    {
+      "name": "Jez",
+      "ingredients": [
+        "kura",
+        "syr",
+        "potkan"
+      ],
+      "recipe": "hej",
+      "id": 13
+    },
+    {
+      "name": "Caj",
+      "ingredients": [
+        "dss"
+      ],
+      "recipe": "dasdsad",
+      "userid": 1,
+      "id": 14
+    },
+    {
+      "name": "Toto je dalsi",
+      "ingredients": [
+        "Cauko"
+      ],
+      "recipe": "dasdasdasd",
+      "userid": 1,
+      "id": 15
     }
   ],
   "comments": [
@@ -156,6 +184,54 @@
       "userid": 0,
       "recipeid": 6,
       "id": 7
+    },
+    {
+      "comment": "cauko",
+      "userid": 0,
+      "recipeid": 11,
+      "id": 8
+    },
+    {
+      "comment": "oris",
+      "userid": 0,
+      "recipeid": 10,
+      "id": 9
+    },
+    {
+      "comment": "orsi kecskeje a legjobb",
+      "userid": 0,
+      "recipeid": 10,
+      "id": 10
+    },
+    {
+      "comment": "dobre asi to funguje",
+      "userid": 0,
+      "recipeid": 10,
+      "id": 11
+    },
+    {
+      "comment": "cauko",
+      "userid": 0,
+      "recipeid": 15,
+      "id": 12
+    },
+    {
+      "comment": "ako preco",
+      "userid": 0,
+      "recipeid": 15,
+      "id": 13
+    },
+    {
+      "comment": "dobre je",
+      "userid": 0,
+      "recipeid": 13,
+      "id": 14
+    },
+    {
+      "comment": "nechapem preco to neslo prvykrat",
+      "userid": 0,
+      "recipeid": 15,
+      "id": 15
     }
   ]
 }
