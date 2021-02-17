@@ -12,7 +12,9 @@ import Api.User exposing (User)
 import Browser.Navigation exposing (Key)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 import Json.Decode as D
+import Ports exposing (clearUser, saveUser)
 import Spa.Document exposing (Document)
 import Spa.Generated.Route as Route
 import Url exposing (Url)
@@ -51,14 +53,18 @@ init json url key =
 
 
 type Msg
-    = ReplaceMe
+    = SignOutSignal
+    | SignInSignal User
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        ReplaceMe ->
-            ( model, Cmd.none )
+        SignOutSignal ->
+            ( { model | user = Nothing }, Ports.clearUser )
+
+        SignInSignal user ->
+            ( { model | user = Just user }, Ports.saveUser user )
 
 
 subscriptions : Model -> Sub Msg
@@ -102,6 +108,7 @@ viewHeader model =
     case model.user of
         Just user ->
             viewHeaderLoggedIn model user
+
         Nothing ->
             viewAll model
 
@@ -153,6 +160,7 @@ viewHeaderLoggedIn model user =
                         ]
                         [ text "profile" ]
                     ]
+
                 {--, a
                     [ class "link", href (Route.toString Route.Article) ]
                     [ li
@@ -176,6 +184,12 @@ viewHeaderLoggedIn model user =
                                 class "navbar-elements"
                         ]
                         [ text "new article" ]
+                    ]
+                , a
+                    [ class "link"]
+                    [ li
+                        [ class "navbar-elements" ]
+                        [ text "sign out" ]
                     ]
                 ]
             ]
@@ -235,22 +249,12 @@ viewHeaderNotLoggedIn model =
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 --     a [ class "link", href (Route.toString Route.NotFound) ] [ text "Not found" ]
+
+
 viewAll : Model -> Html msg
 viewAll model =
-        header
+    header
         [ class "header" ]
         [ div
             [ class "inner-header" ]
@@ -319,6 +323,7 @@ viewAll model =
                         ]
                         [ text "sign in" ]
                     ]
+
                 {--, a
                     [ class "link", href (Route.toString Route.Article) ]
                     [ li

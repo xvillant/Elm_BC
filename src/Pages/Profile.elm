@@ -48,7 +48,8 @@ type alias Model =
 
 type alias Profile =
     { id : Int
-    , username : String
+    , firstname : String
+    , lastname : String
     , email : String
     , bio : String
     }
@@ -105,7 +106,7 @@ view : Model -> Document Msg
 view model =
     case model.profile of
         Success profile ->
-            { title = "Profile | " ++ profile.username
+            { title = "Profile | " ++ profile.email
             , body =
                 [ viewProfile model.profile
                 , div [ class "warning_form" ]
@@ -120,6 +121,7 @@ view model =
                 [ viewProfile model.profile
                 , div [ class "warning_form" ]
                     [ text model.warning ]
+                , viewPosts model.posts
                 ]
             }
 
@@ -138,8 +140,12 @@ viewProfile profile =
             div [ class "centered" ]
                 [ h1 [ class "title_page" ] [ text "Profile" ]
                 , div [ class "profile_attr" ]
-                    [ p [ class "profile_name" ] [ text "username: " ]
-                    , p [ class "profile_name_x" ] [ text value.username ]
+                    [ p [ class "profile_name" ] [ text "first name: " ]
+                    , p [ class "profile_name_x" ] [ text value.firstname ]
+                    ]
+                , div [ class "profile_attr" ]
+                    [ p [ class "profile_name" ] [ text "last name: " ]
+                    , p [ class "profile_name_x" ] [ text value.lastname ]
                     ]
                 , div [ class "profile_attr" ]
                     [ p [ class "profile_name" ] [ text "email: " ]
@@ -188,7 +194,7 @@ viewPosts posts =
 
         Success actualPosts ->
             div [ class "centered" ]
-                [ h1 [ class "title_page" ] [ text "My recipes" ]
+                [ h2 [ class "title_page" ] [ text "My recipes" ]
                 , div [ class "line_after_recipes" ] []
                 , div [ class "articles_list" ]
                     (List.map viewPost actualPosts)
@@ -226,9 +232,10 @@ viewPost post =
 
 userDecoder : Decoder Profile
 userDecoder =
-    map4 Profile
+    map5 Profile
         (field "id" D.int)
-        (field "username" D.string)
+        (field "firstname" D.string)
+        (field "lastname" D.string)
         (field "email" D.string)
         (field "bio" D.string)
 

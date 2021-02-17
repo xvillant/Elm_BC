@@ -2,8 +2,9 @@
   "users": [
     {
       "email": "Drogba11144@gmail.com",
-      "password": "$2a$10$MMtHlr8pKZFxuZp/y6eZQO2lz0QxGLIOx3wdhaLxkW2khK9gQZac2",
-      "username": "xvillant",
+      "password": "$2a$10$DxLQ05RdI7dNYdTcl4EQXucpbYxB/VUPnfD9SKDEge/x7tm73GqP6",
+      "firstname": "Patrik",
+      "lastname": "Villant",
       "bio": "",
       "id": 1
     }
@@ -232,6 +233,24 @@
       "userid": 0,
       "recipeid": 15,
       "id": 15
+    },
+    {
+      "comment": "dobre to je",
+      "userid": 0,
+      "recipeid": 1,
+      "id": 16
+    },
+    {
+      "comment": "hej no",
+      "userid": 0,
+      "recipeid": 1,
+      "id": 17
+    },
+    {
+      "comment": "jop",
+      "userid": 0,
+      "recipeid": 1,
+      "id": 18
     }
   ]
 }

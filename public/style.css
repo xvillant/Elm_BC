@@ -128,9 +128,13 @@ ul{
 
 
 h1.title_page{
- font-size: 56px;
+ font-size: 64px;
  margin: 10px;
 }
+
+h2.title_page{
+  font-size: 30px;
+ }
 
 .fab {
   color: black;

@@ -39,7 +39,8 @@ type alias Model =
     { email : String
     , password : String
     , passwordAgain : String
-    , username : String
+    , firstname : String
+    , lastname : String
     , warning : String
     , key : Key
     }
@@ -47,7 +48,7 @@ type alias Model =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( Model "" "" "" "" "" shared.key, Cmd.none )
+    ( Model "" "" "" "" "" "" shared.key, Cmd.none )
 
 
 
@@ -55,7 +56,8 @@ init shared { params } =
 
 
 type Msg
-    = Username String
+    = FirstName String
+    | LastName String
     | Password String
     | PasswordAgain String
     | Email String
@@ -66,8 +68,11 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Username username ->
-            ( { model | username = username }, Cmd.none )
+        FirstName firstname ->
+            ( { model | firstname = firstname }, Cmd.none )
+        
+        LastName lastname ->
+            ( { model | lastname = lastname }, Cmd.none )
 
         Email email ->
             ( { model | email = email }, Cmd.none )
@@ -79,11 +84,11 @@ update msg model =
             ( { model | passwordAgain = password }, Cmd.none )
 
         Submit ->
-            if model.username == "" then
-                ( { model | warning = "Enter your username!" }, Cmd.none )
+            if String.length model.firstname == 0 then
+                ( { model | warning = "Enter your first name!" }, Cmd.none )
 
-            else if userNameLength model.username then
-                ( { model | warning = "Username is short!" }, Cmd.none )
+            else if String.length model.lastname == 0 then
+                ( { model | warning = "Enter your last name!" }, Cmd.none )
 
             else if model.password == "" then
                 ( { model | warning = "Enter your password!" }, Cmd.none )
@@ -163,11 +168,31 @@ view model =
             [ h1 [ class "title_page" ] [ text "Sign Up" ]
             , div [ class "formFieldClasses" ]
                 [ input
-                    [ id "username"
+                    [ id "firstname"
                     , type_ "text"
-                    , placeholder "Username"
-                    , Html.Attributes.value model.username
-                    , onInput Username
+                    , placeholder "First Name"
+                    , Html.Attributes.value model.firstname
+                    , onInput FirstName
+                    ]
+                    []
+                ]
+            , div [ class "formFieldClasses" ]
+                [ input
+                    [ id "lastname"
+                    , type_ "text"
+                    , placeholder "Last Name"
+                    , Html.Attributes.value model.lastname
+                    , onInput LastName
+                    ]
+                    []
+                ]
+            , div [ class "formFieldClasses" ]
+                [ input
+                    [ id "email"
+                    , type_ "email"
+                    , placeholder "Email"
+                    , Html.Attributes.value model.email
+                    , onInput Email
                     ]
                     []
                 ]
@@ -192,16 +217,6 @@ view model =
                     []
                 ]
             , div [ class "formFieldClasses" ]
-                [ input
-                    [ id "email"
-                    , type_ "email"
-                    , placeholder "Email"
-                    , Html.Attributes.value model.email
-                    , onInput Email
-                    ]
-                    []
-                ]
-            , div [ class "formFieldClasses" ]
                 [ button [ class "submit_button", onClick Submit ] [ text "Sign Up" ] ]
             , div [ class "warning_form" ]
                 [ text model.warning ]
@@ -215,7 +230,8 @@ view model =
 encodeUser : Model -> E.Value
 encodeUser model =
     E.object
-        [ ( "username", E.string model.username )
+        [ ( "firstname", E.string model.firstname )
+        , ( "lastname", E.string model.lastname)
         , ( "password", E.string model.password )
         , ( "email", E.string model.email )
         , ( "bio", E.string "" )
@@ -229,15 +245,6 @@ registerUser model =
         , body = Http.jsonBody <| encodeUser model
         , expect = Http.expectJson Response (field "accessToken" D.string)
         }
-
-
-userNameLength : String -> Bool
-userNameLength username =
-    if String.length username < 6 then
-        True
-
-    else
-        False
 
 
 passwordLength : String -> Bool
