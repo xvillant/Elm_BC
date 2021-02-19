@@ -2,10 +2,11 @@
   "users": [
     {
       "email": "Drogba11144@gmail.com",
-      "password": "$2a$10$DxLQ05RdI7dNYdTcl4EQXucpbYxB/VUPnfD9SKDEge/x7tm73GqP6",
+      "password": "$2a$10$4fKLh707f0nwgu0Pd7moEuwj4yXkTzZfYXm8WKIxuTaHFjrgc.pvm",
       "firstname": "Patrik",
       "lastname": "Villant",
       "bio": "",
+      "image": "/assets/user_default.png",
       "id": 1
     }
   ],
@@ -141,6 +142,17 @@
       "recipe": "dasdasdasd",
       "userid": 1,
       "id": 15
+    },
+    {
+      "name": "Marekove pochutky",
+      "ingredients": [
+        "syr",
+        "maso",
+        "zelenina"
+      ],
+      "recipe": "oprazis",
+      "userid": 1,
+      "id": 16
     }
   ],
   "comments": [
@@ -251,6 +263,12 @@
       "userid": 0,
       "recipeid": 1,
       "id": 18
+    },
+    {
+      "comment": "mldaklsdkô",
+      "userid": 0,
+      "recipeid": 15,
+      "id": 19
     }
   ]
 }

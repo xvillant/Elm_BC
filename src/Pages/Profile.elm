@@ -52,6 +52,7 @@ type alias Profile =
     , lastname : String
     , email : String
     , bio : String
+    , image : String
     }
 
 
@@ -139,6 +140,7 @@ viewProfile profile =
         Success value ->
             div [ class "centered" ]
                 [ h1 [ class "title_page" ] [ text "Profile" ]
+                , img [src value.image, width 80, height 80][]
                 , div [ class "profile_attr" ]
                     [ p [ class "profile_name" ] [ text "first name: " ]
                     , p [ class "profile_name_x" ] [ text value.firstname ]
@@ -232,12 +234,13 @@ viewPost post =
 
 userDecoder : Decoder Profile
 userDecoder =
-    map5 Profile
+    map6 Profile
         (field "id" D.int)
         (field "firstname" D.string)
         (field "lastname" D.string)
         (field "email" D.string)
         (field "bio" D.string)
+        (field "image" D.string)
 
 
 viewFetchError : String -> String -> Html Msg
