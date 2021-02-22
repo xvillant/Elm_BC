@@ -166,7 +166,7 @@ viewFetchError : String -> Html Msg
 viewFetchError errorMessage =
     let
         errorHeading =
-            "Couldn't fetch posts."
+            "Couldn't fetch recipes."
     in
     div [ class "centered" ]
         [ h1 [ class "title_page" ] [ text errorHeading ]

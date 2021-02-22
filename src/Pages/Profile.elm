@@ -11,6 +11,7 @@ import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Json.Decode.Pipeline exposing (required)
+import Api.Profile
 
 page : Page Params Model Msg
 page =
@@ -40,21 +41,10 @@ type alias Post =
     }
 
 type alias Model =
-    { profile : Data Profile
+    { profile : Data Api.Profile.Profile
     , posts : Data (List Post)
     , warning : String
     }
-
-
-type alias Profile =
-    { id : Int
-    , firstname : String
-    , lastname : String
-    , email : String
-    , bio : String
-    , image : String
-    }
-
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
@@ -71,7 +61,7 @@ init shared { params } =
 
 
 type Msg
-    = ReceivedUser (Data Profile)
+    = ReceivedUser (Data Api.Profile.Profile)
     | ReceivedPosts (Data (List Post))
 
 
@@ -127,7 +117,7 @@ view model =
             }
 
 
-viewProfile : Data Profile -> Html Msg
+viewProfile : Data Api.Profile.Profile -> Html Msg
 viewProfile profile =
     case profile of
         NotAsked ->
@@ -190,9 +180,9 @@ viewPosts posts =
         NotAsked ->
             text ""
 
-        Loading ->
-            div [ class "centered" ]
-                [ img [ src "/assets/loading.gif" ] [] ]
+        Loading -> text ""
+            -- div [ class "centered" ]
+            --    [ img [ src "/assets/loading.gif" ] [] ]
 
         Success actualPosts ->
             div [ class "centered" ]
@@ -203,15 +193,15 @@ viewPosts posts =
                 ]
 
         Api.Data.Failure _ ->
-            viewFetchError "posts" "Something went wrong!"
+            text ""
 
 
 
-getUserRequest : Params -> { onResponse : Data Profile -> Msg } -> Cmd Msg
+getUserRequest : Params -> { onResponse : Data Api.Profile.Profile -> Msg } -> Cmd Msg
 getUserRequest params options =
     Http.get
         { url = Server.url ++ "users/" ++ String.fromInt params.profileId
-        , expect = Api.Data.expectJson options.onResponse userDecoder
+        , expect = Api.Data.expectJson options.onResponse Api.Profile.decoder
         }
 
 
@@ -230,17 +220,6 @@ viewPost post =
         , a [ href ("/article/" ++ String.fromInt post.id) ] [ button [ class "submit_button" ] [ text "Comment" ] ]
         , div [ class "line_after_recipes" ] []
         ]
-
-
-userDecoder : Decoder Profile
-userDecoder =
-    map6 Profile
-        (field "id" D.int)
-        (field "firstname" D.string)
-        (field "lastname" D.string)
-        (field "email" D.string)
-        (field "bio" D.string)
-        (field "image" D.string)
 
 
 viewFetchError : String -> String -> Html Msg

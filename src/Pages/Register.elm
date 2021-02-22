@@ -89,6 +89,9 @@ update msg model =
 
             else if String.length model.lastname == 0 then
                 ( { model | warning = "Enter your last name!" }, Cmd.none )
+            
+            else if model.email == "" then
+                ( { model | warning = "Enter your email!" }, Cmd.none )
 
             else if model.password == "" then
                 ( { model | warning = "Enter your password!" }, Cmd.none )
@@ -101,9 +104,6 @@ update msg model =
 
             else if model.password /= model.passwordAgain && String.length model.passwordAgain > 0 then
                 ( { model | warning = "Passwords do not match!" }, Cmd.none )
-
-            else if model.email == "" then
-                ( { model | warning = "Enter your email!" }, Cmd.none )
 
             else
                 ( { model | warning = "Loading..." }, registerUser model )
