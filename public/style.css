@@ -224,6 +224,14 @@ input:focus{
   word-wrap: break-word;
 }
 
+.link_profile {
+  text-decoration: none;
+  color: #4CAF50;
+  font-size: 20px;
+    font-weight: 900;
+    max-width: 100%;
+}
+
 .buttonsdiv{
   margin: 0 5px;
   background-color: #4CAF50;

@@ -168,7 +168,18 @@ encodeArticle model =
         [ ( "name", E.string model.name )
         , ( "ingredients", E.list E.string <| String.split ", " model.ingredients )
         , ( "recipe", E.string model.recipe )
-        , ( "userid", E.int 1)
+        , ( "profile"
+          , E.object
+                [ ("id", E.int 1)
+                , ( "email", E.string "Drogba11144@gmail.com" )
+                , ( "firstname", E.string "Patrik" )
+                , ( "lastname", E.string "Villant" )
+                , ( "bio", E.string "" )
+                , ( "password", E.string "" )
+                , ( "image", E.string "" )
+                ]
+          )
+        , ( "userid", E.int 1 )
         ]
 
 

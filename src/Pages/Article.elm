@@ -14,6 +14,8 @@ import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
+import Api.Profile
+import Api.Article
 
 
 page : Page Params Model Msg
@@ -37,18 +39,10 @@ type alias Params =
 
 
 type alias Model =
-    { article : Data Article
+    { article : Data Api.Article.Article
     , comments : Data (List Comment)
     , comment : Comment
     , warning : String
-    }
-
-
-type alias Article =
-    { id : Int
-    , name : String
-    , ingredients : List String
-    , recipe : String
     }
 
 
@@ -75,7 +69,7 @@ init shared { params } =
 
 
 type Msg
-    = ReceivedArticle (Data Article)
+    = ReceivedArticle (Data Api.Article.Article)
     | CommentsReceived (Data (List Comment))
     | AddComment String
     | SubmitComment
@@ -161,21 +155,12 @@ view model =
             }
 
 
-getArticleRequest : Params -> { onResponse : Data Article -> Msg } -> Cmd Msg
+getArticleRequest : Params -> { onResponse : Data Api.Article.Article -> Msg } -> Cmd Msg
 getArticleRequest params options =
     Http.get
         { url = Server.url ++ "posts/" ++ String.fromInt params.recipeId
-        , expect = Api.Data.expectJson options.onResponse postDecoder
+        , expect = Api.Data.expectJson options.onResponse Api.Article.decoder
         }
-
-
-postDecoder : Decoder Article
-postDecoder =
-    map4 Article
-        (field "id" D.int)
-        (field "name" D.string)
-        (field "ingredients" (D.list D.string))
-        (field "recipe" D.string)
 
 
 getCommentsRequest : Params -> { onResponse : Data (List Comment) -> Msg } -> Cmd Msg
@@ -260,7 +245,7 @@ postComment comment =
         }
 
 
-viewArticle : Data Article -> Html Msg
+viewArticle : Data Api.Article.Article -> Html Msg
 viewArticle article =
     case article of
         NotAsked ->
@@ -284,6 +269,10 @@ viewArticle article =
                 , div [ class "profile_attr" ]
                     [ p [ class "profile_name" ] [ text "recipe: " ]
                     , p [ class "profile_name_x" ] [ text value.recipe ]
+                    ]
+                , div [ class "profile_attr" ]
+                    [ p [ class "profile_name" ] [ text "shared by: " ]
+                    , a [ class "link_profile", href ("/profile/" ++ String.fromInt value.profile.id) ] [ text (value.profile.firstname ++ " " ++ value.profile.lastname) ]
                     ]
                 , div [ class "comment-text" ]
                     [ textarea [ placeholder "Type your comment here...", cols 70, rows 10, onInput AddComment ] []

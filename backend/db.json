@@ -8,273 +8,54 @@
       "bio": "",
       "image": "/assets/user_default.png",
       "id": 1
+    },
+    {
+      "email": "helenka1112@gmail.com",
+      "password": "$2a$10$WazN2Xf3wKRBn4a5FMWwjeE/nb0Q9cne7mO4/P5pJxIKbzs6eivWu",
+      "firstname": "Helena",
+      "lastname": "Labužníková",
+      "bio": "",
+      "image": "/assets/user_default.png",
+      "id": 2
     }
   ],
   "posts": [
     {
-      "name": "Alkohol",
+      "name": "dobre bude",
       "ingredients": [
-        "sdas",
-        "dasd",
-        " dasdad"
+        "dasdasd"
       ],
-      "recipe": "daskldasjdlasdjasldjasldjkasdkljaldkas",
+      "recipe": "dasdasdasdasdasd",
+      "profile": {
+        "email": "Drogba11144@gmail.com",
+        "password": "$2a$10$4fKLh707f0nwgu0Pd7moEuwj4yXkTzZfYXm8WKIxuTaHFjrgc.pvm",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "image": "/assets/user_default.png",
+        "id": 1
+      },
+      "userid": 1,
       "id": 1
     },
     {
-      "name": "Budis voda",
+      "name": "potkan",
       "ingredients": [
-        "das",
-        "dasd",
-        "dlkk"
+        "asdasd"
       ],
-      "recipe": "sdadsljaskd",
+      "recipe": "dasdfasdasdasd",
+      "profile": {
+        "email": "helenka1112@gmail.com",
+        "password": "$2a$10$WazN2Xf3wKRBn4a5FMWwjeE/nb0Q9cne7mO4/P5pJxIKbzs6eivWu",
+        "firstname": "Helena",
+        "lastname": "Labužníková",
+        "bio": "",
+        "image": "/assets/user_default.png",
+        "id": 2
+      },
+      "userid": 2,
       "id": 2
-    },
-    {
-      "name": "Zelenka",
-      "ingredients": [
-        "dsadsa",
-        "kdkaskd"
-      ],
-      "recipe": "dasdasdasd",
-      "id": 3
-    },
-    {
-      "name": "Harac",
-      "ingredients": [
-        "dasd",
-        "daasd",
-        "adasd"
-      ],
-      "recipe": "dasjkdjasjdlasjdlasjk",
-      "id": 4
-    },
-    {
-      "name": "Ciklamen",
-      "ingredients": [
-        "kura"
-      ],
-      "recipe": "dasdasdasdas",
-      "id": 5
-    },
-    {
-      "name": "Kecske",
-      "ingredients": [
-        "kura"
-      ],
-      "recipe": "dasdasdsad",
-      "id": 6
-    },
-    {
-      "name": "Azu",
-      "ingredients": [
-        "kura"
-      ],
-      "recipe": "dasdasdasdas",
-      "id": 7
-    },
-    {
-      "name": "Dobre to vyzera",
-      "ingredients": [
-        "kura"
-      ],
-      "recipe": "dasdasdasdasd",
-      "id": 8
-    },
-    {
-      "name": "Patkány",
-      "ingredients": [
-        "kura"
-      ],
-      "recipe": "potkan je potkan",
-      "id": 9
-    },
-    {
-      "name": "Orsi kecskéje",
-      "ingredients": [
-        "kura",
-        "kecske"
-      ],
-      "recipe": "Kura posmazime a dame vyhladnut",
-      "id": 10
-    },
-    {
-      "name": "dsad",
-      "ingredients": [
-        "dasdsad"
-      ],
-      "recipe": "dasdas",
-      "id": 11
-    },
-    {
-      "name": "Jajky",
-      "ingredients": [
-        "kura"
-      ],
-      "recipe": "dasdsadasdas",
-      "id": 12
-    },
-    {
-      "name": "Jez",
-      "ingredients": [
-        "kura",
-        "syr",
-        "potkan"
-      ],
-      "recipe": "hej",
-      "id": 13
-    },
-    {
-      "name": "Caj",
-      "ingredients": [
-        "dss"
-      ],
-      "recipe": "dasdsad",
-      "userid": 1,
-      "id": 14
-    },
-    {
-      "name": "Toto je dalsi",
-      "ingredients": [
-        "Cauko"
-      ],
-      "recipe": "dasdasdasd",
-      "userid": 1,
-      "id": 15
-    },
-    {
-      "name": "Marekove pochutky",
-      "ingredients": [
-        "syr",
-        "maso",
-        "zelenina"
-      ],
-      "recipe": "oprazis",
-      "userid": 1,
-      "id": 16
     }
   ],
-  "comments": [
-    {
-      "id": 1,
-      "comment": "This is a nice recipe",
-      "recipeid": 6,
-      "userid": 4
-    },
-    {
-      "comment": "jo ez a recept",
-      "userid": 0,
-      "recipeid": 6,
-      "id": 2
-    },
-    {
-      "comment": "cauko",
-      "userid": 0,
-      "recipeid": 6,
-      "id": 3
-    },
-    {
-      "comment": "casdasdasdasdasds",
-      "userid": 0,
-      "recipeid": 6,
-      "id": 4
-    },
-    {
-      "comment": "dobre to je",
-      "userid": 0,
-      "recipeid": 6,
-      "id": 5
-    },
-    {
-      "comment": "cauko celkom fajn to je",
-      "userid": 0,
-      "recipeid": 6,
-      "id": 6
-    },
-    {
-      "comment": "najlepsie",
-      "userid": 0,
-      "recipeid": 6,
-      "id": 7
-    },
-    {
-      "comment": "cauko",
-      "userid": 0,
-      "recipeid": 11,
-      "id": 8
-    },
-    {
-      "comment": "oris",
-      "userid": 0,
-      "recipeid": 10,
-      "id": 9
-    },
-    {
-      "comment": "orsi kecskeje a legjobb",
-      "userid": 0,
-      "recipeid": 10,
-      "id": 10
-    },
-    {
-      "comment": "dobre asi to funguje",
-      "userid": 0,
-      "recipeid": 10,
-      "id": 11
-    },
-    {
-      "comment": "cauko",
-      "userid": 0,
-      "recipeid": 15,
-      "id": 12
-    },
-    {
-      "comment": "ako preco",
-      "userid": 0,
-      "recipeid": 15,
-      "id": 13
-    },
-    {
-      "comment": "dobre je",
-      "userid": 0,
-      "recipeid": 13,
-      "id": 14
-    },
-    {
-      "comment": "nechapem preco to neslo prvykrat",
-      "userid": 0,
-      "recipeid": 15,
-      "id": 15
-    },
-    {
-      "comment": "dobre to je",
-      "userid": 0,
-      "recipeid": 1,
-      "id": 16
-    },
-    {
-      "comment": "hej no",
-      "userid": 0,
-      "recipeid": 1,
-      "id": 17
-    },
-    {
-      "comment": "jop",
-      "userid": 0,
-      "recipeid": 1,
-      "id": 18
-    },
-    {
-      "comment": "mldaklsdkô",
-      "userid": 0,
-      "recipeid": 15,
-      "id": 19
-    },
-    {
-      "comment": "cauko marek",
-      "userid": 0,
-      "recipeid": 16,
-      "id": 20
-    }
-  ]
+  "comments": []
 }

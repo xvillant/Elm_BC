@@ -11,7 +11,8 @@ import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Json.Decode.Pipeline exposing (required)
-import Api.Profile
+import Api.Profile exposing (Profile, decoder)
+import Api.Article exposing (Article, decoder)
 
 page : Page Params Model Msg
 page =
@@ -33,16 +34,9 @@ type alias Params =
     { profileId : Int }
 
 
-type alias Post =
-    { id : Int
-    , name : String
-    , ingredients : List String
-    , recipe : String
-    }
-
 type alias Model =
-    { profile : Data Api.Profile.Profile
-    , posts : Data (List Post)
+    { profile : Data Profile
+    , posts : Data (List Article)
     , warning : String
     }
 
@@ -61,8 +55,8 @@ init shared { params } =
 
 
 type Msg
-    = ReceivedUser (Data Api.Profile.Profile)
-    | ReceivedPosts (Data (List Post))
+    = ReceivedUser (Data Profile)
+    | ReceivedPosts (Data (List Article))
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -117,7 +111,7 @@ view model =
             }
 
 
-viewProfile : Data Api.Profile.Profile -> Html Msg
+viewProfile : Data Profile -> Html Msg
 viewProfile profile =
     case profile of
         NotAsked ->
@@ -153,28 +147,19 @@ viewProfile profile =
             viewFetchError "profile" "Something went wrong!"
 
 
-getContentRequest : Params -> { onResponse : Data (List Post) -> Msg } -> Cmd Msg
+getContentRequest : Params -> { onResponse : Data (List Article) -> Msg } -> Cmd Msg
 getContentRequest params options =
     Http.get
         { url = Server.url ++ "posts?userid=" ++ String.fromInt params.profileId ++ "&_sort=id&_order=desc"
         , expect = Api.Data.expectJson options.onResponse postsDecoder
         }
 
-postsDecoder : Decoder (List Post)
+postsDecoder : Decoder (List Article)
 postsDecoder =
-    D.list postDecoder
+    D.list Api.Article.decoder
 
 
-postDecoder : Decoder Post
-postDecoder =
-    D.succeed Post
-        |> Json.Decode.Pipeline.required "id" int
-        |> Json.Decode.Pipeline.required "name" string
-        |> Json.Decode.Pipeline.required "ingredients" (D.list string)
-        |> Json.Decode.Pipeline.required "recipe" string
-
-
-viewPosts : Data (List Post) -> Html Msg
+viewPosts : Data (List Article) -> Html Msg
 viewPosts posts =
     case posts of
         NotAsked ->
@@ -197,7 +182,7 @@ viewPosts posts =
 
 
 
-getUserRequest : Params -> { onResponse : Data Api.Profile.Profile -> Msg } -> Cmd Msg
+getUserRequest : Params -> { onResponse : Data Profile -> Msg } -> Cmd Msg
 getUserRequest params options =
     Http.get
         { url = Server.url ++ "users/" ++ String.fromInt params.profileId
@@ -205,7 +190,7 @@ getUserRequest params options =
         }
 
 
-viewPost : Post -> Html Msg
+viewPost : Article -> Html Msg
 viewPost post =
     ul [ class "post_list" ]
         [ li [ class "post_name" ]

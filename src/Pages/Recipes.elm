@@ -12,7 +12,7 @@ import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
-
+import Api.Article
 
 page : Page Params Model Msg
 page =
@@ -43,17 +43,8 @@ load shared model =
 type alias Params =
     ()
 
-
-type alias Post =
-    { id : Int
-    , name : String
-    , ingredients : List String
-    , recipe : String
-    }
-
-
 type alias Model =
-    { posts : Data (List Post)
+    { posts : Data (List Api.Article.Article)
     , search : String
     , sorting : String
     , order : String
@@ -75,7 +66,7 @@ initialModel =
 
 
 type Msg =
-    PostsReceived (Data (List Post))
+    PostsReceived (Data (List Api.Article.Article))
     | Search String
     | ChangeSorting String String
 
@@ -110,7 +101,7 @@ view model =
     }
 
 
-getContentRequest : Model -> { onResponse : Data (List Post) -> Msg } -> Cmd Msg
+getContentRequest : Model -> { onResponse : Data (List Api.Article.Article) -> Msg } -> Cmd Msg
 getContentRequest model options =
     Http.get
         { url = Server.url ++ "posts?_sort=" ++ model.sorting ++ "&_order="++ model.order ++"&q=" ++ model.search
@@ -118,21 +109,13 @@ getContentRequest model options =
         }
 
 
-postsDecoder : Decoder (List Post)
+postsDecoder : Decoder (List Api.Article.Article)
 postsDecoder =
-    list postDecoder
+    list Api.Article.decoder
 
 
-postDecoder : Decoder Post
-postDecoder =
-    D.succeed Post
-        |> required "id" int
-        |> required "name" string
-        |> required "ingredients" (list string)
-        |> required "recipe" string
 
-
-viewPosts : Model -> Data (List Post) -> Html Msg
+viewPosts : Model -> Data (List Api.Article.Article) -> Html Msg
 viewPosts model posts =
     case posts of
         NotAsked ->
@@ -174,7 +157,7 @@ viewFetchError errorMessage =
         ]
 
 
-viewPost : Post -> Html Msg
+viewPost : Api.Article.Article -> Html Msg
 viewPost post =
     ul [ class "post_list" ]
         [ li [ class "post_name" ]
@@ -185,6 +168,9 @@ viewPost post =
         , p [ class "recipes_titles" ] [ text "recipe" ]
         , li [ class "recipe_names" ]
             [ text post.recipe ]
+        , p [ class "recipes_titles" ] [ text "shared by" ]
+        , li [ class "recipe_names" ][
+            a [ class "link_profile", href ("/profile/" ++ String.fromInt post.profile.id) ][ text (post.profile.firstname ++ " " ++post.profile.lastname)]]
         , br [] []
         , a [ href ("/article/" ++ String.fromInt post.id) ] [ button [ class "submit_button" ] [ text "Comment" ] ]
         , div [ class "line_after_recipes" ] []
