@@ -1,7 +1,6 @@
-module Api.Article exposing (Article, decoder)
+module Api.Article exposing (Article, decoder, listingDecoder)
 import Api.Profile exposing (..)
 import Json.Decode as D exposing (..)
-import Json.Encode as E exposing (..)
 
 type alias Article =
     { id : Int 
@@ -20,4 +19,9 @@ decoder =
         (field "ingredients" (D.list D.string))
         (field "recipe" D.string)
         (field "profile" Api.Profile.decoder)
+
+
+listingDecoder : Decoder (List Article)
+listingDecoder =
+    list decoder
 

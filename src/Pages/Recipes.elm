@@ -2,17 +2,15 @@ module Pages.Recipes exposing (Model, Msg, Params, page)
 
 import Api.Data exposing (..)
 import Html exposing (..)
-import Html.Attributes exposing (class, href, placeholder, style, type_, src)
+import Html.Attributes exposing (class, href, placeholder, type_, src)
 import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
-import Json.Decode as D exposing (..)
-import Json.Decode.Pipeline exposing (required)
 import Server
 import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
-import Api.Article
+import Api.Article exposing (listingDecoder, Article)
 
 page : Page Params Model Msg
 page =
@@ -44,7 +42,7 @@ type alias Params =
     ()
 
 type alias Model =
-    { posts : Data (List Api.Article.Article)
+    { posts : Data (List Article)
     , search : String
     , sorting : String
     , order : String
@@ -66,7 +64,7 @@ initialModel =
 
 
 type Msg =
-    PostsReceived (Data (List Api.Article.Article))
+    PostsReceived (Data (List Article))
     | Search String
     | ChangeSorting String String
 
@@ -101,21 +99,16 @@ view model =
     }
 
 
-getContentRequest : Model -> { onResponse : Data (List Api.Article.Article) -> Msg } -> Cmd Msg
+getContentRequest : Model -> { onResponse : Data (List Article) -> Msg } -> Cmd Msg
 getContentRequest model options =
     Http.get
         { url = Server.url ++ "posts?_sort=" ++ model.sorting ++ "&_order="++ model.order ++"&q=" ++ model.search
-        , expect = Api.Data.expectJson options.onResponse postsDecoder
+        , expect = Api.Data.expectJson options.onResponse listingDecoder
         }
 
 
-postsDecoder : Decoder (List Api.Article.Article)
-postsDecoder =
-    list Api.Article.decoder
 
-
-
-viewPosts : Model -> Data (List Api.Article.Article) -> Html Msg
+viewPosts : Model -> Data (List Article) -> Html Msg
 viewPosts model posts =
     case posts of
         NotAsked ->
@@ -157,7 +150,7 @@ viewFetchError errorMessage =
         ]
 
 
-viewPost : Api.Article.Article -> Html Msg
+viewPost : Article -> Html Msg
 viewPost post =
     ul [ class "post_list" ]
         [ li [ class "post_name" ]
