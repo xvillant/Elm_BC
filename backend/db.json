@@ -57,5 +57,36 @@
       "id": 2
     }
   ],
-  "comments": []
+  "comments": [
+    {
+      "comment": "velmi dobre",
+      "userid": 0,
+      "recipeid": 2,
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": ""
+      },
+      "id": 1
+    },
+    {
+      "comment": "paci sa mi to velmi",
+      "userid": 0,
+      "recipeid": 2,
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": ""
+      },
+      "id": 2
+    }
+  ]
 }

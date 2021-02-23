@@ -10,9 +10,8 @@ import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
-import Json.Decode.Pipeline exposing (required)
-import Api.Profile exposing (Profile, decoder)
-import Api.Article exposing (Article, decoder)
+import Api.Profile exposing (Profile, profileDecoder)
+import Api.Article exposing (Article, articlesDecoder)
 
 page : Page Params Model Msg
 page =
@@ -151,13 +150,8 @@ getContentRequest : Params -> { onResponse : Data (List Article) -> Msg } -> Cmd
 getContentRequest params options =
     Http.get
         { url = Server.url ++ "posts?userid=" ++ String.fromInt params.profileId ++ "&_sort=id&_order=desc"
-        , expect = Api.Data.expectJson options.onResponse postsDecoder
+        , expect = Api.Data.expectJson options.onResponse articlesDecoder
         }
-
-postsDecoder : Decoder (List Article)
-postsDecoder =
-    D.list Api.Article.decoder
-
 
 viewPosts : Data (List Article) -> Html Msg
 viewPosts posts =
@@ -166,8 +160,6 @@ viewPosts posts =
             text ""
 
         Loading -> text ""
-            -- div [ class "centered" ]
-            --    [ img [ src "/assets/loading.gif" ] [] ]
 
         Success actualPosts ->
             div [ class "centered" ]
@@ -186,7 +178,7 @@ getUserRequest : Params -> { onResponse : Data Profile -> Msg } -> Cmd Msg
 getUserRequest params options =
     Http.get
         { url = Server.url ++ "users/" ++ String.fromInt params.profileId
-        , expect = Api.Data.expectJson options.onResponse Api.Profile.decoder
+        , expect = Api.Data.expectJson options.onResponse profileDecoder
         }
 
 

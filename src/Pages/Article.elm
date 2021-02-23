@@ -7,15 +7,15 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
 import Json.Decode as D exposing (..)
-import Json.Decode.Pipeline exposing (required)
 import Json.Encode as E exposing (..)
 import Server exposing (url)
 import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
-import Api.Profile
-import Api.Article
+import Api.Profile exposing (Profile, profileDecoder)
+import Api.Article exposing (Article, articleDecoder)
+import Api.Comment exposing (Comment, commentsDecoder, commentDecoder)
 
 
 page : Page Params Model Msg
@@ -39,24 +39,17 @@ type alias Params =
 
 
 type alias Model =
-    { article : Data Api.Article.Article
+    { article : Data Article
     , comments : Data (List Comment)
     , comment : Comment
     , warning : String
     }
 
 
-type alias Comment =
-    { userid : Int
-    , comment : String
-    , recipeid : Int
-    }
-
-
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
     ( { article = Loading
-      , comment = { userid = 0, comment = "", recipeid = params.recipeId }
+      , comment = { userid = 0, comment = "", recipeid = params.recipeId, profile = {id = 1, firstname = "Patrik", lastname = "Villant", email = "Drogba11144@gmail.com", bio = "", image = ""}}
       , comments = Loading
       , warning = ""
       }
@@ -69,7 +62,7 @@ init shared { params } =
 
 
 type Msg
-    = ReceivedArticle (Data Api.Article.Article)
+    = ReceivedArticle (Data Article)
     | CommentsReceived (Data (List Comment))
     | AddComment String
     | SubmitComment
@@ -97,6 +90,7 @@ update msg model =
 
                             _ ->
                                 0
+                    , profile = {id = 1, firstname = "Patrik", lastname = "Villant", email = "Drogba11144@gmail.com", bio = "", image = ""}
                     }
               }
             , Cmd.none
@@ -155,11 +149,11 @@ view model =
             }
 
 
-getArticleRequest : Params -> { onResponse : Data Api.Article.Article -> Msg } -> Cmd Msg
+getArticleRequest : Params -> { onResponse : Data Article -> Msg } -> Cmd Msg
 getArticleRequest params options =
     Http.get
         { url = Server.url ++ "posts/" ++ String.fromInt params.recipeId
-        , expect = Api.Data.expectJson options.onResponse Api.Article.decoder
+        , expect = Api.Data.expectJson options.onResponse articleDecoder
         }
 
 
@@ -169,20 +163,6 @@ getCommentsRequest params options =
         { url = Server.url ++ "comments?recipeid=" ++ String.fromInt params.recipeId
         , expect = Api.Data.expectJson options.onResponse commentsDecoder
         }
-
-
-commentsDecoder : Decoder (List Comment)
-commentsDecoder =
-    D.list commentDecoder
-
-
-commentDecoder : Decoder Comment
-commentDecoder =
-    D.succeed Comment
-        |> Json.Decode.Pipeline.required "userid" D.int
-        |> Json.Decode.Pipeline.required "comment" D.string
-        |> Json.Decode.Pipeline.required "recipeid" D.int
-
 
 viewComments : Data (List Comment) -> Html Msg
 viewComments comments =
@@ -223,6 +203,7 @@ viewComment comment =
     ul [ class "comment_list" ]
         [ li [ class "comment_content" ]
             [ text comment.comment ]
+        , a [ class "comment_content", href ("/profile/" ++ String.fromInt comment.profile.id) ] [ text (comment.profile.firstname ++ " " ++ comment.profile.lastname)]
         , div [ class "line_after_recipes" ] []
         ]
 
@@ -233,6 +214,17 @@ encodeComment comment =
         [ ( "comment", E.string comment.comment )
         , ( "userid", E.int comment.userid )
         , ( "recipeid", E.int comment.recipeid )
+        , ( "profile"
+          , E.object
+                [ ("id", E.int 1)
+                , ( "email", E.string "Drogba11144@gmail.com" )
+                , ( "firstname", E.string "Patrik" )
+                , ( "lastname", E.string "Villant" )
+                , ( "bio", E.string "" )
+                , ( "password", E.string "" )
+                , ( "image", E.string "" )
+                ]
+          )
         ]
 
 
@@ -245,7 +237,7 @@ postComment comment =
         }
 
 
-viewArticle : Data Api.Article.Article -> Html Msg
+viewArticle : Data Article -> Html Msg
 viewArticle article =
     case article of
         NotAsked ->

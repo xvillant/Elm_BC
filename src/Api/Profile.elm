@@ -1,5 +1,7 @@
-module Api.Profile exposing (Profile, decoder)
+module Api.Profile exposing (Profile, profileDecoder)
 import Json.Decode as D exposing (..)
+import Time
+import Iso8601
 
 
 type alias Profile =
@@ -9,15 +11,17 @@ type alias Profile =
     , email : String
     , bio : String
     , image : String
+    , created : Time.Posix
     }
 
-decoder : Decoder Profile
-decoder =
-    map6 Profile
+profileDecoder : Decoder Profile
+profileDecoder =
+    map7 Profile
         (field "id" D.int)
         (field "firstname" D.string)
         (field "lastname" D.string)
         (field "email" D.string)
         (field "bio" D.string)
         (field "image" D.string)
+        (field "created" Iso8601.decoder)
 

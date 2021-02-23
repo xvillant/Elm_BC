@@ -10,7 +10,7 @@ import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
-import Api.Article exposing (listingDecoder, Article)
+import Api.Article exposing (articlesDecoder, Article)
 
 page : Page Params Model Msg
 page =
@@ -103,7 +103,7 @@ getContentRequest : Model -> { onResponse : Data (List Article) -> Msg } -> Cmd 
 getContentRequest model options =
     Http.get
         { url = Server.url ++ "posts?_sort=" ++ model.sorting ++ "&_order="++ model.order ++"&q=" ++ model.search
-        , expect = Api.Data.expectJson options.onResponse listingDecoder
+        , expect = Api.Data.expectJson options.onResponse articlesDecoder
         }
 
 
