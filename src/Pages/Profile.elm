@@ -149,7 +149,7 @@ viewProfile profile =
 getContentRequest : Params -> { onResponse : Data (List Article) -> Msg } -> Cmd Msg
 getContentRequest params options =
     Http.get
-        { url = Server.url ++ "posts?profile.id=" ++ String.fromInt params.profileId ++ "&_sort=id&_order=desc"
+        { url = Server.url ++ "/posts?profile.id=" ++ String.fromInt params.profileId ++ "&_sort=id&_order=desc"
         , expect = Api.Data.expectJson options.onResponse articlesDecoder
         }
 
@@ -177,7 +177,7 @@ viewPosts posts =
 getUserRequest : Params -> { onResponse : Data Profile -> Msg } -> Cmd Msg
 getUserRequest params options =
     Http.get
-        { url = Server.url ++ "users/" ++ String.fromInt params.profileId
+        { url = Server.url ++ "/users/" ++ String.fromInt params.profileId
         , expect = Api.Data.expectJson options.onResponse profileDecoder
         }
 

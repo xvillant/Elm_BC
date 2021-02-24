@@ -13,7 +13,8 @@ import Spa.Document exposing (Document)
 import Spa.Generated.Route as Route
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
-
+import Api.User exposing (User)
+import Api.Data exposing (Data)
 
 page : Page Params Model Msg
 page =
@@ -40,6 +41,7 @@ type alias Model =
     , password : String
     , warning : String
     , key : Key
+    , user : Data User
     }
 
 
@@ -49,6 +51,13 @@ init shared { params } =
       , password = ""
       , warning = ""
       , key = shared.key
+      , user = 
+      case shared.user of
+            Just user ->
+                Api.Data.Success user
+
+            Nothing ->
+                Api.Data.NotAsked
       }
     , Cmd.none
     )
@@ -176,7 +185,7 @@ view model =
 loginRequest : Model -> Cmd Msg
 loginRequest model =
     Http.post
-        { url = Server.url ++ "login/"
+        { url = Server.url ++ "/login"
         , body = Http.jsonBody <| encodeLogin model
         , expect = Http.expectJson Response (field "accessToken" D.string)
         }

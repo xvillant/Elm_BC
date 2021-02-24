@@ -323,6 +323,18 @@ viewAll model =
                         ]
                         [ text "sign in" ]
                     ]
+                , a
+                    [ class "link", href (Route.toString Route.Settings) ]
+                    [ li
+                        [ case model.url.path of
+                            "/settings" ->
+                                class "active_link"
+
+                            _ ->
+                                class "navbar-elements"
+                        ]
+                        [ text "settings" ]
+                    ]
 
                 {--, a
                     [ class "link", href (Route.toString Route.Article) ]

@@ -185,7 +185,7 @@ encodeArticle model =
 postArticle : Model -> Cmd Msg
 postArticle model =
     Http.post
-        { url = Server.url ++ "posts/"
+        { url = Server.url ++ "/posts"
         , body = Http.jsonBody <| encodeArticle model
         , expect = Http.expectJson Response (field "name" D.string)
         }

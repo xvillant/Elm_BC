@@ -102,7 +102,7 @@ view model =
 getContentRequest : Model -> { onResponse : Data (List Article) -> Msg } -> Cmd Msg
 getContentRequest model options =
     Http.get
-        { url = Server.url ++ "posts?_sort=" ++ model.sorting ++ "&_order="++ model.order ++"&q=" ++ model.search
+        { url = Server.url ++ "/posts?_sort=" ++ model.sorting ++ "&_order="++ model.order ++"&q=" ++ model.search
         , expect = Api.Data.expectJson options.onResponse articlesDecoder
         }
 

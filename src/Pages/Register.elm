@@ -242,7 +242,7 @@ encodeUser model =
 registerUser : Model -> Cmd Msg
 registerUser model =
     Http.post
-        { url = Server.url ++ "users/"
+        { url = Server.url ++ "/users"
         , body = Http.jsonBody <| encodeUser model
         , expect = Http.expectJson Response (field "accessToken" D.string)
         }

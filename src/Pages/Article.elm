@@ -1,10 +1,12 @@
 module Pages.Article exposing (Model, Msg, Params, page)
 
+import Api.Article exposing (Article, articleDecoder)
+import Api.Comment exposing (Comment, commentDecoder, commentsDecoder)
 import Api.Data exposing (..)
-import Browser.Navigation as Nav
+import Api.Profile exposing (Profile, profileDecoder)
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick, onInput)
+import Html.Events as Events exposing (onClick, onInput)
 import Http exposing (..)
 import Json.Decode as D exposing (..)
 import Json.Encode as E exposing (..)
@@ -13,9 +15,6 @@ import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
-import Api.Profile exposing (Profile, profileDecoder)
-import Api.Article exposing (Article, articleDecoder)
-import Api.Comment exposing (Comment, commentsDecoder, commentDecoder)
 
 
 page : Page Params Model Msg
@@ -41,7 +40,7 @@ type alias Params =
 type alias Model =
     { article : Data Article
     , comments : Data (List Comment)
-    , comment : Comment
+    , commentString : String
     , warning : String
     }
 
@@ -49,7 +48,7 @@ type alias Model =
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
     ( { article = Loading
-      , comment = {comment = "", recipeid = params.recipeId, profile = {id = 1, firstname = "Patrik", lastname = "Villant", email = "Drogba11144@gmail.com", bio = "", image = ""}}
+      , commentString = ""
       , comments = Loading
       , warning = ""
       }
@@ -66,7 +65,7 @@ type Msg
     | CommentsReceived (Data (List Comment))
     | AddComment String
     | SubmitComment
-    | CommentResponse (Result Http.Error Comment)
+    | CommentResponse (Data Comment)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -79,36 +78,34 @@ update msg model =
             ( { model | comments = response }, Cmd.none )
 
         AddComment comment ->
-            ( { model
-                | comment =
-                    { comment = comment
-                    , recipeid =
-                        case model.article of
-                            Success article ->
-                                article.id
-
-                            _ ->
-                                0
-                    , profile = {id = 1, firstname = "Patrik", lastname = "Villant", email = "Drogba11144@gmail.com", bio = "", image = ""}
-                    }
-              }
-            , Cmd.none
-            )
+            ( { model | commentString = comment }, Cmd.none )
 
         SubmitComment ->
-            if String.length model.comment.comment == 0 then
+            if String.isEmpty model.commentString then
                 ( { model | warning = "Type your comment!" }, Cmd.none )
 
             else
-                ( model, Cmd.batch [ postComment model.comment, Nav.reloadAndSkipCache ] )
+                ( { model | commentString = "" }
+                , postComment model.commentString
+                    (case model.article of
+                        Success article ->
+                            article.id
 
-        CommentResponse response ->
-            case response of
-                Ok value ->
-                    ( { model | warning = "Successfully added comment!" }, Cmd.none )
+                        _ ->
+                            0
+                    )
+                    { onResponse = CommentResponse }
+                )
 
-                Err err ->
-                    ( { model | warning = "Something went wrong!" }, Cmd.none )
+        CommentResponse comment ->
+            ( case comment of
+                Api.Data.Success c ->
+                    { model | comments = Api.Data.map (\comments -> c :: comments) model.comments, commentString = "" }
+
+                _ ->
+                    model
+            , Cmd.none
+            )
 
 
 save : Model -> Shared.Model -> Shared.Model
@@ -134,9 +131,9 @@ view : Model -> Document Msg
 view model =
     case model.article of
         Success article ->
-            { title = "Article | " ++ article.name 
+            { title = "Article | " ++ article.name
             , body =
-                [ viewArticle model.article
+                [ viewArticle model.article model
                 , div [ class "warning_form" ] [ text model.warning ]
                 , viewComments model.comments
                 ]
@@ -151,7 +148,7 @@ view model =
 getArticleRequest : Params -> { onResponse : Data Article -> Msg } -> Cmd Msg
 getArticleRequest params options =
     Http.get
-        { url = Server.url ++ "posts/" ++ String.fromInt params.recipeId
+        { url = Server.url ++ "/posts/" ++ String.fromInt params.recipeId
         , expect = Api.Data.expectJson options.onResponse articleDecoder
         }
 
@@ -159,9 +156,10 @@ getArticleRequest params options =
 getCommentsRequest : Params -> { onResponse : Data (List Comment) -> Msg } -> Cmd Msg
 getCommentsRequest params options =
     Http.get
-        { url = Server.url ++ "comments?recipeid=" ++ String.fromInt params.recipeId
+        { url = Server.url ++ "/comments?recipeid=" ++ String.fromInt params.recipeId
         , expect = Api.Data.expectJson options.onResponse commentsDecoder
         }
+
 
 viewComments : Data (List Comment) -> Html Msg
 viewComments comments =
@@ -202,19 +200,19 @@ viewComment comment =
     ul [ class "comment_list" ]
         [ li [ class "comment_content" ]
             [ text comment.comment ]
-        , a [ class "comment_content", href ("/profile/" ++ String.fromInt comment.profile.id) ] [ text (comment.profile.firstname ++ " " ++ comment.profile.lastname)]
+        , a [ class "comment_content", href ("/profile/" ++ String.fromInt comment.profile.id) ] [ text (comment.profile.firstname ++ " " ++ comment.profile.lastname) ]
         , div [ class "line_after_recipes" ] []
         ]
 
 
-encodeComment : Comment -> E.Value
-encodeComment comment =
+encodeComment : String -> Int -> E.Value
+encodeComment comment article =
     E.object
-        [ ( "comment", E.string comment.comment )
-        , ( "recipeid", E.int comment.recipeid )
+        [ ( "comment", E.string comment )
+        , ( "recipeid", E.int article )
         , ( "profile"
           , E.object
-                [ ("id", E.int 1)
+                [ ( "id", E.int 1 )
                 , ( "email", E.string "Drogba11144@gmail.com" )
                 , ( "firstname", E.string "Patrik" )
                 , ( "lastname", E.string "Villant" )
@@ -226,17 +224,17 @@ encodeComment comment =
         ]
 
 
-postComment : Comment -> Cmd Msg
-postComment comment =
+postComment : String -> Int -> { onResponse : Data Comment -> Msg } -> Cmd Msg
+postComment comment article options =
     Http.post
-        { url = Server.url ++ "comments/"
-        , body = Http.jsonBody <| encodeComment comment
-        , expect = Http.expectJson CommentResponse commentDecoder
+        { url = Server.url ++ "/comments"
+        , body = Http.jsonBody <| encodeComment comment article
+        , expect = Api.Data.expectJson options.onResponse commentDecoder
         }
 
 
-viewArticle : Data Article -> Html Msg
-viewArticle article =
+viewArticle : Data Article -> Model -> Html Msg
+viewArticle article model =
     case article of
         NotAsked ->
             text ""
@@ -265,7 +263,7 @@ viewArticle article =
                     , a [ class "link_profile", href ("/profile/" ++ String.fromInt value.profile.id) ] [ text (value.profile.firstname ++ " " ++ value.profile.lastname) ]
                     ]
                 , div [ class "comment-text" ]
-                    [ textarea [ placeholder "Type your comment here...", cols 70, rows 10, onInput AddComment ] []
+                    [ textarea [ placeholder "Type your comment here...", cols 70, rows 10, Html.Attributes.value model.commentString, onInput AddComment ] []
                     ]
                 , div [ class "comment-button" ]
                     [ button [ class "submit_button", onClick SubmitComment ] [ text "Share comment" ]
