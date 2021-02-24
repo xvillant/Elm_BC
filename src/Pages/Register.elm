@@ -234,7 +234,7 @@ encodeUser model =
         , ( "lastname", E.string model.lastname)
         , ( "password", E.string model.password )
         , ( "email", E.string model.email )
-        , ( "bio", E.string "" )
+        , ( "bio", E.string "I am new here..." )
         , ( "image", E.string "/assets/user_default.png")
         ]
 

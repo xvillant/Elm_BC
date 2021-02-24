@@ -1,8 +1,6 @@
 module Api.Article exposing (Article, articleDecoder, articlesDecoder)
 import Api.Profile exposing (Profile, profileDecoder)
 import Json.Decode as D exposing (..)
-import Iso8601
-import Time
 
 type alias Article =
     { id : Int 
@@ -10,19 +8,17 @@ type alias Article =
     , ingredients : List String
     , recipe : String
     , profile : Profile
-    , created : Time.Posix
     }
 
 
 articleDecoder : Decoder Article
 articleDecoder =
-    map6 Article
+    map5 Article
         (field "id" D.int)
         (field "name" D.string)
         (field "ingredients" (D.list D.string))
         (field "recipe" D.string)
         (field "profile" profileDecoder)
-        (field "created" Iso8601.decoder)
 
 
 articlesDecoder : Decoder (List Article)

@@ -49,7 +49,7 @@ type alias Model =
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
     ( { article = Loading
-      , comment = { userid = 0, comment = "", recipeid = params.recipeId, profile = {id = 1, firstname = "Patrik", lastname = "Villant", email = "Drogba11144@gmail.com", bio = "", image = ""}}
+      , comment = {comment = "", recipeid = params.recipeId, profile = {id = 1, firstname = "Patrik", lastname = "Villant", email = "Drogba11144@gmail.com", bio = "", image = ""}}
       , comments = Loading
       , warning = ""
       }
@@ -81,8 +81,7 @@ update msg model =
         AddComment comment ->
             ( { model
                 | comment =
-                    { userid = 0
-                    , comment = comment
+                    { comment = comment
                     , recipeid =
                         case model.article of
                             Success article ->
@@ -212,7 +211,6 @@ encodeComment : Comment -> E.Value
 encodeComment comment =
     E.object
         [ ( "comment", E.string comment.comment )
-        , ( "userid", E.int comment.userid )
         , ( "recipeid", E.int comment.recipeid )
         , ( "profile"
           , E.object

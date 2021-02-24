@@ -179,7 +179,6 @@ encodeArticle model =
                 , ( "image", E.string "" )
                 ]
           )
-        , ( "userid", E.int 1 )
         ]
 
 

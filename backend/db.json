@@ -5,7 +5,7 @@
       "password": "$2a$10$4fKLh707f0nwgu0Pd7moEuwj4yXkTzZfYXm8WKIxuTaHFjrgc.pvm",
       "firstname": "Patrik",
       "lastname": "Villant",
-      "bio": "",
+      "bio": "I am new here...",
       "image": "/assets/user_default.png",
       "id": 1
     },
@@ -14,47 +14,65 @@
       "password": "$2a$10$WazN2Xf3wKRBn4a5FMWwjeE/nb0Q9cne7mO4/P5pJxIKbzs6eivWu",
       "firstname": "Helena",
       "lastname": "Labužníková",
-      "bio": "",
+      "bio": "I am new here...",
       "image": "/assets/user_default.png",
       "id": 2
     }
   ],
   "posts": [
     {
-      "name": "dobre bude",
+      "name": "Diabolský šalát",
       "ingredients": [
-        "dasdasd"
+        "šunka",
+        "syr"
       ],
-      "recipe": "dasdasdasdasdasd",
+      "recipe": "Prípravíme...",
       "profile": {
         "email": "Drogba11144@gmail.com",
         "password": "$2a$10$4fKLh707f0nwgu0Pd7moEuwj4yXkTzZfYXm8WKIxuTaHFjrgc.pvm",
         "firstname": "Patrik",
         "lastname": "Villant",
-        "bio": "",
+        "bio": "I am new here...",
         "image": "/assets/user_default.png",
         "id": 1
       },
-      "userid": 1,
       "id": 1
     },
     {
-      "name": "potkan",
+      "name": "Vypražané kuracie rezne",
       "ingredients": [
-        "asdasd"
+        "kuracie rezne",
+        "strúhanka"
       ],
-      "recipe": "dasdfasdasdasd",
+      "recipe": "vypražíme",
       "profile": {
         "email": "helenka1112@gmail.com",
         "password": "$2a$10$WazN2Xf3wKRBn4a5FMWwjeE/nb0Q9cne7mO4/P5pJxIKbzs6eivWu",
         "firstname": "Helena",
         "lastname": "Labužníková",
-        "bio": "",
+        "bio": "I am new here...",
         "image": "/assets/user_default.png",
         "id": 2
       },
-      "userid": 2,
       "id": 2
+    },
+    {
+      "name": "Kuracie kung pao",
+      "ingredients": [
+        "kura",
+        "zelenina"
+      ],
+      "recipe": "Vyrobíme",
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": ""
+      },
+      "id": 3
     }
   ],
   "comments": [
@@ -67,7 +85,7 @@
         "email": "Drogba11144@gmail.com",
         "firstname": "Patrik",
         "lastname": "Villant",
-        "bio": "",
+        "bio": "I am new here...",
         "password": "",
         "image": ""
       },
@@ -82,11 +100,25 @@
         "email": "Drogba11144@gmail.com",
         "firstname": "Patrik",
         "lastname": "Villant",
-        "bio": "",
+        "bio": "I am new here...",
         "password": "",
         "image": ""
       },
       "id": 2
+    },
+    {
+      "comment": "dobre",
+      "recipeid": 3,
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": ""
+      },
+      "id": 3
     }
   ]
 }
