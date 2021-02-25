@@ -11,6 +11,8 @@ import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Api.Article exposing (articlesDecoder, Article)
+import TimeFormatting exposing (formatDate)
+import TimeFormatting exposing (formatTime)
 
 page : Page Params Model Msg
 page =
@@ -161,6 +163,12 @@ viewPost post =
         , p [ class "recipes_titles" ] [ text "recipe" ]
         , li [ class "recipe_names" ]
             [ text post.recipe ]
+        , p [ class "recipes_titles" ] [ text "shared at" ]
+        , li [ class "recipe_names" ]
+            [ text (formatDate <| post.created) ]
+        , li [ class "recipe_names" ]
+            [ text (formatTime <| post.created) ]
+        
         , p [ class "recipes_titles" ] [ text "shared by" ]
         , li [ class "recipe_names" ][
             a [ class "link_profile", href ("/profile/" ++ String.fromInt post.profile.id) ][ text (post.profile.firstname ++ " " ++post.profile.lastname)]]

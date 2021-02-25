@@ -6,13 +6,17 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Http exposing (..)
+import Iso8601
 import Json.Decode as D exposing (..)
 import Json.Encode as E exposing (..)
+import Platform exposing (Task)
 import Server exposing (url)
 import Shared exposing (Model)
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
+import Task
+import Time
 
 
 page : Page Params Model Msg
@@ -40,13 +44,15 @@ type alias Model =
     , ingredients : String
     , recipe : String
     , warning : String
+    , time : Time.Posix
+    , zone : Time.Zone
     , key : Key
     }
 
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( { name = "", ingredients = "", recipe = "", warning = "", key = shared.key }, Cmd.none )
+    ( { name = "", ingredients = "", recipe = "", warning = "", key = shared.key, zone = Time.utc, time = (Time.millisToPosix 0)  }, Cmd.batch[Task.perform GetZone Time.here, Task.perform GetTime Time.now])
 
 
 
@@ -58,6 +64,8 @@ type Msg
     | Ingredients String
     | Recipe String
     | Submit
+    | GetTime Time.Posix
+    | GetZone Time.Zone
     | Response (Result Http.Error String)
 
 
@@ -84,7 +92,13 @@ update msg model =
                 ( { model | warning = "Enter recipe!" }, Cmd.none )
 
             else
-                ( model, postArticle model )
+                ( model, Cmd.batch[postArticle model,Task.perform GetTime Time.now] )
+
+        GetTime time ->
+            ( { model | time = time }, Cmd.none )
+
+        GetZone zone ->
+            ( { model | zone = zone }, Cmd.none )
 
         Response response ->
             case response of
@@ -170,15 +184,17 @@ encodeArticle model =
         , ( "recipe", E.string model.recipe )
         , ( "profile"
           , E.object
-                [ ("id", E.int 1)
+                [ ( "id", E.int 1 )
                 , ( "email", E.string "Drogba11144@gmail.com" )
                 , ( "firstname", E.string "Patrik" )
                 , ( "lastname", E.string "Villant" )
                 , ( "bio", E.string "" )
                 , ( "password", E.string "" )
                 , ( "image", E.string "" )
+                , ("created", E.string "2021-02-25T11:33:42.052Z")
                 ]
           )
+        , ("created", Iso8601.encode model.time)
         ]
 
 

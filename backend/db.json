@@ -7,6 +7,7 @@
       "lastname": "Villant",
       "bio": "I am new here...",
       "image": "/assets/user_default.png",
+      "created": "2021-02-25T11:33:42.052Z",
       "id": 1
     },
     {
@@ -16,53 +17,17 @@
       "lastname": "Labužníková",
       "bio": "I am new here...",
       "image": "/assets/user_default.png",
+      "created": "2021-02-25T11:33:42.052Z",
       "id": 2
     }
   ],
   "posts": [
     {
-      "name": "Diabolský šalát",
+      "name": "dasd",
       "ingredients": [
-        "šunka",
-        "syr"
+        "dasd"
       ],
-      "recipe": "Prípravíme...",
-      "profile": {
-        "email": "Drogba11144@gmail.com",
-        "password": "$2a$10$4fKLh707f0nwgu0Pd7moEuwj4yXkTzZfYXm8WKIxuTaHFjrgc.pvm",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "I am new here...",
-        "image": "/assets/user_default.png",
-        "id": 1
-      },
-      "id": 1
-    },
-    {
-      "name": "Vypražané kuracie rezne",
-      "ingredients": [
-        "kuracie rezne",
-        "strúhanka"
-      ],
-      "recipe": "vypražíme",
-      "profile": {
-        "email": "helenka1112@gmail.com",
-        "password": "$2a$10$WazN2Xf3wKRBn4a5FMWwjeE/nb0Q9cne7mO4/P5pJxIKbzs6eivWu",
-        "firstname": "Helena",
-        "lastname": "Labužníková",
-        "bio": "I am new here...",
-        "image": "/assets/user_default.png",
-        "id": 2
-      },
-      "id": 2
-    },
-    {
-      "name": "Kuracie kung pao",
-      "ingredients": [
-        "kura",
-        "zelenina"
-      ],
-      "recipe": "Vyrobíme",
+      "recipe": "asdasdasd",
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -70,17 +35,18 @@
         "lastname": "Villant",
         "bio": "",
         "password": "",
-        "image": ""
+        "image": "",
+        "created": "2021-02-25T11:33:42.052Z"
       },
-      "id": 3
+      "created": "2021-02-25T11:33:42.052Z",
+      "id": 7
     },
     {
-      "name": "Kura na ms",
+      "name": "dasassadasd",
       "ingredients": [
-        "dasdas",
-        "adasd"
+        "dasdsada"
       ],
-      "recipe": "dasdasdasdasdasd",
+      "recipe": "adasdasdasd",
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -88,9 +54,106 @@
         "lastname": "Villant",
         "bio": "",
         "password": "",
-        "image": ""
+        "image": "",
+        "created": "2021-02-25T11:33:42.052Z"
       },
-      "id": 4
+      "created": "2021-02-25T11:51:10.754Z",
+      "id": 8
+    },
+    {
+      "name": "dasd",
+      "ingredients": [
+        "dasdasdasd"
+      ],
+      "recipe": "adasdasdadasdasdasdasdada",
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "2021-02-25T11:33:42.052Z"
+      },
+      "created": "2021-02-25T11:52:30.821Z",
+      "id": 9
+    },
+    {
+      "name": "sasdas",
+      "ingredients": [
+        "adadsasd"
+      ],
+      "recipe": "dasdsad",
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "2021-02-25T11:33:42.052Z"
+      },
+      "created": "2021-02-25T12:14:05.373Z",
+      "id": 10
+    },
+    {
+      "name": "dasdsadas",
+      "ingredients": [
+        "sadasdasd"
+      ],
+      "recipe": "dasdasdasdasd",
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "2021-02-25T11:33:42.052Z"
+      },
+      "created": "2021-02-25T12:52:10.808Z",
+      "id": 11
+    },
+    {
+      "name": "s",
+      "ingredients": [
+        "d"
+      ],
+      "recipe": "ssss",
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "2021-02-25T11:33:42.052Z"
+      },
+      "created": "2021-02-25T13:33:19.214Z",
+      "id": 12
+    },
+    {
+      "name": "ycasdsadsad",
+      "ingredients": [
+        "dasdasd"
+      ],
+      "recipe": "adasdasdasda",
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "2021-02-25T11:33:42.052Z"
+      },
+      "created": "2021-02-25T13:34:38.819Z",
+      "id": 13
     }
   ],
   "comments": [
@@ -205,6 +268,20 @@
         "image": ""
       },
       "id": 8
+    },
+    {
+      "comment": "v poriadku",
+      "recipeid": 2,
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": ""
+      },
+      "id": 9
     }
   ]
 }
