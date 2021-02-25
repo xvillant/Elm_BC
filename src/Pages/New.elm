@@ -51,7 +51,7 @@ type alias Model =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( { name = "", ingredients = "", recipe = "", warning = "", key = shared.key, time = (Time.millisToPosix 0)  }, Cmd.none)
+    ( { name = "", ingredients = "", recipe = "", warning = "", key = shared.key, time = (Time.millisToPosix 0)  }, Task.perform GetTime Time.now)
 
 
 

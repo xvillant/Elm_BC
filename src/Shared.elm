@@ -288,10 +288,10 @@ viewAll model =
                         [ text "recipes" ]
                     ]
                 , a
-                    [ class "link", href "/profile/2" ]
+                    [ class "link", href "/profile/1" ]
                     [ li
                         [ case model.url.path of
-                            "/profile/2" ->
+                            "/profile/1" ->
                                 class "active_link"
 
                             _ ->

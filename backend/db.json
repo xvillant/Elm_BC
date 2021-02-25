@@ -2,62 +2,23 @@
   "users": [
     {
       "email": "Drogba11144@gmail.com",
-      "password": "$2a$10$4fKLh707f0nwgu0Pd7moEuwj4yXkTzZfYXm8WKIxuTaHFjrgc.pvm",
+      "password": "$2a$10$KIk4n.90ybsbq35iivHGSOf1MSRkqQsWW66nQ93jiF5fffvmFRS7G",
       "firstname": "Patrik",
       "lastname": "Villant",
       "bio": "I am new here...",
-      "image": "/assets/user_default.png",
-      "created": "2021-02-25T11:33:42.052Z",
+      "image": "https://static.toiimg.com/photo/msid-67586673/67586673.jpg?3918697",
+      "created": "2021-02-25T20:29:22.810Z",
       "id": 1
-    },
-    {
-      "email": "helenka1112@gmail.com",
-      "password": "$2a$10$WazN2Xf3wKRBn4a5FMWwjeE/nb0Q9cne7mO4/P5pJxIKbzs6eivWu",
-      "firstname": "Helena",
-      "lastname": "Labužníková",
-      "bio": "I am new here...",
-      "image": "/assets/user_default.png",
-      "created": "2021-02-25T11:33:42.052Z",
-      "id": 2
-    },
-    {
-      "email": "kkk@gmail.com",
-      "password": "$2a$10$XnNPU6NH1HU9y9h1jJmYKOs9x4N0iw0r0vtbagyuda1y8kSPBRdKa",
-      "firstname": "Kevin",
-      "lastname": "Minarik",
-      "bio": "I am new here...",
-      "image": "/assets/user_default.png",
-      "created": "1970-01-01T00:00:00.000Z",
-      "id": 3
-    },
-    {
-      "email": "kkk@gmial.com",
-      "password": "$2a$10$vnFdWri5e0LzhH45H1N4Ae/ggI0Om96wRNhtzt58USx2T9zJSc202",
-      "firstname": "Nikolas",
-      "lastname": "Villant",
-      "bio": "I am new here...",
-      "image": "/assets/user_default.png",
-      "created": "2021-02-25T15:39:26.311Z",
-      "id": 4
-    },
-    {
-      "email": "aninkan@gmail.com",
-      "password": "$2a$10$engeeVQUK8nBoBVZWO1LSuy.1t0ISZtSBArCbBFMe3zLzRiTv5LaG",
-      "firstname": "Nina",
-      "lastname": "Nemcokova",
-      "bio": "I am new here...",
-      "image": "/assets/user_default.png",
-      "created": "2021-02-25T16:01:08.440Z",
-      "id": 5
     }
   ],
   "posts": [
     {
-      "name": "dasd",
+      "name": "Urškine dobroty",
       "ingredients": [
-        "dasd"
+        "maslo",
+        "kura"
       ],
-      "recipe": "asdasdasd",
+      "recipe": "Pridáme a zamiešame",
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -68,15 +29,16 @@
         "image": "",
         "created": "2021-02-25T11:33:42.052Z"
       },
-      "created": "2021-02-25T11:33:42.052Z",
-      "id": 7
+      "created": "2021-02-25T20:31:04.723Z",
+      "id": 1
     },
     {
-      "name": "dasassadasd",
+      "name": "Vyprážané kuracie rezne",
       "ingredients": [
-        "dasdsada"
+        "kura",
+        "strúhanka"
       ],
-      "recipe": "adasdasdasd",
+      "recipe": "dsadasd",
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -87,166 +49,14 @@
         "image": "",
         "created": "2021-02-25T11:33:42.052Z"
       },
-      "created": "2021-02-25T11:51:10.754Z",
-      "id": 8
-    },
-    {
-      "name": "dasd",
-      "ingredients": [
-        "dasdasdasd"
-      ],
-      "recipe": "adasdasdadasdasdasdasdada",
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "2021-02-25T11:33:42.052Z"
-      },
-      "created": "2021-02-25T11:52:30.821Z",
-      "id": 9
-    },
-    {
-      "name": "sasdas",
-      "ingredients": [
-        "adadsasd"
-      ],
-      "recipe": "dasdsad",
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "2021-02-25T11:33:42.052Z"
-      },
-      "created": "2021-02-25T12:14:05.373Z",
-      "id": 10
-    },
-    {
-      "name": "dasdsadas",
-      "ingredients": [
-        "sadasdasd"
-      ],
-      "recipe": "dasdasdasdasd",
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "2021-02-25T11:33:42.052Z"
-      },
-      "created": "2021-02-25T12:52:10.808Z",
-      "id": 11
-    },
-    {
-      "name": "s",
-      "ingredients": [
-        "d"
-      ],
-      "recipe": "ssss",
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "2021-02-25T11:33:42.052Z"
-      },
-      "created": "2021-02-25T13:33:19.214Z",
-      "id": 12
-    },
-    {
-      "name": "ycasdsadsad",
-      "ingredients": [
-        "dasdasd"
-      ],
-      "recipe": "adasdasdasda",
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "2021-02-25T11:33:42.052Z"
-      },
-      "created": "2021-02-25T13:34:38.819Z",
-      "id": 13
-    },
-    {
-      "name": "cauko",
-      "ingredients": [
-        "adsad"
-      ],
-      "recipe": "zle to ide asi",
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "2021-02-25T11:33:42.052Z"
-      },
-      "created": "2021-02-25T15:30:55.801Z",
-      "id": 14
-    },
-    {
-      "name": "dobre to je?",
-      "ingredients": [
-        "dasdsad"
-      ],
-      "recipe": "asdasdasdasd",
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "2021-02-25T11:33:42.052Z"
-      },
-      "created": "2021-02-25T15:36:09.038Z",
-      "id": 15
-    },
-    {
-      "name": "easda",
-      "ingredients": [
-        "dasdsd"
-      ],
-      "recipe": "asdasdsaadassasadsa",
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "2021-02-25T11:33:42.052Z"
-      },
-      "created": "2021-02-25T15:50:41.019Z",
-      "id": 16
+      "created": "2021-02-25T20:45:29.426Z",
+      "id": 2
     }
   ],
   "comments": [
     {
-      "comment": "dobry recept paci sa mi to",
-      "recipeid": 13,
+      "comment": "dobry recept, paci sa mi velmi",
+      "recipeid": 1,
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -257,12 +67,12 @@
         "image": "",
         "created": "1970-01-01T00:00:00.000Z"
       },
-      "created": "2021-02-25T15:23:50.238Z",
+      "created": "2021-02-25T20:32:00.891Z",
       "id": 1
     },
     {
-      "comment": "dobre to je",
-      "recipeid": 13,
+      "comment": "ako sa mas?",
+      "recipeid": 1,
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -273,12 +83,12 @@
         "image": "",
         "created": "1970-01-01T00:00:00.000Z"
       },
-      "created": "2021-02-25T15:23:58.086Z",
+      "created": "2021-02-25T20:32:50.891Z",
       "id": 2
     },
     {
-      "comment": "hej fjan to je",
-      "recipeid": 12,
+      "comment": "celkom to funguje asi",
+      "recipeid": 1,
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -289,12 +99,12 @@
         "image": "",
         "created": "1970-01-01T00:00:00.000Z"
       },
-      "created": "2021-02-25T15:25:12.614Z",
+      "created": "2021-02-25T20:33:04.890Z",
       "id": 3
     },
     {
-      "comment": "dobry komentar",
-      "recipeid": 15,
+      "comment": "dobre je",
+      "recipeid": 1,
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -305,12 +115,12 @@
         "image": "",
         "created": "1970-01-01T00:00:00.000Z"
       },
-      "created": "2021-02-25T15:44:36.445Z",
+      "created": "2021-02-25T20:33:24.891Z",
       "id": 4
     },
     {
-      "comment": "dkasdkjlasljdkasmkd",
-      "recipeid": 16,
+      "comment": "nicely done ",
+      "recipeid": 1,
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -321,12 +131,12 @@
         "image": "",
         "created": "1970-01-01T00:00:00.000Z"
       },
-      "created": "2021-02-25T15:51:56.326Z",
+      "created": "2021-02-25T20:44:22.477Z",
       "id": 5
     },
     {
-      "comment": "dasd",
-      "recipeid": 16,
+      "comment": "funguje to",
+      "recipeid": 2,
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -337,8 +147,24 @@
         "image": "",
         "created": "1970-01-01T00:00:00.000Z"
       },
-      "created": "2021-02-25T15:52:03.327Z",
+      "created": "2021-02-25T20:48:26.007Z",
       "id": 6
+    },
+    {
+      "comment": "okej",
+      "recipeid": 2,
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "1970-01-01T00:00:00.000Z"
+      },
+      "created": "2021-02-25T20:48:44.864Z",
+      "id": 7
     }
   ]
 }

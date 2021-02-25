@@ -59,7 +59,7 @@ init shared { params } =
       , warning = ""
       , time = (Time.millisToPosix 0)
       }
-    , Cmd.batch [ getArticleRequest params { onResponse = ReceivedArticle }, getCommentsRequest params { onResponse = CommentsReceived } ]
+    , Cmd.batch [ getArticleRequest params { onResponse = ReceivedArticle }, getCommentsRequest params { onResponse = CommentsReceived }, Task.perform GetTime Time.now ]
     )
 
 
@@ -274,6 +274,11 @@ viewArticle article model =
                 , div [ class "profile_attr" ]
                     [ p [ class "profile_name" ] [ text "recipe: " ]
                     , p [ class "profile_name_x" ] [ text value.recipe ]
+                    ]
+                , div [ class "profile_attr" ]
+                    [ p [ class "profile_name" ] [ text "shared at: " ]
+                    , p [ class "profile_name_x" ] [ text (value.created |> formatDate) ]
+                    , p [ class "profile_name_x" ] [ text (value.created |> formatTime) ]
                     ]
                 , div [ class "profile_attr" ]
                     [ p [ class "profile_name" ] [ text "shared by: " ]
