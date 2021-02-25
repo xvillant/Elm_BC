@@ -12,6 +12,7 @@ import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Api.Profile exposing (Profile, profileDecoder)
 import Api.Article exposing (Article, articlesDecoder)
+import TimeFormatting exposing (formatTime, formatDate)
 
 page : Page Params Model Msg
 page =
@@ -139,6 +140,11 @@ viewProfile profile =
                 , div [ class "profile_attr" ]
                     [ p [ class "profile_name" ] [ text "bio: " ]
                     , p [ class "profile_name_x" ] [ text value.bio ]
+                    ]
+                , div [ class "profile_attr" ]
+                    [ p [ class "profile_name" ] [ text "created at: " ]
+                    , p [ class "profile_name_x" ] [ text (value.created |> formatDate)  ]
+                    , p [ class "profile_name_x" ] [ text (value.created |> formatTime)  ]
                     ]
                 ]
 

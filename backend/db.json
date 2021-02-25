@@ -19,6 +19,36 @@
       "image": "/assets/user_default.png",
       "created": "2021-02-25T11:33:42.052Z",
       "id": 2
+    },
+    {
+      "email": "kkk@gmail.com",
+      "password": "$2a$10$XnNPU6NH1HU9y9h1jJmYKOs9x4N0iw0r0vtbagyuda1y8kSPBRdKa",
+      "firstname": "Kevin",
+      "lastname": "Minarik",
+      "bio": "I am new here...",
+      "image": "/assets/user_default.png",
+      "created": "1970-01-01T00:00:00.000Z",
+      "id": 3
+    },
+    {
+      "email": "kkk@gmial.com",
+      "password": "$2a$10$vnFdWri5e0LzhH45H1N4Ae/ggI0Om96wRNhtzt58USx2T9zJSc202",
+      "firstname": "Nikolas",
+      "lastname": "Villant",
+      "bio": "I am new here...",
+      "image": "/assets/user_default.png",
+      "created": "2021-02-25T15:39:26.311Z",
+      "id": 4
+    },
+    {
+      "email": "aninkan@gmail.com",
+      "password": "$2a$10$engeeVQUK8nBoBVZWO1LSuy.1t0ISZtSBArCbBFMe3zLzRiTv5LaG",
+      "firstname": "Nina",
+      "lastname": "Nemcokova",
+      "bio": "I am new here...",
+      "image": "/assets/user_default.png",
+      "created": "2021-02-25T16:01:08.440Z",
+      "id": 5
     }
   ],
   "posts": [
@@ -154,12 +184,69 @@
       },
       "created": "2021-02-25T13:34:38.819Z",
       "id": 13
+    },
+    {
+      "name": "cauko",
+      "ingredients": [
+        "adsad"
+      ],
+      "recipe": "zle to ide asi",
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "2021-02-25T11:33:42.052Z"
+      },
+      "created": "2021-02-25T15:30:55.801Z",
+      "id": 14
+    },
+    {
+      "name": "dobre to je?",
+      "ingredients": [
+        "dasdsad"
+      ],
+      "recipe": "asdasdasdasd",
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "2021-02-25T11:33:42.052Z"
+      },
+      "created": "2021-02-25T15:36:09.038Z",
+      "id": 15
+    },
+    {
+      "name": "easda",
+      "ingredients": [
+        "dasdsd"
+      ],
+      "recipe": "asdasdsaadassasadsa",
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "2021-02-25T11:33:42.052Z"
+      },
+      "created": "2021-02-25T15:50:41.019Z",
+      "id": 16
     }
   ],
   "comments": [
     {
-      "comment": "okej recept",
-      "recipeid": 4,
+      "comment": "dobry recept paci sa mi to",
+      "recipeid": 13,
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -167,13 +254,15 @@
         "lastname": "Villant",
         "bio": "",
         "password": "",
-        "image": ""
+        "image": "",
+        "created": "1970-01-01T00:00:00.000Z"
       },
+      "created": "2021-02-25T15:23:50.238Z",
       "id": 1
     },
     {
       "comment": "dobre to je",
-      "recipeid": 4,
+      "recipeid": 13,
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -181,13 +270,15 @@
         "lastname": "Villant",
         "bio": "",
         "password": "",
-        "image": ""
+        "image": "",
+        "created": "1970-01-01T00:00:00.000Z"
       },
+      "created": "2021-02-25T15:23:58.086Z",
       "id": 2
     },
     {
-      "comment": "dobry recept",
-      "recipeid": 4,
+      "comment": "hej fjan to je",
+      "recipeid": 12,
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -195,13 +286,15 @@
         "lastname": "Villant",
         "bio": "",
         "password": "",
-        "image": ""
+        "image": "",
+        "created": "1970-01-01T00:00:00.000Z"
       },
+      "created": "2021-02-25T15:25:12.614Z",
       "id": 3
     },
     {
-      "comment": "cauko",
-      "recipeid": 4,
+      "comment": "dobry komentar",
+      "recipeid": 15,
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -209,13 +302,15 @@
         "lastname": "Villant",
         "bio": "",
         "password": "",
-        "image": ""
+        "image": "",
+        "created": "1970-01-01T00:00:00.000Z"
       },
+      "created": "2021-02-25T15:44:36.445Z",
       "id": 4
     },
     {
-      "comment": "cyxc",
-      "recipeid": 4,
+      "comment": "dkasdkjlasljdkasmkd",
+      "recipeid": 16,
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -223,13 +318,15 @@
         "lastname": "Villant",
         "bio": "",
         "password": "",
-        "image": ""
+        "image": "",
+        "created": "1970-01-01T00:00:00.000Z"
       },
+      "created": "2021-02-25T15:51:56.326Z",
       "id": 5
     },
     {
-      "comment": "dobre",
-      "recipeid": 3,
+      "comment": "dasd",
+      "recipeid": 16,
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -237,51 +334,11 @@
         "lastname": "Villant",
         "bio": "",
         "password": "",
-        "image": ""
+        "image": "",
+        "created": "1970-01-01T00:00:00.000Z"
       },
+      "created": "2021-02-25T15:52:03.327Z",
       "id": 6
-    },
-    {
-      "comment": "dobreksss",
-      "recipeid": 3,
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": ""
-      },
-      "id": 7
-    },
-    {
-      "comment": "cauko",
-      "recipeid": 2,
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": ""
-      },
-      "id": 8
-    },
-    {
-      "comment": "v poriadku",
-      "recipeid": 2,
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": ""
-      },
-      "id": 9
     }
   ]
 }

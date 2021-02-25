@@ -45,14 +45,13 @@ type alias Model =
     , recipe : String
     , warning : String
     , time : Time.Posix
-    , zone : Time.Zone
     , key : Key
     }
 
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( { name = "", ingredients = "", recipe = "", warning = "", key = shared.key, zone = Time.utc, time = (Time.millisToPosix 0)  }, Cmd.batch[Task.perform GetZone Time.here, Task.perform GetTime Time.now])
+    ( { name = "", ingredients = "", recipe = "", warning = "", key = shared.key, time = (Time.millisToPosix 0)  }, Cmd.none)
 
 
 
@@ -65,7 +64,6 @@ type Msg
     | Recipe String
     | Submit
     | GetTime Time.Posix
-    | GetZone Time.Zone
     | Response (Result Http.Error String)
 
 
@@ -92,13 +90,10 @@ update msg model =
                 ( { model | warning = "Enter recipe!" }, Cmd.none )
 
             else
-                ( model, Cmd.batch[postArticle model,Task.perform GetTime Time.now] )
+                ( model, Cmd.batch[postArticle model] )
 
         GetTime time ->
             ( { model | time = time }, Cmd.none )
-
-        GetZone zone ->
-            ( { model | zone = zone }, Cmd.none )
 
         Response response ->
             case response of
@@ -121,7 +116,7 @@ load shared model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    Time.every 1000 GetTime
 
 
 

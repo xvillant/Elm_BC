@@ -11,8 +11,7 @@ import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Api.Article exposing (articlesDecoder, Article)
-import TimeFormatting exposing (formatDate)
-import TimeFormatting exposing (formatTime)
+import TimeFormatting exposing (formatDate, formatTime)
 
 page : Page Params Model Msg
 page =

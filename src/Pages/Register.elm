@@ -1,5 +1,6 @@
 module Pages.Register exposing (Model, Msg, Params, page)
 
+import Browser.Navigation as Nav exposing (Key)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
@@ -12,7 +13,9 @@ import Spa.Document exposing (Document)
 import Spa.Generated.Route as Route exposing (toString)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
-import Browser.Navigation as Nav exposing (Key)
+import Time
+import Iso8601
+import Task
 
 
 page : Page Params Model Msg
@@ -42,13 +45,14 @@ type alias Model =
     , firstname : String
     , lastname : String
     , warning : String
+    , time : Time.Posix
     , key : Key
     }
 
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( Model "" "" "" "" "" "" shared.key, Cmd.none )
+    ( Model "" "" "" "" "" "" (Time.millisToPosix 0) shared.key, Cmd.none )
 
 
 
@@ -61,6 +65,7 @@ type Msg
     | Password String
     | PasswordAgain String
     | Email String
+    | GetTime Time.Posix
     | Submit
     | Response (Result Http.Error String)
 
@@ -70,7 +75,7 @@ update msg model =
     case msg of
         FirstName firstname ->
             ( { model | firstname = firstname }, Cmd.none )
-        
+
         LastName lastname ->
             ( { model | lastname = lastname }, Cmd.none )
 
@@ -89,7 +94,7 @@ update msg model =
 
             else if String.length model.lastname == 0 then
                 ( { model | warning = "Enter your last name!" }, Cmd.none )
-            
+
             else if model.email == "" then
                 ( { model | warning = "Enter your email!" }, Cmd.none )
 
@@ -108,10 +113,13 @@ update msg model =
             else
                 ( { model | warning = "Loading..." }, registerUser model )
 
+        GetTime time ->
+            ( { model | time = time }, Cmd.none )
+
         Response response ->
             case response of
                 Ok value ->
-                    ( { model | warning = "Successfully registered!" },  Nav.pushUrl model.key "/login")
+                    ( { model | warning = "Successfully registered!" }, Nav.pushUrl model.key "/login" )
 
                 Err err ->
                     ( { model | warning = httpErrorString err }, Cmd.none )
@@ -153,7 +161,7 @@ load shared model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    Time.every 1000 GetTime
 
 
 
@@ -231,11 +239,12 @@ encodeUser : Model -> E.Value
 encodeUser model =
     E.object
         [ ( "firstname", E.string model.firstname )
-        , ( "lastname", E.string model.lastname)
+        , ( "lastname", E.string model.lastname )
         , ( "password", E.string model.password )
         , ( "email", E.string model.email )
         , ( "bio", E.string "I am new here..." )
-        , ( "image", E.string "/assets/user_default.png")
+        , ( "image", E.string "/assets/user_default.png" )
+        , ("created", Iso8601.encode model.time)
         ]
 
 

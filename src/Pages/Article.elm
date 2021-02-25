@@ -15,6 +15,11 @@ import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
+import Time
+import Task
+import Iso8601
+import TimeFormatting exposing (formatDate)
+import TimeFormatting exposing (formatTime)
 
 
 page : Page Params Model Msg
@@ -42,6 +47,7 @@ type alias Model =
     , comments : Data (List Comment)
     , commentString : String
     , warning : String
+    , time : Time.Posix
     }
 
 
@@ -51,6 +57,7 @@ init shared { params } =
       , commentString = ""
       , comments = Loading
       , warning = ""
+      , time = (Time.millisToPosix 0)
       }
     , Cmd.batch [ getArticleRequest params { onResponse = ReceivedArticle }, getCommentsRequest params { onResponse = CommentsReceived } ]
     )
@@ -65,6 +72,7 @@ type Msg
     | CommentsReceived (Data (List Comment))
     | AddComment String
     | SubmitComment
+    | GetTime Time.Posix
     | CommentResponse (Data Comment)
 
 
@@ -86,7 +94,7 @@ update msg model =
 
             else
                 ( { model | commentString = "" }
-                , postComment model.commentString
+                , postComment model model.commentString
                     (case model.article of
                         Success article ->
                             article.id
@@ -96,6 +104,9 @@ update msg model =
                     )
                     { onResponse = CommentResponse }
                 )
+        
+        GetTime time ->
+            ( { model | time = time }, Cmd.none )
 
         CommentResponse comment ->
             ( case comment of
@@ -120,7 +131,7 @@ load shared model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    Time.every 1000 GetTime
 
 
 
@@ -200,13 +211,17 @@ viewComment comment =
     ul [ class "comment_list" ]
         [ li [ class "comment_content" ]
             [ text comment.comment ]
+        , li [ class "comment_content" ]
+            [ text (comment.created |> formatDate) ]
+        , li [ class "comment_content" ]
+            [ text (comment.created |> formatTime) ]
         , a [ class "comment_content", href ("/profile/" ++ String.fromInt comment.profile.id) ] [ text (comment.profile.firstname ++ " " ++ comment.profile.lastname) ]
         , div [ class "line_after_recipes" ] []
         ]
 
 
-encodeComment : String -> Int -> E.Value
-encodeComment comment article =
+encodeComment : Model -> String -> Int -> E.Value
+encodeComment model comment article =
     E.object
         [ ( "comment", E.string comment )
         , ( "recipeid", E.int article )
@@ -219,16 +234,18 @@ encodeComment comment article =
                 , ( "bio", E.string "" )
                 , ( "password", E.string "" )
                 , ( "image", E.string "" )
+                , ("created", E.string "1970-01-01T00:00:00.000Z")
                 ]
           )
+        , ("created", Iso8601.encode model.time)
         ]
 
 
-postComment : String -> Int -> { onResponse : Data Comment -> Msg } -> Cmd Msg
-postComment comment article options =
+postComment : Model -> String -> Int -> { onResponse : Data Comment -> Msg } -> Cmd Msg
+postComment model comment article options =
     Http.post
         { url = Server.url ++ "/comments"
-        , body = Http.jsonBody <| encodeComment comment article
+        , body = Http.jsonBody <| encodeComment model comment article
         , expect = Api.Data.expectJson options.onResponse commentDecoder
         }
 

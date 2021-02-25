@@ -6,7 +6,7 @@ import Time
 formatDate : Time.Posix -> String
 formatDate =
     DF.format
-        [ DF.dayOfMonthNumber
+        [ DF.dayOfMonthSuffix
         , DF.text " "
         , DF.monthNameFull
         , DF.text ", "
@@ -16,8 +16,8 @@ formatDate =
 formatTime : Time.Posix -> String
 formatTime =
     DF.format
-        [ DF.hourNumber
+        [ DF.hourMilitaryFromOneFixed
         , DF.text ":"
-        , DF.minuteNumber
+        , DF.minuteFixed
         ]
         Time.utc
