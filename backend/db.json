@@ -51,6 +51,48 @@
       },
       "created": "2021-02-25T20:45:29.426Z",
       "id": 2
+    },
+    {
+      "name": "dasdasd",
+      "ingredients": [
+        "dobre to je",
+        "ako sa mas",
+        "dobry recept nie?"
+      ],
+      "recipe": "cauko",
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "2021-02-25T11:33:42.052Z"
+      },
+      "created": "2021-02-26T21:48:34.117Z",
+      "id": 3
+    },
+    {
+      "name": "cuclik",
+      "ingredients": [
+        "dobre to je",
+        "ahojkyx asssa",
+        "dobre"
+      ],
+      "recipe": "kldasjldasjkldkljas",
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "2021-02-25T11:33:42.052Z"
+      },
+      "created": "2021-02-26T22:11:00.993Z",
+      "id": 4
     }
   ],
   "comments": [

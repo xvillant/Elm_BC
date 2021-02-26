@@ -1,5 +1,7 @@
 module Pages.Login exposing (Model, Msg, Params, page)
 
+import Api.Data exposing (Data)
+import Api.User exposing (User)
 import Browser.Navigation as Nav exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -14,7 +16,7 @@ import Spa.Generated.Route as Route
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Api.User exposing (User)
-import Api.Data exposing (Data)
+
 
 page : Page Params Model Msg
 page =
@@ -51,13 +53,13 @@ init shared { params } =
       , password = ""
       , warning = ""
       , key = shared.key
-      , user = 
-      case shared.user of
-            Just user ->
-                Api.Data.Success user
+      , user =
+            case shared.user of
+                Just user ->
+                    Api.Data.Success user
 
-            Nothing ->
-                Api.Data.NotAsked
+                Nothing ->
+                    Api.Data.NotAsked
       }
     , Cmd.none
     )
@@ -72,6 +74,7 @@ type Msg
     | Password String
     | Submit
     | Response (Result Http.Error String)
+--    | GotUser (Data User)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -197,3 +200,12 @@ encodeLogin model =
         [ ( "email", E.string model.email )
         , ( "password", E.string model.password )
         ]
+
+
+{--getUserByEmail : Model -> {onResponse : Data User -> Msg }-> Cmd Msg
+getUserByEmail model options =
+    Http.get
+        { url = Server.url ++ "/users"
+        , expect = Api.Data.expectJson options.onResponse (field "accessToken" D.string)
+        }
+--}

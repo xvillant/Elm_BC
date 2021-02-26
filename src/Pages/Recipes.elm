@@ -12,6 +12,7 @@ import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Api.Article exposing (articlesDecoder, Article)
 import TimeFormatting exposing (formatDate, formatTime)
+import Html.Attributes exposing (value)
 
 page : Page Params Model Msg
 page =
@@ -129,7 +130,7 @@ viewPosts model posts =
                 , button [ case model.sorting of 
                     "name" -> class "active_buttonsdiv"
                     _ -> class "buttonsdiv", onClick <| ChangeSorting "name" "asc" ] [ text "Sort by name" ]
-                , input [ class "search_input", type_ "search", placeholder "Search...", onInput Search ] []
+                , input [ class "search_input", type_ "search", placeholder "Search...", onInput Search, Html.Attributes.value model.search ] []
                 , div [ class "line_after_recipes" ] []
                 , div [ class "articles_list" ]
                     (List.map viewPost actualPosts)

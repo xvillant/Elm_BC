@@ -17,6 +17,7 @@ import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Task
 import Time
+import List
 
 
 page : Page Params Model Msg
@@ -145,7 +146,7 @@ view model =
                     [ id "ingredients"
                     , type_ "text"
                     , autocomplete False
-                    , placeholder "Ingredients (divided by ', ')"
+                    , placeholder "Ingredients - divide (,)"
                     , Html.Attributes.value model.ingredients
                     , onInput Ingredients
                     ]
@@ -175,7 +176,7 @@ encodeArticle : Model -> E.Value
 encodeArticle model =
     E.object
         [ ( "name", E.string model.name )
-        , ( "ingredients", E.list E.string <| String.split ", " model.ingredients )
+        , ( "ingredients", E.list E.string <| List.map String.trim <| String.split "," model.ingredients )
         , ( "recipe", E.string model.recipe )
         , ( "profile"
           , E.object
