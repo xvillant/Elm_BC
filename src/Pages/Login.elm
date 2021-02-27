@@ -18,7 +18,6 @@ import Spa.Generated.Route as Route
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Task
-import Time exposing (Month(..))
 
 
 page : Page Params Model Msg
@@ -157,7 +156,7 @@ httpErrorString error =
         BadStatus response ->
             case response of
                 400 ->
-                    "Wrong email or password!"
+                    "Invalid email or password!"
 
                 _ ->
                     "Something went wrong!"

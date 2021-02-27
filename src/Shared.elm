@@ -12,7 +12,7 @@ import Api.User exposing (User, userDecoder)
 import Browser.Navigation exposing (Key)
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
+import Html.Events as Events exposing (onClick)
 import Json.Decode as D
 import Ports exposing (clearUser, saveUser)
 import Spa.Document exposing (Document)
@@ -160,7 +160,6 @@ viewHeaderLoggedIn model user =
                         ]
                         [ text "profile" ]
                     ]
-
                 , a
                     [ class "link", href (Route.toString Route.Settings) ]
                     [ li
@@ -186,7 +185,7 @@ viewHeaderLoggedIn model user =
                         [ text "new article" ]
                     ]
                 , a
-                    [ class "link"]
+                    [ class "link" ]
                     [ li
                         [ class "navbar-elements" ]
                         [ text "sign out" ]
@@ -273,7 +272,7 @@ viewAll model =
                             _ ->
                                 class "navbar-elements"
                         ]
-                        [ i [ class "fas fa-home"] [] ]
+                        [ i [ class "fas fa-home" ] [] ]
                     ]
                 , a
                     [ class "link", href (Route.toString Route.Recipes) ]
@@ -285,7 +284,7 @@ viewAll model =
                             _ ->
                                 class "navbar-elements"
                         ]
-                        [ i [ class "fas fa-book"] []  ]
+                        [ i [ class "fas fa-book" ] [] ]
                     ]
                 , a
                     [ class "link", href "/profile/1" ]
@@ -297,7 +296,7 @@ viewAll model =
                             _ ->
                                 class "navbar-elements"
                         ]
-                        [ i [ class "fas fa-user"] []  ]
+                        [ i [ class "fas fa-user" ] [] ]
                     ]
                 , a
                     [ class "link", href (Route.toString Route.Settings) ]
@@ -309,22 +308,8 @@ viewAll model =
                             _ ->
                                 class "navbar-elements"
                         ]
-                        [ i [ class "fas fa-cogs"] []  ]
+                        [ i [ class "fas fa-cogs" ] [] ]
                     ]
-                
-
-                {--, a
-                    [ class "link", href (Route.toString Route.Article) ]
-                    [ li
-                        [ case model.url.path of
-                            "/article" ->
-                                class "active_link"
-
-                            _ ->
-                                class "navbar-elements"
-                        ]
-                        [ text "article" ]
-                    ]--}
                 , a
                     [ class "link", href (Route.toString Route.New) ]
                     [ li
@@ -335,9 +320,15 @@ viewAll model =
                             _ ->
                                 class "navbar-elements"
                         ]
-                        [ i [ class "fas fa-plus-circle"] [] ]
+                        [ i [ class "fas fa-plus-circle" ] [] ]
                     ]
-                                , a
+                {-, a
+                    [ class "link", Events.onClick SignOutSignal ]
+                    [ li
+                        [ class "navbar-elements" ]
+                        [ i [ class "fas fa-sign-out-alt" ] [] ]
+                    ]-}
+                , a
                     [ class "link", href (Route.toString Route.Register) ]
                     [ li
                         [ case model.url.path of

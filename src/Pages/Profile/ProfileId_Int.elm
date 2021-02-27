@@ -162,11 +162,6 @@ getContentRequest params options =
 viewPosts : Data (List Article) -> Html Msg
 viewPosts posts =
     case posts of
-        NotAsked ->
-            text ""
-
-        Loading -> text ""
-
         Success actualPosts ->
             div [ class "centered" ]
                 [ h2 [ class "title_page" ] [ text "My recipes" ]
@@ -175,7 +170,7 @@ viewPosts posts =
                     (List.map viewPost actualPosts)
                 ]
 
-        Failure _ ->
+        _ ->
             text ""
 
 

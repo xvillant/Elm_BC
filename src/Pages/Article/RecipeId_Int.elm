@@ -168,13 +168,6 @@ getCommentsRequest params options =
 viewComments : Model -> Html Msg
 viewComments model =
     case model.comments of
-        NotAsked ->
-            text ""
-
-        Loading ->
-            div [ class "centered" ]
-                [ img [ src "/assets/loading.gif" ] [] ]
-
         Success actualComments ->
             div [ class "centered" ]
                 [ h1 [ class "title_comment" ] [ text "Comments" ]
@@ -183,8 +176,8 @@ viewComments model =
                     (List.map viewComment actualComments)
                 ]
 
-        Failure _ ->
-            viewFetchError "comments" "Something went wrong!"
+        _ ->
+            text ""
 
 
 viewFetchError : String -> String -> Html Msg
