@@ -3,13 +3,12 @@ module Pages.New exposing (Model, Msg, Params, page)
 import Browser.Navigation as Nav exposing (Key, pushUrl)
 import Elm.Module exposing (Name)
 import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (..)
+import Html.Attributes exposing (value, id, type_, placeholder, class, autocomplete, rows, cols)
+import Html.Events exposing (onInput, onClick)
 import Http exposing (..)
 import Iso8601
-import Json.Decode as D exposing (..)
+import Json.Decode as D exposing (field)
 import Json.Encode as E exposing (..)
-import Platform exposing (Task)
 import Server exposing (url)
 import Shared exposing (Model)
 import Spa.Document exposing (Document)
@@ -17,7 +16,6 @@ import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Task
 import Time
-import List
 
 
 page : Page Params Model Msg
@@ -136,7 +134,7 @@ view model =
                     , type_ "text"
                     , placeholder "Recipe Name"
                     , autocomplete False
-                    , Html.Attributes.value model.name
+                    , value model.name
                     , onInput Name
                     ]
                     []
@@ -147,7 +145,7 @@ view model =
                     , type_ "text"
                     , autocomplete False
                     , placeholder "Ingredients - divide (,)"
-                    , Html.Attributes.value model.ingredients
+                    , value model.ingredients
                     , onInput Ingredients
                     ]
                     []
@@ -155,7 +153,7 @@ view model =
             , div [ class "formFieldClasses" ]
                 [ textarea
                     [ id "recipe"
-                    , Html.Attributes.value model.recipe
+                    , value model.recipe
                     , placeholder "Type here the recipe"
                     , onInput Recipe
                     , rows 10

@@ -8,7 +8,7 @@ module Shared exposing
     , view
     )
 
-import Api.User exposing (User)
+import Api.User exposing (User, userDecoder)
 import Browser.Navigation exposing (Key)
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -40,7 +40,7 @@ init json url key =
     let
         user =
             json
-                |> D.decodeValue (D.field "user" Api.User.decoder)
+                |> D.decodeValue (D.field "user" userDecoder)
                 |> Result.toMaybe
     in
     ( Model url key user
@@ -61,10 +61,10 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         SignOutSignal ->
-            ( { model | user = Nothing }, Ports.clearUser )
+            ( { model | user = Nothing }, clearUser )
 
         SignInSignal user ->
-            ( { model | user = Just user }, Ports.saveUser user )
+            ( { model | user = Just user }, saveUser user )
 
 
 subscriptions : Model -> Sub Msg
@@ -161,18 +161,18 @@ viewHeaderLoggedIn model user =
                         [ text "profile" ]
                     ]
 
-                {--, a
-                    [ class "link", href (Route.toString Route.Article) ]
+                , a
+                    [ class "link", href (Route.toString Route.Settings) ]
                     [ li
                         [ case model.url.path of
-                            "/article" ->
+                            "/settings" ->
                                 class "active_link"
 
                             _ ->
                                 class "navbar-elements"
                         ]
-                        [ text "article" ]
-                    ]--}
+                        [ text "settings" ]
+                    ]
                 , a
                     [ class "link", href (Route.toString Route.New) ]
                     [ li

@@ -9,6 +9,16 @@
       "image": "https://static.toiimg.com/photo/msid-67586673/67586673.jpg?3918697",
       "created": "2021-02-25T20:29:22.810Z",
       "id": 1
+    },
+    {
+      "email": "lolo@gmail.com",
+      "password": "$2a$10$YdWQBWhOLiGjGV/AXwGTH.IEh/X0vbmmdAA9opKYF9tI3D65m.zMS",
+      "firstname": "Kevin",
+      "lastname": "Minarik",
+      "bio": "I am new here...",
+      "image": "/assets/user_default.png",
+      "created": "2021-02-27T17:19:31.517Z",
+      "id": 2
     }
   ],
   "posts": [
@@ -93,6 +103,70 @@
       },
       "created": "2021-02-26T22:11:00.993Z",
       "id": 4
+    },
+    {
+      "name": "dobre",
+      "ingredients": [
+        "adasd",
+        "asdasdasd",
+        "asdasdasko",
+        "dasdasd"
+      ],
+      "recipe": "dasdasdasd",
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "2021-02-25T11:33:42.052Z"
+      },
+      "created": "2021-02-27T16:08:56.924Z",
+      "id": 5
+    },
+    {
+      "name": "assdasd",
+      "ingredients": [
+        "nkjlckjlasjkdajkl",
+        "asdsadsaldasjdljaskd ad",
+        "dasdasdasd"
+      ],
+      "recipe": "dasdasd",
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "2021-02-25T11:33:42.052Z"
+      },
+      "created": "2021-02-27T19:10:09.118Z",
+      "id": 6
+    },
+    {
+      "name": "Marekové griláže",
+      "ingredients": [
+        "griláž",
+        "syr",
+        "noha"
+      ],
+      "recipe": "dsdasdsadasdasdasdjhdhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhqpwodiqwodijqwoidjqwoidjqwdjqwodiqwjdioqwjdijqwkdjasldjlckasndckldsnclsjdcjsdcjsldkcjsklcjsdklcjsdklcjsklcsdjklcsdjkclsjcisjwioejiweroiqwheoiqwheqwioehqwoiehqwoiehqwoiehjcnnc,yxncmnckjwhwioeqwjeioqwjeoiqwjeoqwjeioqwjeqwioejqwoinxkasndncksdjfnkjdsskddkf",
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "2021-02-25T11:33:42.052Z"
+      },
+      "created": "2021-02-27T19:18:43.789Z",
+      "id": 7
     }
   ],
   "comments": [
@@ -207,6 +281,70 @@
       },
       "created": "2021-02-25T20:48:44.864Z",
       "id": 7
+    },
+    {
+      "comment": "velmi dobry recept",
+      "recipeid": 5,
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "1970-01-01T00:00:00.000Z"
+      },
+      "created": "2021-02-27T19:07:57.879Z",
+      "id": 8
+    },
+    {
+      "comment": "kldklôaskdasklôd",
+      "recipeid": 5,
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "1970-01-01T00:00:00.000Z"
+      },
+      "created": "2021-02-27T19:09:10.118Z",
+      "id": 9
+    },
+    {
+      "comment": "cuclik",
+      "recipeid": 4,
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "1970-01-01T00:00:00.000Z"
+      },
+      "created": "2021-02-27T19:17:05.913Z",
+      "id": 10
+    },
+    {
+      "comment": "nice",
+      "recipeid": 7,
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "1970-01-01T00:00:00.000Z"
+      },
+      "created": "2021-02-27T19:19:16.984Z",
+      "id": 11
     }
   ]
 }

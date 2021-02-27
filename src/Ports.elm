@@ -16,7 +16,7 @@ saveUser : User -> Cmd msg
 saveUser user =
     outgoing
         { tag = "saveUser"
-        , data = Api.User.encode user
+        , data = Api.User.userEncode user
         }
 
 

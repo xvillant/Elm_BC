@@ -1,11 +1,11 @@
 module Pages.Register exposing (Model, Msg, Params, page)
 
 import Browser.Navigation as Nav exposing (Key)
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (..)
+import Html exposing (div, input, h1, text, button, a)
+import Html.Attributes exposing (id, placeholder, type_, value, class, href)
+import Html.Events exposing (onInput, onClick)
 import Http exposing (..)
-import Json.Decode as D exposing (..)
+import Json.Decode as D exposing (field)
 import Json.Encode as E exposing (..)
 import Server exposing (url)
 import Shared
@@ -15,7 +15,6 @@ import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Time
 import Iso8601
-import Task
 
 
 page : Page Params Model Msg
@@ -179,7 +178,7 @@ view model =
                     [ id "firstname"
                     , type_ "text"
                     , placeholder "First Name"
-                    , Html.Attributes.value model.firstname
+                    , value model.firstname
                     , onInput FirstName
                     ]
                     []
@@ -189,7 +188,7 @@ view model =
                     [ id "lastname"
                     , type_ "text"
                     , placeholder "Last Name"
-                    , Html.Attributes.value model.lastname
+                    , value model.lastname
                     , onInput LastName
                     ]
                     []
@@ -199,7 +198,7 @@ view model =
                     [ id "email"
                     , type_ "email"
                     , placeholder "Email"
-                    , Html.Attributes.value model.email
+                    , value model.email
                     , onInput Email
                     ]
                     []
@@ -209,7 +208,7 @@ view model =
                     [ id "password"
                     , type_ "password"
                     , placeholder "Password"
-                    , Html.Attributes.value model.password
+                    , value model.password
                     , onInput Password
                     ]
                     []
@@ -219,7 +218,7 @@ view model =
                     [ id "passwordAgain"
                     , type_ "password"
                     , placeholder "Password Again"
-                    , Html.Attributes.value model.passwordAgain
+                    , value model.passwordAgain
                     , onInput PasswordAgain
                     ]
                     []

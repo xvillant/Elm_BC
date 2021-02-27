@@ -1,8 +1,8 @@
 module Pages.Recipes exposing (Model, Msg, Params, page)
 
-import Api.Data exposing (..)
+import Api.Data exposing (Data(..))
 import Html exposing (..)
-import Html.Attributes exposing (class, href, placeholder, type_, src)
+import Html.Attributes exposing (class, href, placeholder, type_, src, value)
 import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
 import Server
@@ -12,7 +12,6 @@ import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Api.Article exposing (articlesDecoder, Article)
 import TimeFormatting exposing (formatDate, formatTime)
-import Html.Attributes exposing (value)
 
 page : Page Params Model Msg
 page =
@@ -96,8 +95,7 @@ view : Model -> Document Msg
 view model =
     { title = "Recipes"
     , body =
-        [ viewPosts model model.posts
-        ]
+        [ viewPosts model ]
     }
 
 
@@ -110,9 +108,9 @@ getContentRequest model options =
 
 
 
-viewPosts : Model -> Data (List Article) -> Html Msg
-viewPosts model posts =
-    case posts of
+viewPosts : Model -> Html Msg
+viewPosts model =
+    case model.posts of
         NotAsked ->
             text ""
 
@@ -130,13 +128,13 @@ viewPosts model posts =
                 , button [ case model.sorting of 
                     "name" -> class "active_buttonsdiv"
                     _ -> class "buttonsdiv", onClick <| ChangeSorting "name" "asc" ] [ text "Sort by name" ]
-                , input [ class "search_input", type_ "search", placeholder "Search...", onInput Search, Html.Attributes.value model.search ] []
+                , input [ class "search_input", type_ "search", placeholder "Search...", onInput Search, value model.search ] []
                 , div [ class "line_after_recipes" ] []
                 , div [ class "articles_list" ]
                     (List.map viewPost actualPosts)
                 ]
 
-        Api.Data.Failure _ ->
+        Failure _ ->
             viewFetchError "Something went wrong!"
 
 

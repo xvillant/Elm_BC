@@ -1,17 +1,18 @@
 module Pages.Settings exposing (Model, Msg, Params, page)
 
 import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (..)
+import Html.Attributes exposing (value, class, id, placeholder, type_, rows, cols)
+import Html.Events exposing (onInput, onClick)
 import Http exposing (..)
 import Server exposing (url)
 import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
-import Spa.Url as Url exposing (Url)
+import Spa.Url exposing (Url)
 import Json.Encode as E exposing (..)
-import Json.Decode as D exposing (..)
-import Browser.Navigation as Nav exposing (Key, pushUrl)
+import Browser.Navigation exposing (Key, pushUrl)
+import Time
+import Iso8601
 
 
 page : Page Params Model Msg
@@ -41,7 +42,7 @@ type alias Model =
     , bio : String
     , firstname : String
     , lastname : String
-    , password : String
+    , created : Time.Posix
     , warning : String
     , key : Key
     }
@@ -56,8 +57,8 @@ init shared { params } =
             , lastname = user.lastname
             , bio = user.bio
             , email = user.email
-            , password = user.password
             , id = user.id
+            , created = user.created
             , warning = ""
             , key = shared.key
             }
@@ -70,7 +71,7 @@ init shared { params } =
             , email = ""
             , id = 0
             , warning = ""
-            , password = ""
+            , created = Time.millisToPosix 0
             , key = shared.key
             }
     , Cmd.none
@@ -115,7 +116,7 @@ update msg model =
         Updated response ->
             case response of
                 Ok value ->
-                    ( { model | warning = "Successfully updated profile!" }, Nav.pushUrl model.key "/recipes" )
+                    ( { model | warning = "Successfully updated profile!" }, pushUrl model.key "/recipes" )
 
                 Err err ->
                     ( { model | warning = "Something went wrong" }, Cmd.none )
@@ -151,7 +152,7 @@ view model =
                     [ id "firstname"
                     , type_ "text"
                     , placeholder "Type first name"
-                    , Html.Attributes.value model.firstname
+                    , value model.firstname
                     , onInput FirstName
                     ]
                     []
@@ -161,7 +162,7 @@ view model =
                     [ id "lastname"
                     , type_ "text"
                     , placeholder "Type last name"
-                    , Html.Attributes.value model.lastname
+                    , value model.lastname
                     , onInput LastName
                     ]
                     []
@@ -171,7 +172,7 @@ view model =
                     [ id "email"
                     , type_ "email"
                     , placeholder "Type email"
-                    , Html.Attributes.value model.email
+                    , value model.email
                     , onInput Email
                     ]
                     []
@@ -181,28 +182,31 @@ view model =
                     [ id "image"
                     , type_ "text"
                     , placeholder "Type profile picture URL"
-                    , Html.Attributes.value model.image
+                    , value model.image
                     , onInput Image
                     ]
                     []
                 ]
             , div [ class "formFieldClasses" ]
-                [ input
+                [ textarea
                     [ id "bio"
-                    , type_ "text"
                     , placeholder "Type your bio"
-                    , Html.Attributes.value model.bio
+                    , value model.bio
                     , onInput Bio
+                    , rows 10
+                    , cols 70
                     ]
                     []
                 ]
             , div [ class "formFieldClasses" ]
-                [ button [ class "submit_button" ] [ text "Save settings" ] ]
+                [ button [ class "submit_button", onClick SubmitUpdate ] [ text "Save settings" ] ]
             , div [ class "warning_form" ]
                 [ text model.warning ]
             ]
         ]
     }
+
+    
 
 
 updateProfile : Model -> Cmd Msg
@@ -224,7 +228,7 @@ encodeUser model =
         ("firstname", E.string model.firstname),
         ("lastname", E.string model.lastname),
         ("bio", E.string model.bio),
-        ("password", E.string model.password),
+        ("created", Iso8601.encode model.created),
         ("email", E.string model.email),
         ("image", E.string model.image)
     ]

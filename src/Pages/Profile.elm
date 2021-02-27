@@ -1,10 +1,10 @@
 module Pages.Profile exposing (Model, Msg, Params, page)
 
-import Api.Data exposing (..)
+import Api.Data exposing (Data(..))
 import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html.Attributes exposing (class, height, width, src, href)
 import Http exposing (..)
-import Json.Decode as D exposing (..)
+import Json.Decode as D exposing (field)
 import Server exposing (url)
 import Shared
 import Spa.Document exposing (Document)
@@ -148,7 +148,7 @@ viewProfile profile =
                     ]
                 ]
 
-        Api.Data.Failure _ ->
+        Failure _ ->
             viewFetchError "profile" "Something went wrong!"
 
 
@@ -175,7 +175,7 @@ viewPosts posts =
                     (List.map viewPost actualPosts)
                 ]
 
-        Api.Data.Failure _ ->
+        Failure _ ->
             text ""
 
 

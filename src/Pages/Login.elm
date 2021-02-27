@@ -1,21 +1,24 @@
 module Pages.Login exposing (Model, Msg, Params, page)
 
-import Api.Data exposing (Data)
-import Api.User exposing (User)
-import Browser.Navigation as Nav exposing (..)
+import Api.Data exposing (Data(..))
+import Api.User exposing (User, userDecoder)
+import Browser.Navigation as Nav exposing (Key, pushUrl)
 import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (..)
+import Html.Attributes exposing (class, href, id, placeholder, type_, value)
+import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
-import Json.Decode as D exposing (..)
+import Json.Decode as D exposing (Decoder, field)
+import Json.Decode.Extra as ED exposing (andMap)
 import Json.Encode as E exposing (..)
+import Jwt
 import Server
 import Shared
 import Spa.Document exposing (Document)
 import Spa.Generated.Route as Route
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
-import Api.User exposing (User)
+import Task
+import Time exposing (Month(..))
 
 
 page : Page Params Model Msg
@@ -43,7 +46,17 @@ type alias Model =
     , password : String
     , warning : String
     , key : Key
+    , tokenString : String
     , user : Data User
+    , token : Maybe Token
+    }
+
+
+type alias Token =
+    { iat : Int
+    , exp : Int
+    , userId : String
+    , email : String
     }
 
 
@@ -52,14 +65,16 @@ init shared { params } =
     ( { email = ""
       , password = ""
       , warning = ""
+      , token = Nothing
+      , tokenString = ""
       , key = shared.key
       , user =
             case shared.user of
                 Just user ->
-                    Api.Data.Success user
+                    Success user
 
                 Nothing ->
-                    Api.Data.NotAsked
+                    NotAsked
       }
     , Cmd.none
     )
@@ -74,7 +89,8 @@ type Msg
     | Password String
     | Submit
     | Response (Result Http.Error String)
---    | GotUser (Data User)
+ --   | DecodeToken (Result Jwt.JwtError Token)
+    | GotUser (Result Http.Error User)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -94,15 +110,36 @@ update msg model =
                 ( { model | warning = "Type your password!" }, Cmd.none )
 
             else
-                ( model, loginRequest model )
+                ( model, Cmd.batch [ loginRequest model ] )
+
+        {--DecodeToken token ->
+            case token of
+                Ok token_ ->
+                    ( { model
+                        | token =
+                            case token_ of
+                                Just tokenS ->
+                                    tokenS
+
+                                Nothing ->
+                                    Nothing
+                      }
+                    , Cmd.none
+                    )
+
+                Err err ->
+                    ( model, Cmd.none )--}
 
         Response response ->
             case response of
                 Ok value ->
-                    ( { model | warning = "Successfully logged in!" }, Nav.pushUrl model.key "/recipes" )
+                    ( { model | warning = "Successfully logged in!", tokenString = value }, Cmd.batch [ getUser model, pushUrl model.key "/recipes" ] )
 
                 Err err ->
                     ( { model | warning = httpErrorString err }, Cmd.none )
+
+        GotUser user ->
+            ( model, Cmd.none )
 
 
 httpErrorString : Http.Error -> String
@@ -159,7 +196,7 @@ view model =
                     [ id "email"
                     , type_ "email"
                     , placeholder "Type your email"
-                    , Html.Attributes.value model.email
+                    , value model.email
                     , onInput Email
                     ]
                     []
@@ -169,7 +206,7 @@ view model =
                     [ id "password"
                     , type_ "password"
                     , placeholder "Type your password"
-                    , Html.Attributes.value model.password
+                    , value model.password
                     , onInput Password
                     ]
                     []
@@ -202,10 +239,42 @@ encodeLogin model =
         ]
 
 
-{--getUserByEmail : Model -> {onResponse : Data User -> Msg }-> Cmd Msg
-getUserByEmail model options =
-    Http.get
-        { url = Server.url ++ "/users"
-        , expect = Api.Data.expectJson options.onResponse (field "accessToken" D.string)
+getUser : Model -> Cmd Msg
+getUser model =
+    Http.request
+        { method = "GET"
+        , headers = [ Http.header "Authorization" ("Bearer " ++ model.tokenString) ]
+        , url =
+            Server.url
+                ++ "/users/"
+                ++ (case model.token of
+                        Nothing ->
+                            "0"
+
+                        Just token ->
+                            token.userId
+                   )
+        , body = Http.emptyBody
+        , expect = Http.expectJson GotUser userDecoder
+        , timeout = Nothing
+        , tracker = Nothing
         }
---}
+
+
+{--decodeJWT : Model -> Result Jwt.JwtError Token
+decodeJWT model =
+    Jwt.decodeToken jwtDecoder model.tokenString
+
+
+jwtDecoder : Decoder Token
+jwtDecoder =
+    D.succeed Token
+        |> andMap (field "iat" D.int)
+        |> andMap (field "exp" D.int)
+        |> andMap (field "sub" D.string)
+        |> andMap (field "email" D.string)
+
+
+decodeToken : Cmd Msg
+decodeToken =
+    Task.attempt DecodeToken decodeJWT--}

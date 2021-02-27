@@ -2,24 +2,22 @@ module Pages.Article exposing (Model, Msg, Params, page)
 
 import Api.Article exposing (Article, articleDecoder)
 import Api.Comment exposing (Comment, commentDecoder, commentsDecoder)
-import Api.Data exposing (..)
+import Api.Data exposing (Data(..))
 import Api.Profile exposing (Profile, profileDecoder)
 import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html.Attributes exposing (class, cols, href, placeholder, rows, src)
 import Html.Events as Events exposing (onClick, onInput)
 import Http exposing (..)
-import Json.Decode as D exposing (..)
+import Iso8601
 import Json.Encode as E exposing (..)
 import Server exposing (url)
 import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
-import Time
 import Task
-import Iso8601
-import TimeFormatting exposing (formatDate)
-import TimeFormatting exposing (formatTime)
+import Time
+import TimeFormatting exposing (formatDate, formatTime)
 
 
 page : Page Params Model Msg
@@ -57,7 +55,7 @@ init shared { params } =
       , commentString = ""
       , comments = Loading
       , warning = ""
-      , time = (Time.millisToPosix 0)
+      , time = Time.millisToPosix 0
       }
     , Cmd.batch [ getArticleRequest params { onResponse = ReceivedArticle }, getCommentsRequest params { onResponse = CommentsReceived }, Task.perform GetTime Time.now ]
     )
@@ -93,24 +91,15 @@ update msg model =
                 ( { model | warning = "Type your comment!" }, Cmd.none )
 
             else
-                ( { model | commentString = "" }
-                , postComment model model.commentString
-                    (case model.article of
-                        Success article ->
-                            article.id
-
-                        _ ->
-                            0
-                    )
-                    { onResponse = CommentResponse }
+                ( { model | commentString = "" }, postComment model { onResponse = CommentResponse }
                 )
-        
+
         GetTime time ->
             ( { model | time = time }, Cmd.none )
 
         CommentResponse comment ->
             ( case comment of
-                Api.Data.Success c ->
+                Success c ->
                     { model | comments = Api.Data.map (\comments -> c :: comments) model.comments, commentString = "" }
 
                 _ ->
@@ -144,15 +133,19 @@ view model =
         Success article ->
             { title = "Article | " ++ article.name
             , body =
-                [ viewArticle model.article model
+                [ viewArticle model
                 , div [ class "warning_form" ] [ text model.warning ]
-                , viewComments model.comments
+                , viewComments model
                 ]
             }
 
         _ ->
             { title = "Article"
-            , body = []
+            , body = [
+                viewArticle model
+                , div [ class "warning_form" ] [ text model.warning ]
+                , viewComments model
+            ]
             }
 
 
@@ -172,9 +165,9 @@ getCommentsRequest params options =
         }
 
 
-viewComments : Data (List Comment) -> Html Msg
-viewComments comments =
-    case comments of
+viewComments : Model -> Html Msg
+viewComments model =
+    case model.comments of
         NotAsked ->
             text ""
 
@@ -190,7 +183,7 @@ viewComments comments =
                     (List.map viewComment actualComments)
                 ]
 
-        Api.Data.Failure _ ->
+        Failure _ ->
             viewFetchError "comments" "Something went wrong!"
 
 
@@ -220,11 +213,20 @@ viewComment comment =
         ]
 
 
-encodeComment : Model -> String -> Int -> E.Value
-encodeComment model comment article =
+encodeComment : Model -> E.Value
+encodeComment model =
     E.object
-        [ ( "comment", E.string comment )
-        , ( "recipeid", E.int article )
+        [ ( "comment", E.string model.commentString )
+        , ( "recipeid"
+          , E.int
+                (case model.article of
+                    Success article ->
+                        article.id
+
+                    _ ->
+                        0
+                )
+          )
         , ( "profile"
           , E.object
                 [ ( "id", E.int 1 )
@@ -234,25 +236,25 @@ encodeComment model comment article =
                 , ( "bio", E.string "" )
                 , ( "password", E.string "" )
                 , ( "image", E.string "" )
-                , ("created", E.string "1970-01-01T00:00:00.000Z")
+                , ( "created", E.string "1970-01-01T00:00:00.000Z" )
                 ]
           )
-        , ("created", Iso8601.encode model.time)
+        , ( "created", Iso8601.encode model.time )
         ]
 
 
-postComment : Model -> String -> Int -> { onResponse : Data Comment -> Msg } -> Cmd Msg
-postComment model comment article options =
+postComment : Model -> { onResponse : Data Comment -> Msg } -> Cmd Msg
+postComment model options =
     Http.post
         { url = Server.url ++ "/comments"
-        , body = Http.jsonBody <| encodeComment model comment article
+        , body = Http.jsonBody <| encodeComment model
         , expect = Api.Data.expectJson options.onResponse commentDecoder
         }
 
 
-viewArticle : Data Article -> Model -> Html Msg
-viewArticle article model =
-    case article of
+viewArticle : Model -> Html Msg
+viewArticle model =
+    case model.article of
         NotAsked ->
             text ""
 
@@ -292,5 +294,5 @@ viewArticle article model =
                     ]
                 ]
 
-        Api.Data.Failure _ ->
+        Failure _ ->
             viewFetchError "article" "Something went wrong!"
