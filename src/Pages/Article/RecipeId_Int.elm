@@ -1,4 +1,4 @@
-module Pages.Article exposing (Model, Msg, Params, page)
+module Pages.Article.RecipeId_Int exposing (Model, Msg, Params, page)
 
 import Api.Article exposing (Article, articleDecoder)
 import Api.Comment exposing (Comment, commentDecoder, commentsDecoder)

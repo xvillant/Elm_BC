@@ -19,6 +19,16 @@
       "image": "/assets/user_default.png",
       "created": "2021-02-27T17:19:31.517Z",
       "id": 2
+    },
+    {
+      "email": "blbost@gmail.com",
+      "password": "$2a$10$EeYxk8dhbKUHZgpM47RWm.QlqKyA6L4IzvzCJHGxzhPAhze2Hw3NC",
+      "firstname": "Nolifer",
+      "lastname": "Cauko",
+      "bio": "I am new here...",
+      "image": "/assets/user_default.png",
+      "created": "2021-02-27T19:23:08.026Z",
+      "id": 3
     }
   ],
   "posts": [
@@ -345,6 +355,38 @@
       },
       "created": "2021-02-27T19:19:16.984Z",
       "id": 11
+    },
+    {
+      "comment": "jdjasldasjkdkljasdjlasjldjasldjqdkljqwdioqwjiodiqjwdiqwdjoiqwjdwqjdoqwidjqwiodjoqwidjqwiodjiqwjdoiqjwdioqwjdiqwjdoqwjdiqwjdioqwjdiqwjdioqwjdoiqwjdoqwidjqwiodjioqjdqoiwdjqwoidjqwoidjqwoidjqwdjqwodiqwjdoiqwjdiowqjdioqwdjiqwodjojiodnqkdnqkldjqwoidjqidojqwoidjqwodjqwiodjqwoidjqwiodjqwidjqwodjqwodjwd\ndqwkdqpwdkoqwdopqkpdoqopwdqwdqodjqdjoiqjwdioqjwidjqiwodjqwiodjqoiwdjiqwodjqiwdjqwjd\ndpoqwkdqwpdkqodqpdkoqpwdqopwdkoqwdkpqwdko",
+      "recipeid": 7,
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "1970-01-01T00:00:00.000Z"
+      },
+      "created": "2021-02-27T19:25:06.610Z",
+      "id": 12
+    },
+    {
+      "comment": "kokos dobryyyyyyyyyyyyyyyyyyy recept",
+      "recipeid": 7,
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "1970-01-01T00:00:00.000Z"
+      },
+      "created": "2021-02-27T19:26:34.610Z",
+      "id": 13
     }
   ]
 }

@@ -1,4 +1,4 @@
-module Pages.Profile exposing (Model, Msg, Params, page)
+module Pages.Profile.ProfileId_Int exposing (Model, Msg, Params, page)
 
 import Api.Data exposing (Data(..))
 import Html exposing (..)
