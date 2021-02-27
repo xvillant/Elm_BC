@@ -15,6 +15,7 @@ import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Task
+import String.Extra
 import Time
 
 
@@ -173,7 +174,7 @@ view model =
 encodeArticle : Model -> E.Value
 encodeArticle model =
     E.object
-        [ ( "name", E.string model.name )
+        [ ( "name", E.string <| String.Extra.toSentenceCase <| model.name)
         , ( "ingredients", E.list E.string <| List.map String.trim <| String.split "," model.ingredients )
         , ( "recipe", E.string model.recipe )
         , ( "profile"

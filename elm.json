@@ -17,6 +17,7 @@
             "elm/time": "1.0.0",
             "elm/url": "1.0.0",
             "elm-community/json-extra": "4.3.0",
+            "elm-community/string-extra": "4.0.1",
             "justinmimbs/timezone-data": "4.0.2",
             "krisajenkins/remotedata": "6.0.1",
             "rtfeldman/elm-iso8601-date-strings": "1.1.3",

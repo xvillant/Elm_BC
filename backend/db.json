@@ -1,16 +1,6 @@
 {
   "users": [
     {
-      "email": "Drogba11144@gmail.com",
-      "password": "$2a$10$KIk4n.90ybsbq35iivHGSOf1MSRkqQsWW66nQ93jiF5fffvmFRS7G",
-      "firstname": "Patrik",
-      "lastname": "Villant",
-      "bio": "I am new here...",
-      "image": "https://static.toiimg.com/photo/msid-67586673/67586673.jpg?3918697",
-      "created": "2021-02-25T20:29:22.810Z",
-      "id": 1
-    },
-    {
       "email": "lolo@gmail.com",
       "password": "$2a$10$YdWQBWhOLiGjGV/AXwGTH.IEh/X0vbmmdAA9opKYF9tI3D65m.zMS",
       "firstname": "Kevin",
@@ -18,7 +8,7 @@
       "bio": "I am new here...",
       "image": "/assets/user_default.png",
       "created": "2021-02-27T17:19:31.517Z",
-      "id": 2
+      "id": 1
     },
     {
       "email": "blbost@gmail.com",
@@ -28,17 +18,17 @@
       "bio": "I am new here...",
       "image": "/assets/user_default.png",
       "created": "2021-02-27T19:23:08.026Z",
-      "id": 3
+      "id": 2
     }
   ],
   "posts": [
     {
-      "name": "Urškine dobroty",
+      "name": "Ahoj Ja k",
       "ingredients": [
-        "maslo",
-        "kura"
+        "dasdasd lôkdôas",
+        "sadasd"
       ],
-      "recipe": "Pridáme a zamiešame",
+      "recipe": "sdasdasd",
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -49,78 +39,14 @@
         "image": "",
         "created": "2021-02-25T11:33:42.052Z"
       },
-      "created": "2021-02-25T20:31:04.723Z",
+      "created": "2021-02-27T20:27:35.495Z",
       "id": 1
     },
     {
-      "name": "Vyprážané kuracie rezne",
+      "name": "B lsadaôkladslk",
       "ingredients": [
-        "kura",
-        "strúhanka"
-      ],
-      "recipe": "dsadasd",
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "2021-02-25T11:33:42.052Z"
-      },
-      "created": "2021-02-25T20:45:29.426Z",
-      "id": 2
-    },
-    {
-      "name": "dasdasd",
-      "ingredients": [
-        "dobre to je",
-        "ako sa mas",
-        "dobry recept nie?"
-      ],
-      "recipe": "cauko",
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "2021-02-25T11:33:42.052Z"
-      },
-      "created": "2021-02-26T21:48:34.117Z",
-      "id": 3
-    },
-    {
-      "name": "cuclik",
-      "ingredients": [
-        "dobre to je",
-        "ahojkyx asssa",
-        "dobre"
-      ],
-      "recipe": "kldasjldasjkldkljas",
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "2021-02-25T11:33:42.052Z"
-      },
-      "created": "2021-02-26T22:11:00.993Z",
-      "id": 4
-    },
-    {
-      "name": "dobre",
-      "ingredients": [
-        "adasd",
-        "asdasdasd",
-        "asdasdasko",
-        "dasdasd"
+        "dasdsad",
+        "adsad"
       ],
       "recipe": "dasdasdasd",
       "profile": {
@@ -133,38 +59,16 @@
         "image": "",
         "created": "2021-02-25T11:33:42.052Z"
       },
-      "created": "2021-02-27T16:08:56.924Z",
-      "id": 5
+      "created": "2021-02-27T20:27:48.600Z",
+      "id": 2
     },
     {
-      "name": "assdasd",
+      "name": "Ninine dobroty",
       "ingredients": [
-        "nkjlckjlasjkdajkl",
-        "asdsadsaldasjdljaskd ad",
-        "dasdasdasd"
-      ],
-      "recipe": "dasdasd",
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "2021-02-25T11:33:42.052Z"
-      },
-      "created": "2021-02-27T19:10:09.118Z",
-      "id": 6
-    },
-    {
-      "name": "Marekové griláže",
-      "ingredients": [
-        "griláž",
         "syr",
-        "noha"
+        "koza"
       ],
-      "recipe": "dsdasdsadasdasdasdjhdhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhqpwodiqwodijqwoidjqwoidjqwdjqwodiqwjdioqwjdijqwkdjasldjlckasndckldsnclsjdcjsdcjsldkcjsklcjsdklcjsdklcjsklcsdjklcsdjkclsjcisjwioejiweroiqwheoiqwheqwioehqwoiehqwoiehqwoiehjcnnc,yxncmnckjwhwioeqwjeioqwjeoiqwjeoqwjeioqwjeqwioejqwoinxkasndncksdjfnkjdsskddkf",
+      "recipe": "dasdsadasdasdasda",
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -175,8 +79,8 @@
         "image": "",
         "created": "2021-02-25T11:33:42.052Z"
       },
-      "created": "2021-02-27T19:18:43.789Z",
-      "id": 7
+      "created": "2021-02-27T20:31:53.127Z",
+      "id": 3
     }
   ],
   "comments": [

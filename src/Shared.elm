@@ -273,7 +273,7 @@ viewAll model =
                             _ ->
                                 class "navbar-elements"
                         ]
-                        [ text "home" ]
+                        [ i [ class "fas fa-home"] [] ]
                     ]
                 , a
                     [ class "link", href (Route.toString Route.Recipes) ]
@@ -285,7 +285,7 @@ viewAll model =
                             _ ->
                                 class "navbar-elements"
                         ]
-                        [ text "recipes" ]
+                        [ i [ class "fas fa-book"] []  ]
                     ]
                 , a
                     [ class "link", href "/profile/1" ]
@@ -297,31 +297,7 @@ viewAll model =
                             _ ->
                                 class "navbar-elements"
                         ]
-                        [ text "profile" ]
-                    ]
-                , a
-                    [ class "link", href (Route.toString Route.Register) ]
-                    [ li
-                        [ case model.url.path of
-                            "/register" ->
-                                class "active_link"
-
-                            _ ->
-                                class "navbar-elements"
-                        ]
-                        [ text "sign up" ]
-                    ]
-                , a
-                    [ class "link", href (Route.toString Route.Login) ]
-                    [ li
-                        [ case model.url.path of
-                            "/login" ->
-                                class "active_link"
-
-                            _ ->
-                                class "navbar-elements"
-                        ]
-                        [ text "sign in" ]
+                        [ i [ class "fas fa-user"] []  ]
                     ]
                 , a
                     [ class "link", href (Route.toString Route.Settings) ]
@@ -333,8 +309,9 @@ viewAll model =
                             _ ->
                                 class "navbar-elements"
                         ]
-                        [ text "settings" ]
+                        [ i [ class "fas fa-cogs"] []  ]
                     ]
+                
 
                 {--, a
                     [ class "link", href (Route.toString Route.Article) ]
@@ -358,7 +335,31 @@ viewAll model =
                             _ ->
                                 class "navbar-elements"
                         ]
-                        [ text "new article" ]
+                        [ i [ class "fas fa-plus-circle"] [] ]
+                    ]
+                                , a
+                    [ class "link", href (Route.toString Route.Register) ]
+                    [ li
+                        [ case model.url.path of
+                            "/register" ->
+                                class "active_link"
+
+                            _ ->
+                                class "navbar-elements"
+                        ]
+                        [ text "sign up" ]
+                    ]
+                , a
+                    [ class "link", href (Route.toString Route.Login) ]
+                    [ li
+                        [ case model.url.path of
+                            "/login" ->
+                                class "active_link"
+
+                            _ ->
+                                class "navbar-elements"
+                        ]
+                        [ text "sign in" ]
                     ]
                 ]
             ]
