@@ -18,7 +18,6 @@ import Html.Events exposing (onClick)
 import Json.Decode as D
 import Ports exposing (clearUser, saveUser)
 import Spa.Document exposing (Document)
-import Spa.Generated.Route as Route
 import Url exposing (Url)
 
 
@@ -63,7 +62,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         SignOutSignal ->
-            ( { model | user = Nothing }, Cmd.batch[ clearUser, Nav.pushUrl model.key ""] )
+            ( { model | user = Nothing }, Cmd.batch [ clearUser, Nav.pushUrl model.key "/" ] )
 
         SignInSignal user ->
             ( { model | user = Just user }, saveUser user )
@@ -94,6 +93,3 @@ view { page, toMsg } model =
         , Components.Footer.view
         ]
     }
-
-
-
