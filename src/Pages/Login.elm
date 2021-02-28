@@ -88,7 +88,6 @@ type Msg
     | Password String
     | Submit
     | Response (Result Http.Error String)
- --   | DecodeToken (Result Jwt.JwtError Token)
     | GotUser (Result Http.Error User)
 
 
@@ -109,25 +108,9 @@ update msg model =
                 ( { model | warning = "Type your password!" }, Cmd.none )
 
             else
-                ( model, Cmd.batch [ loginRequest model ] )
+                ( model, loginRequest model )
 
-        {--DecodeToken token ->
-            case token of
-                Ok token_ ->
-                    ( { model
-                        | token =
-                            case token_ of
-                                Just tokenS ->
-                                    tokenS
 
-                                Nothing ->
-                                    Nothing
-                      }
-                    , Cmd.none
-                    )
-
-                Err err ->
-                    ( model, Cmd.none )--}
 
         Response response ->
             case response of
@@ -223,19 +206,19 @@ view model =
 
 loginRequest : Model -> Cmd Msg
 loginRequest model =
+    let
+        body =
+            [ ( "email", E.string model.email )
+            , ( "password", E.string model.password )
+            ]
+                |> E.object
+                |> Http.jsonBody
+    in
     Http.post
         { url = Server.url ++ "/login"
-        , body = Http.jsonBody <| encodeLogin model
+        , body = body
         , expect = Http.expectJson Response (field "accessToken" D.string)
         }
-
-
-encodeLogin : Model -> E.Value
-encodeLogin model =
-    E.object
-        [ ( "email", E.string model.email )
-        , ( "password", E.string model.password )
-        ]
 
 
 getUser : Model -> Cmd Msg
@@ -260,7 +243,7 @@ getUser model =
         }
 
 
-{--decodeJWT : Model -> Result Jwt.JwtError Token
+decodeJWT : Model -> Result Jwt.JwtError Token
 decodeJWT model =
     Jwt.decodeToken jwtDecoder model.tokenString
 
@@ -272,8 +255,3 @@ jwtDecoder =
         |> andMap (field "exp" D.int)
         |> andMap (field "sub" D.string)
         |> andMap (field "email" D.string)
-
-
-decodeToken : Cmd Msg
-decodeToken =
-    Task.attempt DecodeToken decodeJWT--}

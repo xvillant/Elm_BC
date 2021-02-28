@@ -1,10 +1,11 @@
 module Pages.Register exposing (Model, Msg, Params, page)
 
 import Browser.Navigation as Nav exposing (Key)
-import Html exposing (div, input, h1, text, button, a)
-import Html.Attributes exposing (id, placeholder, type_, value, class, href)
-import Html.Events exposing (onInput, onClick)
+import Html exposing (a, button, div, h1, input, text)
+import Html.Attributes exposing (class, href, id, placeholder, type_, value)
+import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
+import Iso8601
 import Json.Decode as D exposing (field)
 import Json.Encode as E exposing (..)
 import Server exposing (url)
@@ -14,7 +15,6 @@ import Spa.Generated.Route as Route exposing (toString)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Time
-import Iso8601
 
 
 page : Page Params Model Msg
@@ -233,25 +233,24 @@ view model =
         ]
     }
 
-
-encodeUser : Model -> E.Value
-encodeUser model =
-    E.object
-        [ ( "firstname", E.string model.firstname )
-        , ( "lastname", E.string model.lastname )
-        , ( "password", E.string model.password )
-        , ( "email", E.string model.email )
-        , ( "bio", E.string "I am new here..." )
-        , ( "image", E.string "/assets/user_default.png" )
-        , ("created", Iso8601.encode model.time)
-        ]
-
-
 registerUser : Model -> Cmd Msg
 registerUser model =
+    let
+        body =
+            [ ( "firstname", E.string model.firstname )
+            , ( "lastname", E.string model.lastname )
+            , ( "password", E.string model.password )
+            , ( "email", E.string model.email )
+            , ( "bio", E.string "I am new here..." )
+            , ( "image", E.string "/assets/user_default.png" )
+            , ( "created", Iso8601.encode model.time )
+            ]
+                |> E.object
+                |> Http.jsonBody
+    in
     Http.post
         { url = Server.url ++ "/users"
-        , body = Http.jsonBody <| encodeUser model
+        , body = body
         , expect = Http.expectJson Response (field "accessToken" D.string)
         }
 

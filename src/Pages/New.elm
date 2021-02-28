@@ -3,8 +3,8 @@ module Pages.New exposing (Model, Msg, Params, page)
 import Browser.Navigation as Nav exposing (Key, pushUrl)
 import Elm.Module exposing (Name)
 import Html exposing (..)
-import Html.Attributes exposing (value, id, type_, placeholder, class, autocomplete, rows, cols)
-import Html.Events exposing (onInput, onClick)
+import Html.Attributes exposing (autocomplete, class, cols, id, placeholder, rows, type_, value)
+import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
 import Iso8601
 import Json.Decode as D exposing (field)
@@ -14,8 +14,8 @@ import Shared exposing (Model)
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
-import Task
 import String.Extra
+import Task
 import Time
 
 
@@ -51,7 +51,7 @@ type alias Model =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( { name = "", ingredients = "", recipe = "", warning = "", key = shared.key, time = (Time.millisToPosix 0)  }, Task.perform GetTime Time.now)
+    ( { name = "", ingredients = "", recipe = "", warning = "", key = shared.key, time = Time.millisToPosix 0 }, Task.perform GetTime Time.now )
 
 
 
@@ -90,7 +90,7 @@ update msg model =
                 ( { model | warning = "Enter recipe!" }, Cmd.none )
 
             else
-                ( model, Cmd.batch[postArticle model] )
+                ( model, Cmd.batch [ postArticle model ] )
 
         GetTime time ->
             ( { model | time = time }, Cmd.none )
@@ -98,7 +98,7 @@ update msg model =
         Response response ->
             case response of
                 Ok value ->
-                    ( { model | warning = "Successfully added article!" }, Nav.pushUrl model.key "/recipes" )
+                    ( { model | warning = "Successfully added article!" }, pushUrl model.key "/recipes" )
 
                 Err err ->
                     ( { model | warning = "Something went wrong!" }, Cmd.none )
@@ -170,33 +170,32 @@ view model =
         ]
     }
 
-
-encodeArticle : Model -> E.Value
-encodeArticle model =
-    E.object
-        [ ( "name", E.string <| String.Extra.toSentenceCase <| model.name)
-        , ( "ingredients", E.list E.string <| List.map String.trim <| String.split "," model.ingredients )
-        , ( "recipe", E.string model.recipe )
-        , ( "profile"
-          , E.object
-                [ ( "id", E.int 1 )
-                , ( "email", E.string "Drogba11144@gmail.com" )
-                , ( "firstname", E.string "Patrik" )
-                , ( "lastname", E.string "Villant" )
-                , ( "bio", E.string "" )
-                , ( "password", E.string "" )
-                , ( "image", E.string "" )
-                , ("created", E.string "2021-02-25T11:33:42.052Z")
-                ]
-          )
-        , ("created", Iso8601.encode model.time)
-        ]
-
-
 postArticle : Model -> Cmd Msg
 postArticle model =
+    let
+        body =
+            [ ( "name", E.string <| String.Extra.toSentenceCase <| model.name )
+            , ( "ingredients", E.list E.string <| List.map String.trim <| String.split "," model.ingredients )
+            , ( "recipe", E.string model.recipe )
+            , ( "profile"
+              , E.object
+                    [ ( "id", E.int 1 )
+                    , ( "email", E.string "Drogba11144@gmail.com" )
+                    , ( "firstname", E.string "Patrik" )
+                    , ( "lastname", E.string "Villant" )
+                    , ( "bio", E.string "" )
+                    , ( "password", E.string "" )
+                    , ( "image", E.string "" )
+                    , ( "created", E.string "2021-02-25T11:33:42.052Z" )
+                    ]
+              )
+            , ( "created", Iso8601.encode model.time )
+            ]
+                |> E.object
+                |> Http.jsonBody
+    in
     Http.post
         { url = Server.url ++ "/posts"
-        , body = Http.jsonBody <| encodeArticle model
+        , body = body
         , expect = Http.expectJson Response (field "name" D.string)
         }
