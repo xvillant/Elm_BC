@@ -52,7 +52,7 @@ type alias Model =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( initialModel, getContentRequest initialModel { onResponse = PostsReceived } )
+    ( initialModel, getContentRequest "" "id" "desc" { onResponse = PostsReceived } )
 
 
 initialModel : Model
@@ -77,10 +77,10 @@ update msg model =
             ( { model | posts = response }, Cmd.none )
 
         Search searched ->
-            ( { model | search = searched }, getContentRequest model { onResponse = PostsReceived } )
+            ( { model | search = searched }, getContentRequest searched model.sorting model.order { onResponse = PostsReceived } )
 
         ChangeSorting sorting order ->
-            ( { model | sorting = sorting, order = order }, getContentRequest model { onResponse = PostsReceived } )
+            ( { model | sorting = sorting, order = order }, getContentRequest model.search sorting order { onResponse = PostsReceived } )
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
@@ -99,10 +99,10 @@ view model =
     }
 
 
-getContentRequest : Model -> { onResponse : Data (List Article) -> Msg } -> Cmd Msg
-getContentRequest model options =
+getContentRequest : String -> String -> String -> { onResponse : Data (List Article) -> Msg } -> Cmd Msg
+getContentRequest searched sorting order options =
     Http.get
-        { url = Server.url ++ "/posts?_sort=" ++ model.sorting ++ "&_order="++ model.order ++"&q=" ++ model.search
+        { url = Server.url ++ "/posts?_sort=" ++ sorting ++ "&_order="++ order ++"&q=" ++ searched
         , expect = Api.Data.expectJson options.onResponse articlesDecoder
         }
 
