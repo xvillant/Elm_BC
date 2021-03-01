@@ -1,5 +1,7 @@
 module Pages.New exposing (Model, Msg, Params, page)
 
+import Api.Article exposing (Article, articleDecoder)
+import Api.Data exposing (Data(..))
 import Browser.Navigation as Nav exposing (Key, pushUrl)
 import Elm.Module exposing (Name)
 import Html exposing (..)
@@ -64,7 +66,7 @@ type Msg
     | Recipe String
     | Submit
     | GetTime Time.Posix
-    | Response (Result Http.Error String)
+    | Response (Data Article)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -90,17 +92,17 @@ update msg model =
                 ( { model | warning = "Enter recipe!" }, Cmd.none )
 
             else
-                ( model, Cmd.batch [ postArticle model ] )
+                ( { model | warning = "Loading..." }, postArticle model { onResponse = Response } ) 
 
         GetTime time ->
             ( { model | time = time }, Cmd.none )
 
         Response response ->
             case response of
-                Ok value ->
+                Success s ->
                     ( { model | warning = "Successfully added article!" }, pushUrl model.key "/recipes" )
 
-                Err err ->
+                _ ->
                     ( { model | warning = "Something went wrong!" }, Cmd.none )
 
 
@@ -170,8 +172,9 @@ view model =
         ]
     }
 
-postArticle : Model -> Cmd Msg
-postArticle model =
+
+postArticle : Model -> { onResponse : Data Article -> Msg } -> Cmd Msg
+postArticle model options =
     let
         body =
             [ ( "name", E.string <| String.Extra.toSentenceCase <| model.name )
@@ -197,5 +200,5 @@ postArticle model =
     Http.post
         { url = Server.url ++ "/posts"
         , body = body
-        , expect = Http.expectJson Response (field "name" D.string)
+        , expect = Api.Data.expectJson options.onResponse articleDecoder
         }
