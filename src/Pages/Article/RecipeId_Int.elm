@@ -91,7 +91,8 @@ update msg model =
                 ( { model | warning = "Type your comment!" }, Cmd.none )
 
             else
-                ( { model | commentString = "" }, postComment model { onResponse = CommentResponse }
+                ( { model | commentString = "" }
+                , postComment model { onResponse = CommentResponse }
                 )
 
         GetTime time ->
@@ -100,7 +101,7 @@ update msg model =
         CommentResponse comment ->
             ( case comment of
                 Success c ->
-                    { model | comments = Api.Data.map (\comments -> c :: comments) model.comments, commentString = "" }
+                    { model | comments = Api.Data.map (\comments -> c :: comments) model.comments, commentString = "", warning = "" }
 
                 _ ->
                     model
@@ -141,11 +142,11 @@ view model =
 
         _ ->
             { title = "Article"
-            , body = [
-                viewArticle model
+            , body =
+                [ viewArticle model
                 , div [ class "warning_form" ] [ text model.warning ]
                 , viewComments model
-            ]
+                ]
             }
 
 
@@ -169,12 +170,23 @@ viewComments : Model -> Html Msg
 viewComments model =
     case model.comments of
         Success actualComments ->
-            div [ class "centered" ]
-                [ h1 [ class "title_comment" ] [ text "Comments" ]
-                , div [ class "line_after_recipes" ] []
-                , div [ class "comments_list" ]
-                    (List.map viewComment actualComments)
-                ]
+            if List.isEmpty actualComments then
+                div []
+                    [ h2 [] [ text "Comments" ]
+                    , div [ class "line_after_recipes" ] []
+                    , div [ class "comments_list" ]
+                        [ br [] []
+                        , p [ class "err" ] [ text "No comments yet..." ]
+                        ]
+                    ]
+
+            else
+                div []
+                    [ h2 [] [ text "Comments" ]
+                    , div [ class "line_after_recipes" ] []
+                    , div [ class "comments_list" ]
+                        (List.map viewComment actualComments)
+                    ]
 
         _ ->
             text ""
@@ -186,22 +198,22 @@ viewFetchError items errorMessage =
         errorHeading =
             "Couldn't fetch " ++ items ++ "."
     in
-    div [ class "centered" ]
-        [ h1 [ class "title_page" ] [ text errorHeading ]
+    div []
+        [ h1 [] [ text errorHeading ]
         , text ("Error: " ++ errorMessage)
         ]
 
 
 viewComment : Comment -> Html Msg
 viewComment comment =
-    ul [ class "comment_list" ]
-        [ li [ class "comment_content" ]
+    ul []
+        [ li [ class "value" ]
             [ text comment.comment ]
-        , li [ class "comment_content" ]
-            [ text (comment.created |> formatDate) ]
-        , li [ class "comment_content" ]
-            [ text (comment.created |> formatTime) ]
-        , a [ class "comment_content", href ("/profile/" ++ String.fromInt comment.profile.id) ] [ text (comment.profile.firstname ++ " " ++ comment.profile.lastname) ]
+        , li [ class "value" ]
+            [ p [ class "datetime" ] [ text (comment.created |> formatDate) ]
+            , p [ class "datetime" ] [ text (comment.created |> formatTime) ]
+            ]
+        , a [ class "link", href ("/profile/" ++ String.fromInt comment.profile.id) ] [ text (comment.profile.firstname ++ " " ++ comment.profile.lastname) ]
         , div [ class "line_after_recipes" ] []
         ]
 
@@ -252,37 +264,31 @@ viewArticle model =
             text ""
 
         Loading ->
-            div [ class "centered" ]
+            div []
                 [ img [ src "/assets/loading.gif" ] [] ]
 
         Success value ->
-            div [ class "centered" ]
-                [ h1 [ class "title_page" ] [ text "Article" ]
-                , div [ class "profile_attr" ]
-                    [ p [ class "profile_name" ] [ text "recipe name: " ]
-                    , p [ class "profile_name_x" ] [ text value.name ]
+            div []
+                [ h1 [] [ text value.name ]
+                , p [ class "datetime" ] [ text (value.created |> formatDate) ]
+                , p [ class "datetime" ] [ text (value.created |> formatTime) ]
+                , div []
+                    [ p [ class "title" ] [ text "ingredients " ]
+                    , p [ class "value" ] [ text <| String.join ", " value.ingredients ]
                     ]
-                , div [ class "profile_attr" ]
-                    [ p [ class "profile_name" ] [ text "ingredients: " ]
-                    , p [ class "profile_name_x" ] [ text <| String.join ", " value.ingredients ]
+                , div []
+                    [ p [ class "title" ] [ text "recipe " ]
+                    , p [ class "value" ] [ text value.recipe ]
                     ]
-                , div [ class "profile_attr" ]
-                    [ p [ class "profile_name" ] [ text "recipe: " ]
-                    , p [ class "profile_name_x" ] [ text value.recipe ]
+                , div []
+                    [ p [ class "title" ] [ text "shared by " ]
+                    , a [ class "link", href ("/profile/" ++ String.fromInt value.profile.id) ] [ text (value.profile.firstname ++ " " ++ value.profile.lastname) ]
                     ]
-                , div [ class "profile_attr" ]
-                    [ p [ class "profile_name" ] [ text "shared at: " ]
-                    , p [ class "profile_name_x" ] [ text (value.created |> formatDate) ]
-                    , p [ class "profile_name_x" ] [ text (value.created |> formatTime) ]
+                , div []
+                    [ 
+                    textarea [ placeholder "Type your comment here...", cols 70, rows 10, Html.Attributes.value model.commentString, onInput AddComment, class "form" ] []
                     ]
-                , div [ class "profile_attr" ]
-                    [ p [ class "profile_name" ] [ text "shared by: " ]
-                    , a [ class "link_profile", href ("/profile/" ++ String.fromInt value.profile.id) ] [ text (value.profile.firstname ++ " " ++ value.profile.lastname) ]
-                    ]
-                , div [ class "comment-text" ]
-                    [ textarea [ placeholder "Type your comment here...", cols 70, rows 10, Html.Attributes.value model.commentString, onInput AddComment ] []
-                    ]
-                , div [ class "comment-button" ]
+                , div []
                     [ button [ class "submit_button", onClick SubmitComment ] [ text "Share comment" ]
                     ]
                 ]

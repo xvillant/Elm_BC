@@ -118,33 +118,25 @@ viewProfile profile =
             text ""
 
         Loading ->
-            div [ class "centered" ]
+            div [ ]
                 [ img [ src "/assets/loading.gif" ] [] ]
 
         Success value ->
-            div [ class "centered" ]
-                [ h1 [ class "title_page" ] [ text "Profile" ]
+            div [ ]
+                [ h1 [ ] [ text (value.firstname ++ " " ++ value.lastname) ]
                 , img [src value.image, width 80, height 80][]
-                , div [ class "profile_attr" ]
-                    [ p [ class "profile_name" ] [ text "first name: " ]
-                    , p [ class "profile_name_x" ] [ text value.firstname ]
+                , div [ ]
+                    [ p [ class "title" ] [ text "email" ]
+                    , p [ class "value" ] [ text value.email ]
                     ]
-                , div [ class "profile_attr" ]
-                    [ p [ class "profile_name" ] [ text "last name: " ]
-                    , p [ class "profile_name_x" ] [ text value.lastname ]
+                , div [ ]
+                    [ p [ class "title" ] [ text "bio" ]
+                    , p [ class "value" ] [ text value.bio ]
                     ]
-                , div [ class "profile_attr" ]
-                    [ p [ class "profile_name" ] [ text "email: " ]
-                    , p [ class "profile_name_x" ] [ text value.email ]
-                    ]
-                , div [ class "profile_attr" ]
-                    [ p [ class "profile_name" ] [ text "bio: " ]
-                    , p [ class "profile_name_x" ] [ text value.bio ]
-                    ]
-                , div [ class "profile_attr" ]
-                    [ p [ class "profile_name" ] [ text "created at: " ]
-                    , p [ class "profile_name_x" ] [ text (value.created |> formatDate)  ]
-                    , p [ class "profile_name_x" ] [ text (value.created |> formatTime)  ]
+                , div [ ]
+                    [ p [ class "title" ] [ text "created at" ]
+                    , p [ class "datetime" ] [ text (value.created |> formatDate)  ]
+                    , p [ class "datetime" ] [ text (value.created |> formatTime)  ]
                     ]
                 ]
 
@@ -163,8 +155,8 @@ viewPosts : Data (List Article) -> Html Msg
 viewPosts posts =
     case posts of
         Success actualPosts ->
-            div [ class "centered" ]
-                [ h2 [ class "title_page" ] [ text "My recipes" ]
+            div [ ]
+                [ h2 [ ] [ text "My recipes" ]
                 , div [ class "line_after_recipes" ] []
                 , div [ class "articles_list" ]
                     (List.map viewPost actualPosts)
@@ -186,14 +178,13 @@ getUserRequest params options =
 viewPost : Article -> Html Msg
 viewPost post =
     ul [ class "post_list" ]
-        [ li [ class "post_name" ]
-            [ text post.name ]
-        , p [ class "recipes_titles" ] [ text "ingredients" ]
-        , li [ class "ingredients_names" ]
-            [ String.join ", " post.ingredients |> text ]
-        , p [ class "recipes_titles" ] [ text "recipe" ]
-        , li [ class "recipe_names" ]
-            [ text post.recipe ]
+        [ h2 [][text post.name]
+        , p[class "datetime"][ text (formatDate <| post.created) ]
+        , p[class "datetime"][ text (formatTime <| post.created) ]
+        , p [ class "title" ] [ text "ingredients" ]
+        , li [ class "value" ][ String.join ", " post.ingredients |> text ]
+        , p [ class "title" ] [ text "recipe" ]
+        , li [ class "value" ][ text post.recipe ]
         , br [] []
         , a [ href ("/article/" ++ String.fromInt post.id) ] [ button [ class "submit_button" ] [ text "Comment" ] ]
         , div [ class "line_after_recipes" ] []
@@ -206,7 +197,7 @@ viewFetchError items errorMessage =
         errorHeading =
             "Couldn't fetch " ++ items ++ "."
     in
-    div [ class "centered" ]
-        [ h1 [ class "title_page" ] [ text errorHeading ]
+    div [ ]
+        [ h1 [ ] [ text errorHeading ]
         , text ("Error: " ++ errorMessage)
         ]

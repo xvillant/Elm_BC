@@ -129,9 +129,9 @@ view : Model -> Document Msg
 view model =
     { title = "New Article"
     , body =
-        [ div [ class "centered" ]
-            [ h1 [ class "title_page" ] [ text "New Article" ]
-            , div [ class "formFieldClasses" ]
+        [ div [ ]
+            [ h1 [ ] [ text "New Article" ]
+            , div [ ]
                 [ input
                     [ id "recipe_name"
                     , type_ "text"
@@ -139,10 +139,11 @@ view model =
                     , autocomplete False
                     , value model.name
                     , onInput Name
+                    , class "form"
                     ]
                     []
                 ]
-            , div [ class "formFieldClasses" ]
+            , div [ ]
                 [ input
                     [ id "ingredients"
                     , type_ "text"
@@ -150,10 +151,11 @@ view model =
                     , placeholder "Ingredients - divide (,)"
                     , value model.ingredients
                     , onInput Ingredients
+                    , class "form"
                     ]
                     []
                 ]
-            , div [ class "formFieldClasses" ]
+            , div [ ]
                 [ textarea
                     [ id "recipe"
                     , value model.recipe
@@ -161,10 +163,11 @@ view model =
                     , onInput Recipe
                     , rows 10
                     , cols 70
+                    , class "form"
                     ]
                     []
                 ]
-            , div [ class "formFieldClasses" ]
+            , div [ ]
                 [ button [ class "submit_button", onClick Submit ] [ text "Share recipe" ] ]
             , div [ class "warning_form" ]
                 [ text model.warning ]

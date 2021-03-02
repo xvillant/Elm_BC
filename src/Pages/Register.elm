@@ -1,7 +1,7 @@
 module Pages.Register exposing (Model, Msg, Params, page)
 
 import Browser.Navigation as Nav exposing (Key)
-import Html exposing (a, button, div, h1, input, text)
+import Html exposing (a, button, div, h1, input, text, br)
 import Html.Attributes exposing (class, href, id, placeholder, type_, value)
 import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
@@ -171,64 +171,70 @@ view : Model -> Document Msg
 view model =
     { title = "Sign Up"
     , body =
-        [ div [ class "centered" ]
-            [ h1 [ class "title_page" ] [ text "Sign Up" ]
-            , div [ class "formFieldClasses" ]
+        [ div [ ]
+            [ h1 [ ] [ text "Sign Up" ]
+            , div [  ]
                 [ input
                     [ id "firstname"
                     , type_ "text"
                     , placeholder "First Name"
                     , value model.firstname
                     , onInput FirstName
+                    , class "form"
                     ]
                     []
                 ]
-            , div [ class "formFieldClasses" ]
+            , div [  ]
                 [ input
                     [ id "lastname"
                     , type_ "text"
                     , placeholder "Last Name"
                     , value model.lastname
                     , onInput LastName
+                    , class "form"
                     ]
                     []
                 ]
-            , div [ class "formFieldClasses" ]
+            , div [  ]
                 [ input
                     [ id "email"
                     , type_ "email"
                     , placeholder "Email"
                     , value model.email
                     , onInput Email
+                    , class "form"
                     ]
                     []
                 ]
-            , div [ class "formFieldClasses" ]
+            , div [  ]
                 [ input
                     [ id "password"
                     , type_ "password"
                     , placeholder "Password"
                     , value model.password
                     , onInput Password
+                    , class "form"
                     ]
                     []
                 ]
-            , div [ class "formFieldClasses" ]
+            , div [  ]
                 [ input
                     [ id "passwordAgain"
                     , type_ "password"
                     , placeholder "Password Again"
                     , value model.passwordAgain
                     , onInput PasswordAgain
+                    , class "form"
                     ]
                     []
                 ]
-            , div [ class "formFieldClasses" ]
+            , div [ ]
                 [ button [ class "submit_button", onClick Submit ] [ text "Sign Up" ] ]
             , div [ class "warning_form" ]
                 [ text model.warning ]
-            , div [ class "not_registered" ]
-                [ a [ class "not_registered_link", href (Route.toString Route.Login) ] [ text "Have an account?" ] ]
+            , div [ ]
+                [ br [] []
+                    ,a [ class "link", href (Route.toString Route.Login) ] [ text "Have an account?" ] ]
             ]
         ]
     }

@@ -128,10 +128,9 @@ view model =
                 , style "height" "400px"
                 , style "width" "100%"
                 , style "background-image" url
-
-                --, style "background-color" "gray"
-                --, style "background-size" "cover"
-                --, style "overflow" "hidden"
+                , style "background-color" "gray"
+                , style "background-size" "cover"
+                , style "overflow" "hidden"
                 , style "transition" "all .5s ease-in-out"
                 ]
                 [ div [ style "margin-top" "0px" ]
@@ -166,7 +165,7 @@ view model =
                     ]
 
                 --display bullets (the small dots) which allow jumping to a specific image in carousel
-                , div [ style "margin-top" "0px" ] (Array.toList (Array.indexedMap (viewBullet model) model.source))
+                , div [ style "margin-top" "350px" ] (Array.toList (Array.indexedMap (viewBullet model) model.source))
                 ]
 
         Nothing ->

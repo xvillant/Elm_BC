@@ -1,149 +1,96 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:500');
+
+* {
+  box-sizing:  border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
 html {
   height: 100%;
 }
 
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  font-family: Garamond, serif;
-}
-
-
-.footer {
-  bottom: 0%;
-  color: #000;
-  height: 80px;
-  position: relative;
-  background-color: #dedede;
-  width: 100%;
-  text-align: center;
-  border-top: 2px;
-  border-top-style: solid;
-  border-color: #ccc;
-  font-family: Monospace;
-  font-size: 14px;
-}
-
-.header{
-  background-color: #dedede;
-  color: white;
-  height: 80px;
-  display: block;
-  border-bottom: 2px;
-  border-bottom-style: solid;
-  border-color: #ccc;
-}
-
-.inner-header{
-  height: 100%;
-  display: block;
-  margin-top: 0;
-  margin-bottom: 0;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #dedede;
-}
-
-.logo-container{
-  height: 100%;
-  display: table;
-  float: left;
-  margin-top: 10px;
-  margin-left: 10px;
-  font-family: Monospace;
-  color: #000;
-  font-size: 25px;
-}
-
-.navigation{
-  float: right;
-  height: 100%;
-  margin-top: 10px;
-}
-
-.link{
-  display: table;
-  height: 100%;
-  float: left;
-  margin: 0 20px;
-}
-
-.navbar-elements{
-  display: table-cell;
-  vertical-align: middle;
-  height: 100%;
-  color: #000;
-  font-size: 22px;
-  letter-spacing: 2px;
-}
-
-a{text-decoration: none;}
-
-.navbar-elements:hover{
-  color: #4CAF50;
-}
-
-.active_link{
-  display: table-cell;
-  vertical-align: middle;
-  height: 100%;
-  color: #4CAF50;
-  font-size: 22px;
-  letter-spacing: 2px;
-}
-
-.page { 
-  width: 100%;
-  max-width: 800px;
-  margin: auto;
-  flex: 1;
-}
-
-.notfound_center{
-
-  margin: auto;
-  margin-top: 15%;
-  width: 50%;
-  text-align: center;
-  font-size: 50px;
-}
-
-.centered{
-  text-align: center;
+li, a, button, textarea, input {
+  font-weight: 500;
+  font-size: 16px;
+  text-decoration: none;
+  color: #edf0f1;
 }
 
 ul{
   list-style-type: none;
-  padding: 0;
 }
 
-.post_name{
-  font-size: 22px;
-  font-weight: bold;
-  letter-spacing: 3px;
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10%;
+  background-color: #24252a;
 }
 
-
-h1.title_page{
- font-size: 64px;
- margin: 10px;
+.logo {
+  cursor: pointer;
 }
 
-h2.title_page{
-  font-size: 30px;
+.nav__links {
+  list-style: none;
+}
+
+.nav__links li{
+  display: inline-block;
+  padding: 0 20px;
+}
+
+.nav__links li a{
+  transition: all 0.3s ease 0s;
+}
+
+.nav__links li a:hover{
+  color: #b1f5b2;
+}
+
+.active_link{
+  color: #4CAF50;
+  font-size: 20px;
+}
+
+body {
+  margin: 0;
+  font-family: basic-sans, sans-serif;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
  }
 
-.fab {
-  color: black;
-  font-size: 18px;
+ footer {
+   text-align: center;
+   padding: 5px;
+   margin-top: auto;
+   background-color: #707070;
+   color: whitesmoke;
+ }
+
+footer a{
+  transition: all 0.3s ease 0s;
+  font-size: 25px;
 }
 
-.formFieldClasses{
-  margin: 20px;
-  border-radius: 20px;
+footer a:hover{
+  color: #4CAF50;
 }
+
+.page { 
+  margin: auto;
+  width: 1000px;
+   word-wrap: break-word;
+  text-align: center;
+  flex: 1;
+}
+
+
 
 .submit_button{
     background-color: #4CAF50;
@@ -154,86 +101,13 @@ h2.title_page{
     text-align: center;
     outline: 0;
     display: inline-block;
+    transition: all 0.3s ease 0s;
 }
 
-.submit_button:hover{
-  background-color: white;
-  color: black;
-}
 
-input{
-  width: 500px;
-  height: 40px;
-  outline: 0;
-  border: none;
-  border-bottom: solid 1px rgb(218, 218, 218);
-  font-size: 15px;
-  line-height: none;
-  padding-left: 20px;
-}
-
-input:focus{
-  border-color: #4CAF50;
-}
-
-.warning_form{
-  margin-top: 7px;
-  height: 45px;
-  font-size: 25px;
-  font-weight: bold;
-  text-align: center;
-  color: rgb(255, 75, 75);
-}
-
-.not_registered_link{
-  text-decoration: underline;
-  color: black;
-  font-size: 20px;
-}
-.not_registered_link:hover{
-  color: #4CAF50;
-}
-
-.profile_attr{
-  margin: 20px 0px;
-  font-weight: 900;
-}
-
-.profile_name_x{
-  color: #4CAF50;
-  font-size: 20px;
-  font-weight: 900;
-  max-width: 100%;
-  word-wrap: break-word;
-}
-
-.line_after_recipes{
-  width: 100%;
-  border-bottom: solid 1px rgba(0,0,0,0.2);
-  padding-top: 10px;
-}
-
-.recipes_titles{
-  letter-spacing: 5px;
-  font-weight: 900;
-}
-
-.recipe_names {
-  max-width: 100%;
-  word-wrap: break-word;
-}
-
-.link_profile {
-  text-decoration: none;
-  color: #4CAF50;
-  font-size: 20px;
-    font-weight: 900;
-    max-width: 100%;
-}
-
-.buttonsdiv{
-  margin: 0 5px;
+.category_button{    
   background-color: #4CAF50;
+  opacity: 0.5;
   border: 1px solid;
   border-radius: 20px;
   color: white;
@@ -241,51 +115,74 @@ input:focus{
   text-align: center;
   outline: 0;
   display: inline-block;
+  transition: all 0.3s ease 0s;}
+
+.active_category_button {
+    background-color: #4CAF50;
+    border: 1px solid;
+    border-radius: 20px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    outline: 0;
+    display: inline-block;
+    transition: all 0.3s ease 0s;
 }
 
-.buttonsdiv:hover{
-  background-color: white;
-  color: black;
+.category_button:hover{
+  background-color: #4CAF50;
+  opacity: 1;
+  color: white;
+  cursor: pointer;
 }
 
-.active_buttonsdiv{
-  margin: 0 5px;
-  background-color: white;
-  border: 1px solid;
-  border-radius: 20px;
-  color: black;
-  padding: 15px 32px;
-  text-align: center;
+.submit_button:hover{
+  background-color: #ffffff;
+  color: #24252a;
+  cursor: pointer;
+}
+
+input{
   outline: 0;
-  display: inline-block;
+  border: none;
+  line-height: none;
 }
 
-.comment_list{
+input:focus{
+  border-color: #4CAF50;
+}
+
+.warning_form{
+  font-size: 25px;
+  font-weight: bold;
+  color: rgb(255, 75, 75);
+}
+
+.line_after_recipes{
   width: 100%;
-  word-wrap: break-word;
-}
-
-textarea{
-  resize: none;
-  outline: 0;
-  border-radius: 8px;
-  border-width: 2px;
-  border-style: dashed;
+  border-bottom: solid 1px rgba(0,0,0,0.2);
+  margin-top: 10px;
 }
 
 
 .search_input {
   margin: 20px 0;
+  width: 25%;
   background-image: url(assets/search-logo.svg);
   background-size: 30px;
   background-position: 10px center;
   background-repeat: no-repeat;
   border: 1px solid #ccc;
   border-radius: 20px;
+  color: black;
 
   padding: 10px 5px 10px 20px;
   text-indent: 20px;
+  transition: width 0.4s ease-in-out;
+}
 
+.search_input:focus {
+  width: 50%;
 }
 
 .search_input::-webkit-search-cancel-button{
@@ -296,3 +193,79 @@ textarea{
   background: url(assets/cancel-button.svg);
   color: black;
 }
+
+h1 {
+  font-size: 64px;
+  font-weight: 12px;
+ }
+
+ h2 {
+  font-size: 40px;
+  font-weight: 12px;
+ }
+
+ .link {
+   color: #4CAF50;
+   text-decoration: underline;
+   text-decoration-color: transparent;
+   transition: all 0.5s ease 0s;
+
+ }
+
+ .link:hover {
+  text-decoration-color: #4CAF50;
+ }
+
+ .value {
+   color: rgba(0, 0, 0, 0.6);
+ }
+
+ .title {
+   font-size: 20px;
+   color: black;
+   font-weight: bold;
+   letter-spacing: 2px;
+ }
+
+ .datetime {
+   font-size: 13px;
+   color: rgba(0,0,0,0.4);
+ }
+
+ input.form{
+  width: 500px;
+  height: 40px;
+  margin: 10px 0;
+  outline: 0;
+  color: black;
+  border-bottom: solid 1px rgb(218, 218, 218);
+  padding-left: 5px;
+  transition: border-color 0.5s ease 0s;
+ }
+
+ input.form:focus{
+  border-color: #4CAF50;
+ }
+
+ textarea.form {
+  width: 500px;
+  resize: none;
+  outline: 0;
+  border-radius: 5px;
+  border-width: 1px;
+  margin-top: 10px;
+  padding-top: 5px;
+  padding-left: 5px;
+  color: black;
+  transition: border-color 0.5s ease 0s;
+ }
+
+ textarea.form:focus{
+  border-color: #4CAF50;
+ }
+
+ .err {
+   font-size: 22px;
+   font-weight: 500;
+   letter-spacing: 3px;
+ }

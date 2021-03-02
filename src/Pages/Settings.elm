@@ -145,49 +145,53 @@ view : Model -> Document Msg
 view model =
     { title = "Settings"
     , body =
-        [ div [ class "centered" ]
-            [ h1 [ class "title_page" ] [ text "Settings" ]
-            , div [ class "formFieldClasses" ]
+        [ div [ ]
+            [ h1 [ ] [ text "Settings" ]
+            , div [ ]
                 [ input
                     [ id "firstname"
                     , type_ "text"
                     , placeholder "Type first name"
                     , value model.firstname
                     , onInput FirstName
+                    , class "form"
                     ]
                     []
                 ]
-            , div [ class "formFieldClasses" ]
+            , div [ ]
                 [ input
                     [ id "lastname"
                     , type_ "text"
                     , placeholder "Type last name"
                     , value model.lastname
                     , onInput LastName
+                    , class "form"
                     ]
                     []
                 ]
-            , div [ class "formFieldClasses" ]
+            , div [ ]
                 [ input
                     [ id "email"
                     , type_ "email"
                     , placeholder "Type email"
                     , value model.email
                     , onInput Email
+                    , class "form"
                     ]
                     []
                 ]
-            , div [ class "formFieldClasses" ]
+            , div [ ]
                 [ input
                     [ id "image"
                     , type_ "text"
                     , placeholder "Type profile picture URL"
                     , value model.image
                     , onInput Image
+                    , class "form"
                     ]
                     []
                 ]
-            , div [ class "formFieldClasses" ]
+            , div [ ]
                 [ textarea
                     [ id "bio"
                     , placeholder "Type your bio"
@@ -195,10 +199,11 @@ view model =
                     , onInput Bio
                     , rows 10
                     , cols 70
+                    , class "form"
                     ]
                     []
                 ]
-            , div [ class "formFieldClasses" ]
+            , div [ ]
                 [ button [ class "submit_button", onClick SubmitUpdate ] [ text "Save settings" ] ]
             , div [ class "warning_form" ]
                 [ text model.warning ]

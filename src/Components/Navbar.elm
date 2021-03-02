@@ -2,8 +2,8 @@ module Components.Navbar exposing (view)
 
 import Api.User exposing (User)
 import Html exposing (..)
-import Html.Attributes exposing (class, classList, height, href, src, width)
-import Html.Events as Events
+import Html.Attributes exposing (alt, class, classList, height, href, src, width)
+import Html.Events as Events exposing (onClick)
 import Spa.Generated.Route as Route exposing (Route, toString)
 import Url exposing (Url)
 
@@ -16,8 +16,9 @@ view :
     -> Html msg
 view options =
     case options.user of
-        Just user -> 
+        Just user ->
             viewHeaderLoggedIn options
+
         Nothing ->
             viewAll options
 
@@ -173,105 +174,93 @@ viewAll :
     }
     -> Html msg
 viewAll options =
-    header
-        [ class "header" ]
-        [ div
-            [ class "inner-header" ]
-            [ div
-                [ class "logo-container" ]
-                [ img [ src "/assets/recipelogo.svg", width 50, height 50 ] [], text "RECIPES" ]
-            , ul
-                [ class "navigation" ]
+    header []
+        [ a [ href (Route.toString Route.Top) ] [ img [ class "logo", src "/assets/lunch.png", width 50, height 50, alt "logo" ] [] ]
+        , ul [ class "nav__links" ]
+            [ li []
                 [ a
-                    [ class "link", href (Route.toString Route.Top) ]
-                    [ li
-                        [ case options.url.path of
-                            "/" ->
-                                class "active_link"
+                    [ href (Route.toString Route.Top)
+                    , case options.url.path of
+                        "/" ->
+                            class "active_link"
 
-                            _ ->
-                                class "navbar-elements"
-                        ]
-                        [ i [ class "fas fa-home" ] [] ]
+                        _ ->
+                            class "navbar-elements"
                     ]
-                , a
-                    [ class "link", href (Route.toString Route.Recipes) ]
-                    [ li
-                        [ case options.url.path of
-                            "/recipes" ->
-                                class "active_link"
+                    [ i [ class "fas fa-home" ] [] ]
+                ]
+            , li []
+                [ a
+                    [ href (Route.toString Route.Recipes)
+                    , case options.url.path of
+                        "/recipes" ->
+                            class "active_link"
 
-                            _ ->
-                                class "navbar-elements"
-                        ]
-                        [ i [ class "fas fa-book" ] [] ]
+                        _ ->
+                            class "navbar-elements"
                     ]
-                , a
-                    [ class "link", href "/profile/1" ]
-                    [ li
-                        [ case options.url.path of
-                            "/profile/1" ->
-                                class "active_link"
+                    [ i [ class "fas fa-book" ] [] ]
+                ]
+            , li []
+                [ a
+                    [ href (Route.toString Route.New)
+                    , case options.url.path of
+                        "/new" ->
+                            class "active_link"
 
-                            _ ->
-                                class "navbar-elements"
-                        ]
-                        [ i [ class "fas fa-user" ] [] ]
+                        _ ->
+                            class "navbar-elements"
                     ]
-                , a
-                    [ class "link", href (Route.toString Route.Settings) ]
-                    [ li
-                        [ case options.url.path of
-                            "/settings" ->
-                                class "active_link"
+                    [ i [ class "fas fa-plus-circle" ] [] ]
+                ]
+            , li []
+                [ a
+                    [ href "/profile/1"
+                    , case options.url.path of
+                        "/profile/1" ->
+                            class "active_link"
 
-                            _ ->
-                                class "navbar-elements"
-                        ]
-                        [ i [ class "fas fa-cogs" ] [] ]
+                        _ ->
+                            class "navbar-elements"
                     ]
-                , a
-                    [ class "link", href (Route.toString Route.New) ]
-                    [ li
-                        [ case options.url.path of
-                            "/new" ->
-                                class "active_link"
+                    [ i [ class "fas fa-user" ] [] ]
+                ]
+            , li []
+                [ a
+                    [ href (Route.toString Route.Settings)
+                    , case options.url.path of
+                        "/settings" ->
+                            class "active_link"
 
-                            _ ->
-                                class "navbar-elements"
-                        ]
-                        [ i [ class "fas fa-plus-circle" ] [] ]
+                        _ ->
+                            class "navbar-elements"
                     ]
-                , a
-                    [ class "link", Events.onClick options.onSignOut ]
-                    [ li
-                        [ class "navbar-elements" ]
-                        [ i [ class "fas fa-sign-out-alt" ] [] ]
-                    ]
-                , a
-                    [ class "link", href (Route.toString Route.Register) ]
-                    [ li
-                        [ case options.url.path of
-                            "/register" ->
-                                class "active_link"
+                    [ i [ class "fas fa-cogs" ] [] ]
+                ]
+            , li [] [ a [ onClick options.onSignOut ] [ i [ class "fas fa-sign-out-alt" ] [] ] ]
+            , li []
+                [ a
+                    [ href (Route.toString Route.Login)
+                    , case options.url.path of
+                        "/login" ->
+                            class "active_link"
 
-                            _ ->
-                                class "navbar-elements"
-                        ]
-                        [ text "sign up" ]
+                        _ ->
+                            class "navbar-elements"
                     ]
-                , a
-                    [ class "link", href (Route.toString Route.Login) ]
-                    [ li
-                        [ case options.url.path of
-                            "/login" ->
-                                class "active_link"
+                    [ text "sign in" ]
+                ]
+            , li []
+                [ a
+                    [ href (Route.toString Route.Register)
+                    , case options.url.path of
+                        "/register" ->
+                            class "active_link"
 
-                            _ ->
-                                class "navbar-elements"
-                        ]
-                        [ text "sign in" ]
+                        _ ->
+                            class "navbar-elements"
                     ]
+                    [ text "sign up" ]
                 ]
             ]
         ]

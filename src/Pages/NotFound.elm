@@ -34,10 +34,10 @@ view : Url Params -> Document Msg
 view { params } =
     { title = "404"
     , body =
-        [ div [ class "centered" ]
-            [ h1 [ class "title_page" ] [ text "Page not found!" ]
-            , div [ class "not_registered" ]
-                [ a [ class "not_registered_link", href (Route.toString Route.Top) ] [ text "Try this link" ] ]
+        [ div [  ]
+            [ h1 [  ] [ text "Page not found!" ]
+            , div [ ]
+                [ a [ class "link", href (Route.toString Route.Top) ] [ text "Try this link" ] ]
             ]
         ]
     }

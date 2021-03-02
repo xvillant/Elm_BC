@@ -110,8 +110,6 @@ update msg model =
             else
                 ( model, loginRequest model )
 
-
-
         Response response ->
             case response of
                 Ok value ->
@@ -171,34 +169,38 @@ view : Model -> Document Msg
 view model =
     { title = "Sign In"
     , body =
-        [ div [ class "centered" ]
-            [ h1 [ class "title_page" ] [ text "Sign In" ]
-            , div [ class "formFieldClasses" ]
+        [ div []
+            [ h1 [] [ text "Sign In" ]
+            , div []
                 [ input
                     [ id "email"
                     , type_ "email"
                     , placeholder "Type your email"
                     , value model.email
                     , onInput Email
+                    , class "form"
                     ]
                     []
                 ]
-            , div [ class "formFieldClasses" ]
+            , div []
                 [ input
                     [ id "password"
                     , type_ "password"
                     , placeholder "Type your password"
                     , value model.password
                     , onInput Password
+                    , class "form"
                     ]
                     []
                 ]
-            , div [ class "formFieldClasses" ]
+            , div []
                 [ button [ class "submit_button", onClick Submit ] [ text "Log In" ] ]
             , div [ class "warning_form" ]
                 [ text model.warning ]
-            , div [ class "not_registered" ]
-                [ a [ class "not_registered_link", href (Route.toString Route.Register) ] [ text "Don't have an account?" ] ]
+            , div []
+                [ br [] []
+                , a [ class "link", href (Route.toString Route.Register) ] [ text "Don't have an account?" ]
+                ]
             ]
         ]
     }
