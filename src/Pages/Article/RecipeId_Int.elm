@@ -161,7 +161,7 @@ getArticleRequest params options =
 getCommentsRequest : Params -> { onResponse : Data (List Comment) -> Msg } -> Cmd Msg
 getCommentsRequest params options =
     Http.get
-        { url = Server.url ++ "/comments?recipeid=" ++ String.fromInt params.recipeId
+        { url = Server.url ++ "/comments?recipeid=" ++ String.fromInt params.recipeId ++ "&_sort=created&_order=desc"
         , expect = Api.Data.expectJson options.onResponse commentsDecoder
         }
 

@@ -54,12 +54,12 @@ type alias Model =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( initialModel, getContentRequest "" "id" "desc" { onResponse = PostsReceived } )
+    ( initialModel, getContentRequest "" "created" "desc" { onResponse = PostsReceived } )
 
 
 initialModel : Model
 initialModel =
-    { posts = Loading, search = "", sorting = "id", order = "desc" }
+    { posts = Loading, search = "", sorting = "created", order = "desc" }
 
 
 
@@ -125,12 +125,12 @@ viewPosts model =
                 [ h1 [] [ text "Recipes" ]
                 , button
                     [ case model.sorting of
-                        "id" ->
+                        "created" ->
                             class "active_category_button"
 
                         _ ->
                             class "category_button"
-                    , onClick <| ChangeSorting "id" "desc"
+                    , onClick <| ChangeSorting "created" "desc"
                     ]
                     [ text "Latest posts" ]
                 , button

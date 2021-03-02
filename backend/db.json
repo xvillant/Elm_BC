@@ -97,6 +97,25 @@
       },
       "created": "2021-03-02T12:42:32.061Z",
       "id": 4
+    },
+    {
+      "name": "Dasd",
+      "ingredients": [
+        "dasd"
+      ],
+      "recipe": "dasdsad",
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "2021-02-25T11:33:42.052Z"
+      },
+      "created": "2021-03-02T15:18:56.471Z",
+      "id": 5
     }
   ],
   "comments": [
@@ -131,6 +150,86 @@
       },
       "created": "2021-03-02T12:15:58.698Z",
       "id": 2
+    },
+    {
+      "comment": "dasd",
+      "recipeid": 4,
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "1970-01-01T00:00:00.000Z"
+      },
+      "created": "2021-03-02T12:52:00.431Z",
+      "id": 3
+    },
+    {
+      "comment": "daskldjasd",
+      "recipeid": 4,
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "1970-01-01T00:00:00.000Z"
+      },
+      "created": "2021-03-02T14:11:25.624Z",
+      "id": 4
+    },
+    {
+      "comment": "dobre",
+      "recipeid": 4,
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "1970-01-01T00:00:00.000Z"
+      },
+      "created": "2021-03-02T15:14:59.499Z",
+      "id": 5
+    },
+    {
+      "comment": "dasdasd",
+      "recipeid": 4,
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "1970-01-01T00:00:00.000Z"
+      },
+      "created": "2021-03-02T15:17:28.003Z",
+      "id": 6
+    },
+    {
+      "comment": "aasda",
+      "recipeid": 3,
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "1970-01-01T00:00:00.000Z"
+      },
+      "created": "2021-03-02T15:20:06.754Z",
+      "id": 7
     }
   ]
 }
