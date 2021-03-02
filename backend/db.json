@@ -19,6 +19,16 @@
       "image": "/assets/user_default.png",
       "created": "2021-02-27T19:23:08.026Z",
       "id": 2
+    },
+    {
+      "email": "trolol@gmail.com",
+      "password": "$2a$10$2JI.QjUsMLg.9qUaCervXOlVEO4GQWdxkWHthVGmUOhmLUjvAZIlO",
+      "firstname": "Nikolas",
+      "lastname": "Villant",
+      "bio": "I am new here...",
+      "image": "/assets/user_default.png",
+      "created": "2021-03-02T18:29:00.552Z",
+      "id": 3
     }
   ],
   "posts": [
@@ -71,6 +81,31 @@
       },
       "created": "2021-03-02T17:08:47.107Z",
       "id": 2
+    },
+    {
+      "name": "Zapekaný ryžový puding (Sutlac)",
+      "ingredients": [
+        "1/2liter voda",
+        "140g ryža",
+        "1 liter mlieko",
+        "1ks vanilkový struk",
+        "1KL citrónová kôra",
+        "250g kryštálový cukor",
+        "1štipka soľ"
+      ],
+      "recipe": "Vodu nalejeme do väčšieho hrnca, pridáme prepláchnutú ryžu, zakryjeme a na menšom plameni povaríme zhruba 15 minút.\n\nPotom pridáme mlieko, prepolený vanilkový struk, postrúhanú citrónovú kôru  a opäť privedieme k varu a spoločne, za občasného premiešania, povaríme ešte 30 minút.\n\nNakoniec k mliečnej ryži primiešame cukor, štipku soli a všetko spolu, za stáleho miešania, varíme ešte 5 minút.\n\nVytiahneme vanilkový struk a ryžu rozlejeme do zapekacích misiek.\n\nMisky poukladáme do hlbokého plechu, do ktorého nalejeme vriacu vodu (zhruba do tretiny výšky misiek) a dáme piecť do rúry vyhriatej na 200°C (s funkciou grilu) na cca 30 až 40 minút, kým sa na povrchu nevytvorí pripálená vrstva.\n\nRyžový puding môžeme podávať horúci, ale výborne chutí aj vychladnutý.",
+      "profile": {
+        "id": 1,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": "2021-02-25T11:33:42.052Z"
+      },
+      "created": "2021-03-02T18:26:28.496Z",
+      "id": 3
     }
   ],
   "comments": [

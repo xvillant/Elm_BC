@@ -171,8 +171,15 @@ viewPosts posts =
             div []
                 [ h2 [] [ text "My recipes" ]
                 , div [ class "line_after_recipes" ] []
-                , div [ class "articles_list" ]
-                    (List.map viewPost actualPosts)
+                , if List.isEmpty actualPosts then
+                    div [ class "articles_list" ]
+                        [ br [] []
+                        , p [ class "err" ] [ text "No recipes yet..." ]
+                        ]
+
+                  else
+                    div [ class "articles_list" ]
+                        (List.map viewPost actualPosts)
                 ]
 
         _ ->
