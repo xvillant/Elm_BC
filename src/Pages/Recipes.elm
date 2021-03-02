@@ -11,7 +11,10 @@ import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
+import Task
+import Time
 import TimeFormatting exposing (formatDate, formatTime)
+import TimeZone exposing (europe__bratislava)
 
 
 page : Page Params Model Msg
@@ -175,11 +178,15 @@ viewFetchError errorMessage =
 
 viewPost : Article -> Html Msg
 viewPost post =
+    let
+        timezone =
+            europe__bratislava ()
+    in
     ul [ class "post_list" ]
         [ h2 [ class "post_name" ]
             [ text post.name ]
-        , p [ class "datetime" ] [ text (formatDate <| post.created) ]
-        , p [ class "datetime" ] [ text (formatTime <| post.created) ]
+        , p [ class "datetime" ] [ text (formatDate timezone post.created) ]
+        , p [ class "datetime" ] [ text (formatTime timezone post.created) ]
         , p [ class "title" ] [ text "ingredients" ]
         , li [ class "value" ]
             [ String.join ", " post.ingredients |> text ]
@@ -194,3 +201,8 @@ viewPost post =
         , a [ href ("/article/" ++ String.fromInt post.id) ] [ button [ class "submit_button" ] [ text "Comment" ] ]
         , div [ class "line_after_recipes" ] []
         ]
+
+
+makeZoneList : Time.Zone -> Int -> List Time.Zone
+makeZoneList zone number =
+    List.repeat number zone

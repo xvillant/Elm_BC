@@ -18,6 +18,7 @@ import Spa.Url as Url exposing (Url)
 import Task
 import Time
 import TimeFormatting exposing (formatDate, formatTime)
+import TimeZone exposing (europe__bratislava)
 
 
 page : Page Params Model Msg
@@ -46,6 +47,7 @@ type alias Model =
     , commentString : String
     , warning : String
     , time : Time.Posix
+    , zone : Time.Zone
     }
 
 
@@ -56,8 +58,9 @@ init shared { params } =
       , comments = Loading
       , warning = ""
       , time = Time.millisToPosix 0
+      , zone = Time.utc
       }
-    , Cmd.batch [ getArticleRequest params { onResponse = ReceivedArticle }, getCommentsRequest params { onResponse = CommentsReceived }, Task.perform GetTime Time.now ]
+    , Cmd.batch [ getArticleRequest params { onResponse = ReceivedArticle }, getCommentsRequest params { onResponse = CommentsReceived }, Task.perform GetTime Time.now, Task.perform Timezone Time.here ]
     )
 
 
@@ -71,6 +74,7 @@ type Msg
     | AddComment String
     | SubmitComment
     | GetTime Time.Posix
+    | Timezone Time.Zone
     | CommentResponse (Data Comment)
 
 
@@ -94,6 +98,9 @@ update msg model =
                 ( { model | commentString = "" }
                 , postComment model { onResponse = CommentResponse }
                 )
+
+        Timezone tz ->
+            ( { model | zone = tz }, Cmd.none )
 
         GetTime time ->
             ( { model | time = time }, Cmd.none )
@@ -206,12 +213,16 @@ viewFetchError items errorMessage =
 
 viewComment : Comment -> Html Msg
 viewComment comment =
+    let
+        timezone =
+            europe__bratislava ()
+    in
     ul []
         [ li [ class "value" ]
             [ text comment.comment ]
         , li [ class "value" ]
-            [ p [ class "datetime" ] [ text (comment.created |> formatDate) ]
-            , p [ class "datetime" ] [ text (comment.created |> formatTime) ]
+            [ p [ class "datetime" ] [ text (formatDate timezone comment.created) ]
+            , p [ class "datetime" ] [ text (formatTime timezone comment.created) ]
             ]
         , a [ class "link", href ("/profile/" ++ String.fromInt comment.profile.id) ] [ text (comment.profile.firstname ++ " " ++ comment.profile.lastname) ]
         , div [ class "line_after_recipes" ] []
@@ -270,8 +281,8 @@ viewArticle model =
         Success value ->
             div []
                 [ h1 [] [ text value.name ]
-                , p [ class "datetime" ] [ text (value.created |> formatDate) ]
-                , p [ class "datetime" ] [ text (value.created |> formatTime) ]
+                , p [ class "datetime" ] [ text (formatDate model.zone value.created) ]
+                , p [ class "datetime" ] [ text (formatTime model.zone value.created) ]
                 , div []
                     [ p [ class "title" ] [ text "ingredients " ]
                     , p [ class "value" ] [ text <| String.join ", " value.ingredients ]
@@ -285,8 +296,7 @@ viewArticle model =
                     , a [ class "link", href ("/profile/" ++ String.fromInt value.profile.id) ] [ text (value.profile.firstname ++ " " ++ value.profile.lastname) ]
                     ]
                 , div []
-                    [ 
-                    textarea [ placeholder "Type your comment here...", cols 70, rows 10, Html.Attributes.value model.commentString, onInput AddComment, class "form" ] []
+                    [ textarea [ placeholder "Type your comment here...", cols 70, rows 10, Html.Attributes.value model.commentString, onInput AddComment, class "form" ] []
                     ]
                 , div []
                     [ button [ class "submit_button", onClick SubmitComment ] [ text "Share comment" ]

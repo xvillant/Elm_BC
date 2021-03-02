@@ -3,8 +3,8 @@ module TimeFormatting exposing (formatDate, formatTime)
 import DateFormat as DF
 import Time
 
-formatDate : Time.Posix -> String
-formatDate =
+formatDate : Time.Zone -> Time.Posix -> String
+formatDate zone time=
     DF.format
         [ DF.dayOfMonthSuffix
         , DF.text " "
@@ -12,12 +12,14 @@ formatDate =
         , DF.text ", "
         , DF.yearNumber
         ]
-        Time.utc
-formatTime : Time.Posix -> String
-formatTime =
+        zone
+        time
+formatTime : Time.Zone -> Time.Posix -> String
+formatTime zone time =
     DF.format
-        [ DF.hourMilitaryFromOneFixed
+        [ DF.hourMilitaryNumber
         , DF.text ":"
         , DF.minuteFixed
         ]
-        Time.utc
+        zone
+        time

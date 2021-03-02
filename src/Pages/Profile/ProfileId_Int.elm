@@ -1,8 +1,10 @@
 module Pages.Profile.ProfileId_Int exposing (Model, Msg, Params, page)
 
+import Api.Article exposing (Article, articlesDecoder)
 import Api.Data exposing (Data(..))
+import Api.Profile exposing (Profile, profileDecoder)
 import Html exposing (..)
-import Html.Attributes exposing (class, height, width, src, href)
+import Html.Attributes exposing (class, height, href, src, width)
 import Http exposing (..)
 import Json.Decode as D exposing (field)
 import Server exposing (url)
@@ -10,9 +12,11 @@ import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
-import Api.Profile exposing (Profile, profileDecoder)
-import Api.Article exposing (Article, articlesDecoder)
-import TimeFormatting exposing (formatTime, formatDate)
+import Task
+import Time
+import TimeFormatting exposing (formatDate, formatTime)
+import TimeZone exposing (europe__bratislava)
+
 
 page : Page Params Model Msg
 page =
@@ -38,15 +42,18 @@ type alias Model =
     { profile : Data Profile
     , posts : Data (List Article)
     , warning : String
+    , zone : Time.Zone
     }
+
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
     ( { profile = Loading
-      , posts = Loading 
+      , posts = Loading
       , warning = ""
+      , zone = Time.utc
       }
-    , Cmd.batch[getUserRequest params { onResponse = ReceivedUser }, getContentRequest params {onResponse = ReceivedPosts}]
+    , Cmd.batch [ getUserRequest params { onResponse = ReceivedUser }, getContentRequest params { onResponse = ReceivedPosts }, Task.perform Timezone Time.here ]
     )
 
 
@@ -57,6 +64,7 @@ init shared { params } =
 type Msg
     = ReceivedUser (Data Profile)
     | ReceivedPosts (Data (List Article))
+    | Timezone Time.Zone
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -64,8 +72,12 @@ update msg model =
     case msg of
         ReceivedUser response ->
             ( { model | profile = response }, Cmd.none )
+
         ReceivedPosts posts ->
             ( { model | posts = posts }, Cmd.none )
+
+        Timezone tz ->
+            ( { model | zone = tz }, Cmd.none )
 
 
 save : Model -> Shared.Model -> Shared.Model
@@ -93,7 +105,7 @@ view model =
         Success profile ->
             { title = "Profile | " ++ profile.email
             , body =
-                [ viewProfile model.profile
+                [ viewProfile model.zone model.profile
                 , div [ class "warning_form" ]
                     [ text model.warning ]
                 , viewPosts model.posts
@@ -103,7 +115,7 @@ view model =
         _ ->
             { title = "Profile"
             , body =
-                [ viewProfile model.profile
+                [ viewProfile model.zone model.profile
                 , div [ class "warning_form" ]
                     [ text model.warning ]
                 , viewPosts model.posts
@@ -111,32 +123,32 @@ view model =
             }
 
 
-viewProfile : Data Profile -> Html Msg
-viewProfile profile =
+viewProfile : Time.Zone -> Data Profile -> Html Msg
+viewProfile tz profile =
     case profile of
         NotAsked ->
             text ""
 
         Loading ->
-            div [ ]
+            div []
                 [ img [ src "/assets/loading.gif" ] [] ]
 
         Success value ->
-            div [ ]
-                [ h1 [ ] [ text (value.firstname ++ " " ++ value.lastname) ]
-                , img [src value.image, width 80, height 80][]
-                , div [ ]
+            div []
+                [ h1 [] [ text (value.firstname ++ " " ++ value.lastname) ]
+                , img [ src value.image, width 80, height 80 ] []
+                , div []
                     [ p [ class "title" ] [ text "email" ]
                     , p [ class "value" ] [ text value.email ]
                     ]
-                , div [ ]
+                , div []
                     [ p [ class "title" ] [ text "bio" ]
                     , p [ class "value" ] [ text value.bio ]
                     ]
-                , div [ ]
+                , div []
                     [ p [ class "title" ] [ text "created at" ]
-                    , p [ class "datetime" ] [ text (value.created |> formatDate)  ]
-                    , p [ class "datetime" ] [ text (value.created |> formatTime)  ]
+                    , p [ class "datetime" ] [ text (formatDate tz value.created) ]
+                    , p [ class "datetime" ] [ text (formatTime tz value.created) ]
                     ]
                 ]
 
@@ -151,12 +163,13 @@ getContentRequest params options =
         , expect = Api.Data.expectJson options.onResponse articlesDecoder
         }
 
+
 viewPosts : Data (List Article) -> Html Msg
 viewPosts posts =
     case posts of
         Success actualPosts ->
-            div [ ]
-                [ h2 [ ] [ text "My recipes" ]
+            div []
+                [ h2 [] [ text "My recipes" ]
                 , div [ class "line_after_recipes" ] []
                 , div [ class "articles_list" ]
                     (List.map viewPost actualPosts)
@@ -164,7 +177,6 @@ viewPosts posts =
 
         _ ->
             text ""
-
 
 
 getUserRequest : Params -> { onResponse : Data Profile -> Msg } -> Cmd Msg
@@ -177,14 +189,18 @@ getUserRequest params options =
 
 viewPost : Article -> Html Msg
 viewPost post =
+    let
+        timezone =
+            europe__bratislava ()
+    in
     ul [ class "post_list" ]
-        [ h2 [][text post.name]
-        , p[class "datetime"][ text (formatDate <| post.created) ]
-        , p[class "datetime"][ text (formatTime <| post.created) ]
+        [ h2 [] [ text post.name ]
+        , p [ class "datetime" ] [ text (formatDate timezone post.created) ]
+        , p [ class "datetime" ] [ text (formatTime timezone post.created) ]
         , p [ class "title" ] [ text "ingredients" ]
-        , li [ class "value" ][ String.join ", " post.ingredients |> text ]
+        , li [ class "value" ] [ String.join ", " post.ingredients |> text ]
         , p [ class "title" ] [ text "recipe" ]
-        , li [ class "value" ][ text post.recipe ]
+        , li [ class "value" ] [ text post.recipe ]
         , br [] []
         , a [ href ("/article/" ++ String.fromInt post.id) ] [ button [ class "submit_button" ] [ text "Comment" ] ]
         , div [ class "line_after_recipes" ] []
@@ -197,7 +213,7 @@ viewFetchError items errorMessage =
         errorHeading =
             "Couldn't fetch " ++ items ++ "."
     in
-    div [ ]
-        [ h1 [ ] [ text errorHeading ]
+    div []
+        [ h1 [] [ text errorHeading ]
         , text ("Error: " ++ errorMessage)
         ]

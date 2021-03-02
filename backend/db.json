@@ -23,11 +23,19 @@
   ],
   "posts": [
     {
-      "name": "Fsdf",
+      "name": "Karfiolovo-syrové fašírky",
       "ingredients": [
-        "dasd"
+        "1ks menší karfiol",
+        "100g tavený syr",
+        "100g strúhaný tvrdý syr (eidam",
+        "gouda",
+        "čedar",
+        "...)",
+        "1PL hladká múka",
+        "podľa chuti soľ a korenie",
+        "trochu oleja"
       ],
-      "recipe": "asdasdsad",
+      "recipe": "Karfiol umyjeme a ostrým nožom nasekáme, alebo rozmixujeme na malé kúsky, ktoré uvaríme v slanej vode a popučíme na pyré (s kvapkou vody, v ktorej sa varil).\n\nKarfiolovú kašu dáme do misky a pridáme tavený a postrúhaný syr, zľahka osolíme a okoreníme. Potom primiešame hladkú múku.\n\nZo zmesi navlhčenými rukami tvarujeme malé kroketky, ktoré následne obaľujeme v múke, vyšľahanom vajíčku a strúhanke.  \n\nKarfiolové kroketky vyprážame do zlatova  z oboch strán a podávame s varenými zemiakmi a domácim dresingom.",
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -38,15 +46,19 @@
         "image": "",
         "created": "2021-02-25T11:33:42.052Z"
       },
-      "created": "2021-03-02T11:50:05.511Z",
+      "created": "2021-03-02T17:05:18.110Z",
       "id": 1
     },
     {
-      "name": "Dasdasd",
+      "name": "Pečený bravčový bôčik na dánsky spôsob (Flæskesteg)",
       "ingredients": [
-        "adasdadsad"
+        "1kg bravčový bôčik s kožou",
+        "2PL morská soľ",
+        "10ks bôbkový list",
+        "1KL čierne korenie",
+        "1ks citrón (kôra)"
       ],
-      "recipe": "dlaskdjalsdljkaslkdasjdlkasdjlasdjkasdjklajkdajldasjkdakdjlasjdaskdjasldjaskldjasdjlkasdjasdjlasljdkaslkdjdasdsaklôdasdkasôdlkasdkôasdklôasdasklôdkasôdsakldôasdklsadôkasdlasd",
+      "recipe": "Kožu na reze mäsa husto priečene narežeme a zo všetkých strán votrieme soľ.\n\nMedzi zárezy na koži kde-tu vložíme bobkové listy a kožu ešte posypeme čerstvo zomletým/podrveným čiernym korením.\n\nMäso položíme na mriežku z rúry.\n\nDo spodnej polovice rúry, ktorú sme vyhriali na 180°C, vložíme plech asi s litrom vriacej vody. Do vody rozsypeme strúhanú citrónovú kôru.\n\nNad plech (do vyššieho stredu rúry) zasunieme mriežku a pri teplote 180°C pečieme prvých 60 minút.\n\nAk treba, po hodine dolejeme vodu, zvýšime teplotu na 200°C a pečieme ešte zhruba 45 minút. \n\nTakýto chrumkavý a voňavý bôčik je naozaj fantastický.",
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -57,103 +69,14 @@
         "image": "",
         "created": "2021-02-25T11:33:42.052Z"
       },
-      "created": "2021-03-02T12:24:09.949Z",
+      "created": "2021-03-02T17:08:47.107Z",
       "id": 2
-    },
-    {
-      "name": "Cfsdf",
-      "ingredients": [
-        "dasdasdasd"
-      ],
-      "recipe": "dasdasd",
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "2021-02-25T11:33:42.052Z"
-      },
-      "created": "2021-03-02T12:42:00.826Z",
-      "id": 3
-    },
-    {
-      "name": "Zelenka",
-      "ingredients": [
-        "dasdasdasd"
-      ],
-      "recipe": "dasdasdasdadasd",
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "2021-02-25T11:33:42.052Z"
-      },
-      "created": "2021-03-02T12:42:32.061Z",
-      "id": 4
-    },
-    {
-      "name": "Dasd",
-      "ingredients": [
-        "dasd"
-      ],
-      "recipe": "dasdsad",
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "2021-02-25T11:33:42.052Z"
-      },
-      "created": "2021-03-02T15:18:56.471Z",
-      "id": 5
     }
   ],
   "comments": [
     {
-      "comment": "fsdf",
-      "recipeid": 1,
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "1970-01-01T00:00:00.000Z"
-      },
-      "created": "2021-03-02T11:51:27.395Z",
-      "id": 1
-    },
-    {
-      "comment": "fsdfdsfdsfsdfdsfdsf",
-      "recipeid": 1,
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "1970-01-01T00:00:00.000Z"
-      },
-      "created": "2021-03-02T12:15:58.698Z",
-      "id": 2
-    },
-    {
       "comment": "dasd",
-      "recipeid": 4,
+      "recipeid": 1,
       "profile": {
         "id": 1,
         "email": "Drogba11144@gmail.com",
@@ -164,72 +87,8 @@
         "image": "",
         "created": "1970-01-01T00:00:00.000Z"
       },
-      "created": "2021-03-02T12:52:00.431Z",
-      "id": 3
-    },
-    {
-      "comment": "daskldjasd",
-      "recipeid": 4,
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "1970-01-01T00:00:00.000Z"
-      },
-      "created": "2021-03-02T14:11:25.624Z",
-      "id": 4
-    },
-    {
-      "comment": "dobre",
-      "recipeid": 4,
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "1970-01-01T00:00:00.000Z"
-      },
-      "created": "2021-03-02T15:14:59.499Z",
-      "id": 5
-    },
-    {
-      "comment": "dasdasd",
-      "recipeid": 4,
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "1970-01-01T00:00:00.000Z"
-      },
-      "created": "2021-03-02T15:17:28.003Z",
-      "id": 6
-    },
-    {
-      "comment": "aasda",
-      "recipeid": 3,
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "1970-01-01T00:00:00.000Z"
-      },
-      "created": "2021-03-02T15:20:06.754Z",
-      "id": 7
+      "created": "2021-03-02T17:57:17.509Z",
+      "id": 1
     }
   ]
 }
