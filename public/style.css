@@ -156,6 +156,7 @@ input:focus{
   font-size: 25px;
   font-weight: bold;
   color: rgb(255, 75, 75);
+  margin-top: 20px;
 }
 
 .line_after_recipes{
@@ -208,7 +209,7 @@ h1 {
    color: #4CAF50;
    text-decoration: underline;
    text-decoration-color: transparent;
-   transition: all 0.5s ease 0s;
+   transition: all 0.7s ease 0s;
 
  }
 
