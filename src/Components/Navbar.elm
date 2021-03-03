@@ -6,6 +6,7 @@ import Html.Attributes exposing (alt, class, classList, height, href, src, width
 import Html.Events as Events exposing (onClick)
 import Spa.Generated.Route as Route exposing (Route, toString)
 import Url exposing (Url)
+import String
 
 
 view :
@@ -30,6 +31,17 @@ viewHeaderLoggedIn :
     }
     -> Html msg
 viewHeaderLoggedIn options =
+    let
+        myprofile = "/profile/" ++ String.fromInt
+                            (case options.user of
+                                Nothing ->
+                                    0
+
+                                Just user ->
+                                    user.id
+                            )
+    in
+    
     header []
         [ a [ href (Route.toString Route.Top) ] [ img [ class "logo", src "/assets/lunch.png", width 50, height 50, alt "logo" ] [] ]
         , ul [ class "nav__links" ]
@@ -71,20 +83,13 @@ viewHeaderLoggedIn options =
                 ]
             , li []
                 [ a
-                    [ href ("/profile/"
-                        ++ String.fromInt
-                            (case options.user of
-                                Nothing ->
-                                    0
-
-                                Just user ->
-                                    user.id
-                            ))
-                    , case options.url.path of
-                        "/profile/1" ->
+                    [ href myprofile
+                        
+                    , if String.contains myprofile options.url.path 
+                    then
                             class "active_link"
 
-                        _ ->
+                    else
                             class "navbar-elements"
                     ]
                     [ i [ class "fas fa-user" ] [] ]

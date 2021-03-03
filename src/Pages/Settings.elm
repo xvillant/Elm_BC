@@ -221,7 +221,7 @@ updateProfile model options =
     Http.request
         { method = "PUT"
         , headers = []
-        , url = Server.url ++ "/users/" ++ String.fromInt model.id
+        , url = url ++ "/users/" ++ String.fromInt model.id
         , body = Http.jsonBody <| encodeUser model
         , expect = Api.Data.expectJson options.onResponse userDecoder
         , timeout = Nothing

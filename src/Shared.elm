@@ -9,12 +9,11 @@ module Shared exposing
     )
 
 import Api.User exposing (User, userDecoder)
-import Browser.Navigation as Nav exposing (Key, pushUrl)
+import Browser.Navigation exposing (Key, pushUrl)
 import Components.Footer
 import Components.Navbar
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
 import Json.Decode as D
 import Ports exposing (clearUser)
 import Spa.Document exposing (Document)
@@ -59,7 +58,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         SignOutSignal ->
-            ( { model | user = Nothing }, Cmd.batch [ Nav.pushUrl model.key "/", clearUser ] )
+            ( { model | user = Nothing }, Cmd.batch [ pushUrl model.key "/", clearUser ] )
 
 
 subscriptions : Model -> Sub Msg

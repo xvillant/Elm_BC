@@ -6,12 +6,11 @@ import Html exposing (..)
 import Html.Attributes exposing (class, href, placeholder, src, type_, value)
 import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
-import Server
+import Server exposing (url)
 import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
-import Spa.Url as Url exposing (Url)
-import Task
+import Spa.Url exposing (Url)
 import Time
 import TimeFormatting exposing (formatDate, formatTime)
 import TimeZone exposing (europe__bratislava)
@@ -108,7 +107,7 @@ view model =
 getContentRequest : String -> String -> String -> { onResponse : Data (List Article) -> Msg } -> Cmd Msg
 getContentRequest searched sorting order options =
     Http.get
-        { url = Server.url ++ "/posts?_sort=" ++ sorting ++ "&_order=" ++ order ++ "&q=" ++ searched
+        { url = url ++ "/posts?_sort=" ++ sorting ++ "&_order=" ++ order ++ "&q=" ++ searched
         , expect = Api.Data.expectJson options.onResponse articlesDecoder
         }
 

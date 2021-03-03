@@ -1,14 +1,12 @@
 module Pages.Top exposing (Model, Msg, Params, page)
 
 import Array
-import Browser.Navigation as Nav exposing (Key)
 import Components.Carousel as Carousel
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
-import Spa.Url as Url exposing (Url)
-import Time
+import Spa.Url exposing (Url)
 
 
 page : Page Params Model Msg
@@ -30,8 +28,7 @@ type alias Params =
 
 
 type alias Model =
-    { carousel : Carousel.Model
-    }
+    { carousel : Carousel.Model }
 
 
 init : Url Params -> ( Model, Cmd Msg )
