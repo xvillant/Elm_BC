@@ -95,21 +95,19 @@ update msg model =
             ( { model | password = password }, Cmd.none )
 
         Submit ->
-            if String.length model.email == 0 then
+            if String.isEmpty model.email then
                 ( { model | warning = "Type your email!" }, Cmd.none )
 
-            else if String.length model.password == 0 then
+            else if String.isEmpty model.password then
                 ( { model | warning = "Type your password!" }, Cmd.none )
 
             else
-                ( model, loginRequest model )
+                ( {model | warning = "Loading..."}, loginRequest model )
 
         Response response ->
             case response of
                 Ok value ->
-                    ( model
-                    , getUser value model {onResponse = GotUser}
-                    )
+                    ( {model | warning = "Loading..."}, getUser value model {onResponse = GotUser})
 
                 Err err ->
                     ( { model | warning = httpErrorString err }, Cmd.none )

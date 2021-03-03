@@ -85,13 +85,13 @@ update msg model =
             ( { model | recipe = recipe }, Cmd.none )
 
         Submit ->
-            if String.length model.name == 0 then
+            if String.isEmpty model.name then
                 ( { model | warning = "Enter recipe name!" }, Cmd.none )
 
-            else if String.length model.ingredients == 0 then
+            else if String.isEmpty model.ingredients then
                 ( { model | warning = "Enter ingredients!" }, Cmd.none )
 
-            else if String.length model.recipe == 0 then
+            else if String.isEmpty model.recipe then
                 ( { model | warning = "Enter recipe!" }, Cmd.none )
 
             else

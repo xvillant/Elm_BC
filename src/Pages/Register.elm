@@ -88,22 +88,22 @@ update msg model =
             ( { model | passwordAgain = password }, Cmd.none )
 
         Submit ->
-            if String.length model.firstname == 0 then
+            if String.isEmpty model.firstname then
                 ( { model | warning = "Enter your first name!" }, Cmd.none )
 
-            else if String.length model.lastname == 0 then
+            else if String.isEmpty model.lastname then
                 ( { model | warning = "Enter your last name!" }, Cmd.none )
 
-            else if model.email == "" then
+            else if String.isEmpty model.email then
                 ( { model | warning = "Enter your email!" }, Cmd.none )
 
-            else if model.password == "" then
+            else if String.isEmpty model.password then
                 ( { model | warning = "Enter your password!" }, Cmd.none )
 
             else if passwordLength model.password then
                 ( { model | warning = "Password is short!" }, Cmd.none )
 
-            else if model.passwordAgain == "" then
+            else if String.isEmpty model.passwordAgain then
                 ( { model | warning = "Enter your password again!" }, Cmd.none )
 
             else if model.password /= model.passwordAgain && String.length model.passwordAgain > 0 then
