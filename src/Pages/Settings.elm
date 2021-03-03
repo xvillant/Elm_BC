@@ -1,18 +1,20 @@
 module Pages.Settings exposing (Model, Msg, Params, page)
 
+import Api.Data exposing (Data(..))
+import Api.User exposing (User, userDecoder)
+import Browser.Navigation exposing (Key, pushUrl)
 import Html exposing (..)
-import Html.Attributes exposing (value, class, id, placeholder, type_, rows, cols)
-import Html.Events exposing (onInput, onClick)
+import Html.Attributes exposing (class, cols, id, placeholder, rows, type_, value)
+import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
+import Iso8601
+import Json.Encode as E exposing (..)
 import Server exposing (url)
 import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
-import Json.Encode as E exposing (..)
-import Browser.Navigation exposing (Key, pushUrl)
 import Time
-import Iso8601
 
 
 page : Page Params Model Msg
@@ -42,9 +44,11 @@ type alias Model =
     , bio : String
     , firstname : String
     , lastname : String
+    , password : String
     , created : Time.Posix
     , warning : String
     , key : Key
+    , user : Maybe User
     }
 
 
@@ -57,10 +61,12 @@ init shared { params } =
             , lastname = user.lastname
             , bio = user.bio
             , email = user.email
+            , password = ""
             , id = user.id
             , created = user.created
             , warning = ""
             , key = shared.key
+            , user = shared.user
             }
 
         Nothing ->
@@ -70,9 +76,11 @@ init shared { params } =
             , bio = ""
             , email = ""
             , id = 0
+            , password = ""
             , warning = ""
             , created = Time.millisToPosix 0
             , key = shared.key
+            , user = Nothing
             }
     , Cmd.none
     )
@@ -87,9 +95,10 @@ type Msg
     | LastName String
     | Email String
     | Image String
+    | Password String
     | Bio String
     | SubmitUpdate
-    | Updated (Result Http.Error String)
+    | Updated (Data User)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -104,27 +113,41 @@ update msg model =
         Email email ->
             ( { model | email = email }, Cmd.none )
 
+        Password password ->
+            ( { model | password = password }, Cmd.none )
+
         Bio bio ->
             ( { model | bio = bio }, Cmd.none )
 
         Image image ->
             ( { model | image = image }, Cmd.none )
-        
-        SubmitUpdate ->
-            ( model, updateProfile model )
-        
-        Updated response ->
-            case response of
-                Ok value ->
-                    ( { model | warning = "Successfully updated profile!" }, pushUrl model.key "/recipes" )
 
-                Err err ->
-                    ( { model | warning = "Something went wrong" }, Cmd.none )
+        SubmitUpdate ->
+            if String.isEmpty model.firstname then
+                ( { model | warning = "Type your first name!" }, Cmd.none )
+
+            else if String.isEmpty model.lastname then
+                ( { model | warning = "Type your last name!" }, Cmd.none )
+
+            else if String.isEmpty model.email then
+                ( { model | warning = "Type your email!" }, Cmd.none )
+
+            else if String.isEmpty model.image then
+                ( { model | warning = "Type your image URL!" }, Cmd.none )
+
+            else if String.isEmpty model.password then
+                ( { model | warning = "Type your password!" }, Cmd.none )
+
+            else
+                ( { model | warning = "Loading..." }, updateProfile model { onResponse = Updated } )
+
+        Updated response ->
+            ( { model | user = Api.Data.toMaybe response }, pushUrl model.key "/" )
 
 
 save : Model -> Shared.Model -> Shared.Model
 save model shared =
-    shared
+    { shared | user = model.user }
 
 
 load : Shared.Model -> Model -> ( Model, Cmd Msg )
@@ -145,9 +168,9 @@ view : Model -> Document Msg
 view model =
     { title = "Settings"
     , body =
-        [ div [ ]
-            [ h1 [ ] [ text "Settings" ]
-            , div [ ]
+        [ div []
+            [ h1 [] [ text "Settings" ]
+            , div []
                 [ input
                     [ id "firstname"
                     , type_ "text"
@@ -158,7 +181,7 @@ view model =
                     ]
                     []
                 ]
-            , div [ ]
+            , div []
                 [ input
                     [ id "lastname"
                     , type_ "text"
@@ -169,7 +192,7 @@ view model =
                     ]
                     []
                 ]
-            , div [ ]
+            , div []
                 [ input
                     [ id "email"
                     , type_ "email"
@@ -180,7 +203,7 @@ view model =
                     ]
                     []
                 ]
-            , div [ ]
+            , div []
                 [ input
                     [ id "image"
                     , type_ "text"
@@ -191,7 +214,18 @@ view model =
                     ]
                     []
                 ]
-            , div [ ]
+            , div []
+                [ input
+                    [ id "password"
+                    , type_ "password"
+                    , placeholder "Type your new password"
+                    , value model.password
+                    , onInput Password
+                    , class "form"
+                    ]
+                    []
+                ]
+            , div []
                 [ textarea
                     [ id "bio"
                     , placeholder "Type your bio"
@@ -203,7 +237,7 @@ view model =
                     ]
                     []
                 ]
-            , div [ ]
+            , div []
                 [ button [ class "submit_button", onClick SubmitUpdate ] [ text "Save settings" ] ]
             , div [ class "warning_form" ]
                 [ text model.warning ]
@@ -211,29 +245,29 @@ view model =
         ]
     }
 
-    
 
+updateProfile : Model -> { onResponse : Data User -> Msg } -> Cmd Msg
+updateProfile model options =
+    Http.request
+        { method = "PUT"
+        , headers = []
+        , url = Server.url ++ "/users/" ++ String.fromInt model.id
+        , body = Http.jsonBody <| encodeUser model
+        , expect = Api.Data.expectJson options.onResponse userDecoder
+        , timeout = Nothing
+        , tracker = Nothing
+        }
 
-updateProfile : Model -> Cmd Msg
-updateProfile model =
-  Http.request
-    { method = "PUT"
-    , headers = []
-    , url = Server.url ++ "/users/" ++ String.fromInt model.id
-    , body = Http.jsonBody <| encodeUser model
-    , expect = Http.expectString Updated
-    , timeout = Nothing
-    , tracker = Nothing
-    }
 
 encodeUser : Model -> E.Value
-encodeUser model = 
-    E.object [
-        ("id", E.int model.id),
-        ("firstname", E.string model.firstname),
-        ("lastname", E.string model.lastname),
-        ("bio", E.string model.bio),
-        ("created", Iso8601.encode model.created),
-        ("email", E.string model.email),
-        ("image", E.string model.image)
-    ]
+encodeUser model =
+    E.object
+        [ ( "id", E.int model.id )
+        , ( "firstname", E.string model.firstname )
+        , ( "lastname", E.string model.lastname )
+        , ( "password", E.string model.password )
+        , ( "bio", E.string model.bio )
+        , ( "created", Iso8601.encode model.created )
+        , ( "email", E.string model.email )
+        , ( "image", E.string model.image )
+        ]

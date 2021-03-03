@@ -1,128 +1,52 @@
 {
   "users": [
     {
-      "email": "lolo@gmail.com",
-      "password": "$2a$10$YdWQBWhOLiGjGV/AXwGTH.IEh/X0vbmmdAA9opKYF9tI3D65m.zMS",
-      "firstname": "Kevin",
-      "lastname": "Minarik",
-      "bio": "I am new here...",
-      "image": "/assets/user_default.png",
-      "created": "2021-02-27T17:19:31.517Z",
-      "id": 1
-    },
-    {
-      "email": "blbost@gmail.com",
-      "password": "$2a$10$EeYxk8dhbKUHZgpM47RWm.QlqKyA6L4IzvzCJHGxzhPAhze2Hw3NC",
-      "firstname": "Nolifer",
-      "lastname": "Cauko",
-      "bio": "I am new here...",
-      "image": "/assets/user_default.png",
-      "created": "2021-02-27T19:23:08.026Z",
-      "id": 2
-    },
-    {
-      "email": "trolol@gmail.com",
-      "password": "$2a$10$2JI.QjUsMLg.9qUaCervXOlVEO4GQWdxkWHthVGmUOhmLUjvAZIlO",
-      "firstname": "Nikolas",
+      "id": 1,
+      "firstname": "Janos",
       "lastname": "Villant",
-      "bio": "I am new here...",
-      "image": "/assets/user_default.png",
-      "created": "2021-03-02T18:29:00.552Z",
-      "id": 3
+      "password": "$2a$10$IARZ9xVjTei5EfZgIWZ8eeMDxyeKqNfvQt33mDkuAgEeEvmgDVcaS",
+      "bio": "",
+      "created": "2021-03-03T14:30:03.651Z",
+      "email": "lolo@gmail.com",
+      "image": "/assets/user_default.png"
     }
   ],
   "posts": [
     {
-      "name": "Karfiolovo-syrové fašírky",
+      "name": "Dobry receptik",
       "ingredients": [
-        "1ks menší karfiol",
-        "100g tavený syr",
-        "100g strúhaný tvrdý syr (eidam",
-        "gouda",
-        "čedar",
-        "...)",
-        "1PL hladká múka",
-        "podľa chuti soľ a korenie",
-        "trochu oleja"
+        "dasdas"
       ],
-      "recipe": "Karfiol umyjeme a ostrým nožom nasekáme, alebo rozmixujeme na malé kúsky, ktoré uvaríme v slanej vode a popučíme na pyré (s kvapkou vody, v ktorej sa varil).\n\nKarfiolovú kašu dáme do misky a pridáme tavený a postrúhaný syr, zľahka osolíme a okoreníme. Potom primiešame hladkú múku.\n\nZo zmesi navlhčenými rukami tvarujeme malé kroketky, ktoré následne obaľujeme v múke, vyšľahanom vajíčku a strúhanke.  \n\nKarfiolové kroketky vyprážame do zlatova  z oboch strán a podávame s varenými zemiakmi a domácim dresingom.",
+      "recipe": "dasdad",
       "profile": {
         "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
+        "email": "lolo@gmail.com",
+        "firstname": "Nikolas",
         "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "2021-02-25T11:33:42.052Z"
+        "bio": "I am new here...",
+        "password": "$2a$10$DkV0vHYF/ArCU/SgNQwqfOmAe.JOTJLtMg.H.aWp0gISpUO3yjXb2",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-03T14:30:03.651Z"
       },
-      "created": "2021-03-02T17:05:18.110Z",
+      "created": "2021-03-03T14:35:44.910Z",
       "id": 1
-    },
-    {
-      "name": "Pečený bravčový bôčik na dánsky spôsob (Flæskesteg)",
-      "ingredients": [
-        "1kg bravčový bôčik s kožou",
-        "2PL morská soľ",
-        "10ks bôbkový list",
-        "1KL čierne korenie",
-        "1ks citrón (kôra)"
-      ],
-      "recipe": "Kožu na reze mäsa husto priečene narežeme a zo všetkých strán votrieme soľ.\n\nMedzi zárezy na koži kde-tu vložíme bobkové listy a kožu ešte posypeme čerstvo zomletým/podrveným čiernym korením.\n\nMäso položíme na mriežku z rúry.\n\nDo spodnej polovice rúry, ktorú sme vyhriali na 180°C, vložíme plech asi s litrom vriacej vody. Do vody rozsypeme strúhanú citrónovú kôru.\n\nNad plech (do vyššieho stredu rúry) zasunieme mriežku a pri teplote 180°C pečieme prvých 60 minút.\n\nAk treba, po hodine dolejeme vodu, zvýšime teplotu na 200°C a pečieme ešte zhruba 45 minút. \n\nTakýto chrumkavý a voňavý bôčik je naozaj fantastický.",
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "2021-02-25T11:33:42.052Z"
-      },
-      "created": "2021-03-02T17:08:47.107Z",
-      "id": 2
-    },
-    {
-      "name": "Zapekaný ryžový puding (Sutlac)",
-      "ingredients": [
-        "1/2liter voda",
-        "140g ryža",
-        "1 liter mlieko",
-        "1ks vanilkový struk",
-        "1KL citrónová kôra",
-        "250g kryštálový cukor",
-        "1štipka soľ"
-      ],
-      "recipe": "Vodu nalejeme do väčšieho hrnca, pridáme prepláchnutú ryžu, zakryjeme a na menšom plameni povaríme zhruba 15 minút.\n\nPotom pridáme mlieko, prepolený vanilkový struk, postrúhanú citrónovú kôru  a opäť privedieme k varu a spoločne, za občasného premiešania, povaríme ešte 30 minút.\n\nNakoniec k mliečnej ryži primiešame cukor, štipku soli a všetko spolu, za stáleho miešania, varíme ešte 5 minút.\n\nVytiahneme vanilkový struk a ryžu rozlejeme do zapekacích misiek.\n\nMisky poukladáme do hlbokého plechu, do ktorého nalejeme vriacu vodu (zhruba do tretiny výšky misiek) a dáme piecť do rúry vyhriatej na 200°C (s funkciou grilu) na cca 30 až 40 minút, kým sa na povrchu nevytvorí pripálená vrstva.\n\nRyžový puding môžeme podávať horúci, ale výborne chutí aj vychladnutý.",
-      "profile": {
-        "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "2021-02-25T11:33:42.052Z"
-      },
-      "created": "2021-03-02T18:26:28.496Z",
-      "id": 3
     }
   ],
   "comments": [
     {
-      "comment": "dasd",
+      "comment": "pravda",
       "recipeid": 1,
       "profile": {
         "id": 1,
-        "email": "Drogba11144@gmail.com",
-        "firstname": "Patrik",
+        "email": "lolo@gmail.com",
+        "firstname": "Nikolas",
         "lastname": "Villant",
-        "bio": "",
-        "password": "",
-        "image": "",
-        "created": "1970-01-01T00:00:00.000Z"
+        "bio": "I am new here...",
+        "password": "$2a$10$DkV0vHYF/ArCU/SgNQwqfOmAe.JOTJLtMg.H.aWp0gISpUO3yjXb2",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-03T14:30:03.651Z"
       },
-      "created": "2021-03-02T17:57:17.509Z",
+      "created": "2021-03-03T14:36:12.793Z",
       "id": 1
     }
   ]

@@ -2,8 +2,10 @@ module Pages.New exposing (Model, Msg, Params, page)
 
 import Api.Article exposing (Article, articleDecoder)
 import Api.Data exposing (Data(..))
+import Api.User exposing (User)
 import Browser.Navigation as Nav exposing (Key, pushUrl)
 import Elm.Module exposing (Name)
+import FeatherIcons exposing (user)
 import Html exposing (..)
 import Html.Attributes exposing (autocomplete, class, cols, id, placeholder, rows, type_, value)
 import Html.Events exposing (onClick, onInput)
@@ -48,12 +50,13 @@ type alias Model =
     , warning : String
     , time : Time.Posix
     , key : Key
+    , user : Maybe User
     }
 
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( { name = "", ingredients = "", recipe = "", warning = "", key = shared.key, time = Time.millisToPosix 0 }, Task.perform GetTime Time.now )
+    ( { name = "", ingredients = "", recipe = "", warning = "", key = shared.key, time = Time.millisToPosix 0, user = shared.user }, Task.perform GetTime Time.now )
 
 
 
@@ -92,7 +95,7 @@ update msg model =
                 ( { model | warning = "Enter recipe!" }, Cmd.none )
 
             else
-                ( { model | warning = "Loading..." }, postArticle model { onResponse = Response } ) 
+                ( { model | warning = "Loading..." }, postArticle model { onResponse = Response } )
 
         GetTime time ->
             ( { model | time = time }, Cmd.none )
@@ -113,7 +116,7 @@ save model shared =
 
 load : Shared.Model -> Model -> ( Model, Cmd Msg )
 load shared model =
-    ( model, Cmd.none )
+    ( { model | user = shared.user }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
@@ -129,9 +132,9 @@ view : Model -> Document Msg
 view model =
     { title = "New Article"
     , body =
-        [ div [ ]
-            [ h1 [ ] [ text "New Article" ]
-            , div [ ]
+        [ div []
+            [ h1 [] [ text "New Article" ]
+            , div []
                 [ input
                     [ id "recipe_name"
                     , type_ "text"
@@ -143,7 +146,7 @@ view model =
                     ]
                     []
                 ]
-            , div [ ]
+            , div []
                 [ input
                     [ id "ingredients"
                     , type_ "text"
@@ -155,7 +158,7 @@ view model =
                     ]
                     []
                 ]
-            , div [ ]
+            , div []
                 [ textarea
                     [ id "recipe"
                     , value model.recipe
@@ -167,7 +170,7 @@ view model =
                     ]
                     []
                 ]
-            , div [ ]
+            , div []
                 [ button [ class "submit_button", onClick Submit ] [ text "Share recipe" ] ]
             , div [ class "warning_form" ]
                 [ text model.warning ]
@@ -184,16 +187,30 @@ postArticle model options =
             , ( "ingredients", E.list E.string <| List.map String.trim <| String.split "," model.ingredients )
             , ( "recipe", E.string model.recipe )
             , ( "profile"
-              , E.object
-                    [ ( "id", E.int 1 )
-                    , ( "email", E.string "Drogba11144@gmail.com" )
-                    , ( "firstname", E.string "Patrik" )
-                    , ( "lastname", E.string "Villant" )
-                    , ( "bio", E.string "" )
-                    , ( "password", E.string "" )
-                    , ( "image", E.string "" )
-                    , ( "created", E.string "2021-02-25T11:33:42.052Z" )
-                    ]
+              , case model.user of
+                    Just user ->
+                        E.object
+                            [ ( "id", E.int user.id )
+                            , ( "email", E.string user.email )
+                            , ( "firstname", E.string user.firstname )
+                            , ( "lastname", E.string user.lastname )
+                            , ( "bio", E.string user.bio )
+                            , ( "password", E.string user.password )
+                            , ( "image", E.string user.image )
+                            , ( "created", Iso8601.encode user.created )
+                            ]
+
+                    Nothing ->
+                        E.object
+                            [ ( "id", E.int 0 )
+                            , ( "email", E.string "" )
+                            , ( "firstname", E.string "" )
+                            , ( "lastname", E.string "" )
+                            , ( "bio", E.string "" )
+                            , ( "password", E.string "" )
+                            , ( "image", E.string "" )
+                            , ( "created", E.string "" )
+                            ]
               )
             , ( "created", Iso8601.encode model.time )
             ]

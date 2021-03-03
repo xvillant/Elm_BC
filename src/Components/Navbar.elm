@@ -20,7 +20,7 @@ view options =
             viewHeaderLoggedIn options
 
         Nothing ->
-            viewAll options
+            viewHeaderNotLoggedIn options
 
 
 viewHeaderLoggedIn :
@@ -30,82 +30,78 @@ viewHeaderLoggedIn :
     }
     -> Html msg
 viewHeaderLoggedIn options =
-    header
-        [ class "header" ]
-        [ div
-            [ class "inner-header" ]
-            [ div
-                [ class "logo-container" ]
-                [ img [ src "/assets/recipelogo.svg", width 50, height 50 ] [], text "RECIPES" ]
-            , ul
-                [ class "navigation" ]
+    header []
+        [ a [ href (Route.toString Route.Top) ] [ img [ class "logo", src "/assets/lunch.png", width 50, height 50, alt "logo" ] [] ]
+        , ul [ class "nav__links" ]
+            [ li []
                 [ a
-                    [ class "link", href (Route.toString Route.Top) ]
-                    [ li
-                        [ case options.url.path of
-                            "/" ->
-                                class "active_link"
+                    [ href (Route.toString Route.Top)
+                    , case options.url.path of
+                        "/" ->
+                            class "active_link"
 
-                            _ ->
-                                class "navbar-elements"
-                        ]
-                        [ i [ class "fas fa-home" ] [] ]
+                        _ ->
+                            class "navbar-elements"
                     ]
-                , a
-                    [ class "link", href (Route.toString Route.Recipes) ]
-                    [ li
-                        [ case options.url.path of
-                            "/recipes" ->
-                                class "active_link"
-
-                            _ ->
-                                class "navbar-elements"
-                        ]
-                        [ i [ class "fas fa-book" ] [] ]
-                    ]
-                , a
-                    [ class "link", href "/profile/1" ]
-                    [ li
-                        [ case options.url.path of
-                            "/profile" ->
-                                class "active_link"
-
-                            _ ->
-                                class "navbar-elements"
-                        ]
-                        [ i [ class "fas fa-user" ] [] ]
-                    ]
-                , a
-                    [ class "link", href (Route.toString Route.Settings) ]
-                    [ li
-                        [ case options.url.path of
-                            "/settings" ->
-                                class "active_link"
-
-                            _ ->
-                                class "navbar-elements"
-                        ]
-                        [ i [ class "fas fa-cogs" ] [] ]
-                    ]
-                , a
-                    [ class "link", href (Route.toString Route.New) ]
-                    [ li
-                        [ case options.url.path of
-                            "/new" ->
-                                class "active_link"
-
-                            _ ->
-                                class "navbar-elements"
-                        ]
-                        [ i [ class "fas fa-plus-circle" ] [] ]
-                    ]
-                , a
-                    [ class "link", Events.onClick options.onSignOut ]
-                    [ li
-                        [ class "navbar-elements" ]
-                        [ i [ class "fas fa-sign-out-alt" ] [] ]
-                    ]
+                    [ i [ class "fas fa-home" ] [] ]
                 ]
+            , li []
+                [ a
+                    [ href (Route.toString Route.Recipes)
+                    , case options.url.path of
+                        "/recipes" ->
+                            class "active_link"
+
+                        _ ->
+                            class "navbar-elements"
+                    ]
+                    [ i [ class "fas fa-book" ] [] ]
+                ]
+            , li []
+                [ a
+                    [ href (Route.toString Route.New)
+                    , case options.url.path of
+                        "/new" ->
+                            class "active_link"
+
+                        _ ->
+                            class "navbar-elements"
+                    ]
+                    [ i [ class "fas fa-plus-circle" ] [] ]
+                ]
+            , li []
+                [ a
+                    [ href ("/profile/"
+                        ++ String.fromInt
+                            (case options.user of
+                                Nothing ->
+                                    0
+
+                                Just user ->
+                                    user.id
+                            ))
+                    , case options.url.path of
+                        "/profile/1" ->
+                            class "active_link"
+
+                        _ ->
+                            class "navbar-elements"
+                    ]
+                    [ i [ class "fas fa-user" ] [] ]
+                ]
+            , li []
+                [ a
+                    [ href (Route.toString Route.Settings)
+                    , case options.url.path of
+                        "/settings" ->
+                            class "active_link"
+
+                        _ ->
+                            class "navbar-elements"
+                    ]
+                    [ i [ class "fas fa-cogs" ] [] ]
+                ]
+            , li [] [ a [ class "sign-out", onClick options.onSignOut ] [ i [ class "fas fa-sign-out-alt" ] [] ] ]
             ]
         ]
 
@@ -117,57 +113,51 @@ viewHeaderNotLoggedIn :
     }
     -> Html msg
 viewHeaderNotLoggedIn options =
-    header
-        [ class "header" ]
-        [ div
-            [ class "inner-header" ]
-            [ div
-                [ class "logo-container" ]
-                [ img [ src "/assets/recipelogo.svg", width 50, height 50 ] [], text "RECIPES" ]
-            , ul
-                [ class "navigation" ]
+    header []
+        [ a [ href (Route.toString Route.Top) ] [ img [ class "logo", src "/assets/lunch.png", width 50, height 50, alt "logo" ] [] ]
+        , ul [ class "nav__links" ]
+            [ li []
                 [ a
-                    [ class "link", href (Route.toString Route.Top) ]
-                    [ li
-                        [ case options.url.path of
-                            "/" ->
-                                class "active_link"
+                    [ href (Route.toString Route.Top)
+                    , case options.url.path of
+                        "/" ->
+                            class "active_link"
 
-                            _ ->
-                                class "navbar-elements"
-                        ]
-                        [ i [ class "fas fa-home" ] [] ]
+                        _ ->
+                            class "navbar-elements"
                     ]
-                , a
-                    [ class "link", href (Route.toString Route.Register) ]
-                    [ li
-                        [ case options.url.path of
-                            "/register" ->
-                                class "active_link"
+                    [ i [ class "fas fa-home" ] [] ]
+                ]
+            , li []
+                [ a
+                    [ href (Route.toString Route.Login)
+                    , case options.url.path of
+                        "/login" ->
+                            class "active_link"
 
-                            _ ->
-                                class "navbar-elements"
-                        ]
-                        [ text "sign up" ]
+                        _ ->
+                            class "navbar-elements"
                     ]
-                , a
-                    [ class "link", href (Route.toString Route.Login) ]
-                    [ li
-                        [ case options.url.path of
-                            "/login" ->
-                                class "active_link"
+                    [ text "sign in" ]
+                ]
+            , li []
+                [ a
+                    [ href (Route.toString Route.Register)
+                    , case options.url.path of
+                        "/register" ->
+                            class "active_link"
 
-                            _ ->
-                                class "navbar-elements"
-                        ]
-                        [ text "sign in" ]
+                        _ ->
+                            class "navbar-elements"
                     ]
+                    [ text "sign up" ]
                 ]
             ]
         ]
 
 
-viewAll :
+
+{--viewAll :
     { user : Maybe User
     , url : Url
     , onSignOut : msg
@@ -264,3 +254,4 @@ viewAll options =
                 ]
             ]
         ]
+--}

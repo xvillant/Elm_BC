@@ -19,6 +19,7 @@ import Task
 import Time
 import TimeFormatting exposing (formatDate, formatTime)
 import TimeZone exposing (europe__bratislava)
+import Api.User exposing (User)
 
 
 page : Page Params Model Msg
@@ -48,6 +49,7 @@ type alias Model =
     , warning : String
     , time : Time.Posix
     , zone : Time.Zone
+    , user : Maybe User
     }
 
 
@@ -59,6 +61,7 @@ init shared { params } =
       , warning = ""
       , time = Time.millisToPosix 0
       , zone = Time.utc
+      , user = shared.user
       }
     , Cmd.batch [ getArticleRequest params { onResponse = ReceivedArticle }, getCommentsRequest params { onResponse = CommentsReceived }, Task.perform GetTime Time.now, Task.perform Timezone Time.here ]
     )
@@ -123,7 +126,7 @@ save model shared =
 
 load : Shared.Model -> Model -> ( Model, Cmd Msg )
 load shared model =
-    ( model, Cmd.none )
+    ( {model | user = shared.user}, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
@@ -244,16 +247,30 @@ encodeComment model =
                 )
           )
         , ( "profile"
-          , E.object
-                [ ( "id", E.int 1 )
-                , ( "email", E.string "Drogba11144@gmail.com" )
-                , ( "firstname", E.string "Patrik" )
-                , ( "lastname", E.string "Villant" )
-                , ( "bio", E.string "" )
-                , ( "password", E.string "" )
-                , ( "image", E.string "" )
-                , ( "created", E.string "1970-01-01T00:00:00.000Z" )
-                ]
+          , case model.user of
+                    Just user ->
+                        E.object
+                            [ ( "id", E.int user.id )
+                            , ( "email", E.string user.email )
+                            , ( "firstname", E.string user.firstname )
+                            , ( "lastname", E.string user.lastname )
+                            , ( "bio", E.string user.bio )
+                            , ( "password", E.string user.password )
+                            , ( "image", E.string user.image )
+                            , ( "created", Iso8601.encode user.created )
+                            ]
+
+                    Nothing ->
+                        E.object
+                            [ ( "id", E.int 0 )
+                            , ( "email", E.string "" )
+                            , ( "firstname", E.string "" )
+                            , ( "lastname", E.string "" )
+                            , ( "bio", E.string "" )
+                            , ( "password", E.string "" )
+                            , ( "image", E.string "" )
+                            , ( "created", E.string "" )
+                            ]
           )
         , ( "created", Iso8601.encode model.time )
         ]

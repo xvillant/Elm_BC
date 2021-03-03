@@ -10,7 +10,7 @@ import Http exposing (..)
 import Json.Decode as D exposing (Decoder, field)
 import Json.Decode.Extra as ED exposing (andMap)
 import Json.Encode as E exposing (..)
-import Jwt
+import Jwt exposing (JwtError)
 import Server
 import Shared
 import Spa.Document exposing (Document)
@@ -18,6 +18,8 @@ import Spa.Generated.Route as Route
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Task
+import FeatherIcons exposing (user)
+import Api.Data
 
 
 page : Page Params Model Msg
@@ -45,8 +47,7 @@ type alias Model =
     , password : String
     , warning : String
     , key : Key
-    , tokenString : String
-    , user : Data User
+    , user : Maybe User
     , token : Maybe Token
     }
 
@@ -65,15 +66,8 @@ init shared { params } =
       , password = ""
       , warning = ""
       , token = Nothing
-      , tokenString = ""
       , key = shared.key
-      , user =
-            case shared.user of
-                Just user ->
-                    Success user
-
-                Nothing ->
-                    NotAsked
+      , user = shared.user
       }
     , Cmd.none
     )
@@ -88,7 +82,7 @@ type Msg
     | Password String
     | Submit
     | Response (Result Http.Error String)
-    | GotUser (Result Http.Error User)
+    | GotUser (Data User)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -113,13 +107,15 @@ update msg model =
         Response response ->
             case response of
                 Ok value ->
-                    ( { model | warning = "Successfully logged in!", tokenString = value }, Cmd.batch [ getUser model, pushUrl model.key "/recipes" ] )
+                    ( model
+                    , getUser value model {onResponse = GotUser}
+                    )
 
                 Err err ->
                     ( { model | warning = httpErrorString err }, Cmd.none )
 
         GotUser user ->
-            ( model, Cmd.none )
+            ( { model | user = Api.Data.toMaybe user }, pushUrl model.key "/recipes" )
 
 
 httpErrorString : Http.Error -> String
@@ -148,7 +144,7 @@ httpErrorString error =
 
 save : Model -> Shared.Model -> Shared.Model
 save model shared =
-    shared
+    {shared | user = model.user}
 
 
 load : Shared.Model -> Model -> ( Model, Cmd Msg )
@@ -223,31 +219,35 @@ loginRequest model =
         }
 
 
-getUser : Model -> Cmd Msg
-getUser model =
+getUser : String -> Model -> {onResponse : Data User -> Msg} -> Cmd Msg
+getUser tokenString model options =
+    let
+        token =
+            decodeJWT tokenString
+    in
     Http.request
         { method = "GET"
-        , headers = [ Http.header "Authorization" ("Bearer " ++ model.tokenString) ]
+        , headers = [ Http.header "Authorization" ("Bearer " ++ tokenString) ]
         , url =
             Server.url
                 ++ "/users/"
-                ++ (case model.token of
-                        Nothing ->
+                ++ (case token of
+                        Err err ->
                             "0"
 
-                        Just token ->
-                            token.userId
+                        Ok token_ ->
+                            token_.userId
                    )
         , body = Http.emptyBody
-        , expect = Http.expectJson GotUser userDecoder
+        , expect = Api.Data.expectJson options.onResponse userDecoder
         , timeout = Nothing
         , tracker = Nothing
         }
 
 
-decodeJWT : Model -> Result Jwt.JwtError Token
-decodeJWT model =
-    Jwt.decodeToken jwtDecoder model.tokenString
+decodeJWT : String -> Result Jwt.JwtError Token
+decodeJWT tokenString =
+    Jwt.decodeToken jwtDecoder tokenString
 
 
 jwtDecoder : Decoder Token

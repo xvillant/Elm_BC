@@ -1,13 +1,13 @@
 port module Ports exposing (clearUser, saveUser)
 
-import Api.User exposing (User)
-import Json.Decode as Json
-import Json.Encode as Encode
+import Api.User exposing (User, userEncode)
+import Json.Decode as D
+import Json.Encode as E
 
 
 port outgoing :
     { tag : String
-    , data : Json.Value
+    , data : D.Value
     }
     -> Cmd msg
 
@@ -16,7 +16,7 @@ saveUser : User -> Cmd msg
 saveUser user =
     outgoing
         { tag = "saveUser"
-        , data = Api.User.userEncode user
+        , data = userEncode user
         }
 
 
@@ -24,5 +24,5 @@ clearUser : Cmd msg
 clearUser =
     outgoing
         { tag = "clearUser"
-        , data = Encode.null
+        , data = E.null
         }
