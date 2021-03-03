@@ -15,6 +15,7 @@ import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
 import Time
+import Components.Validity exposing (isValidPassword, isValidEmail)
 
 
 page : Page Params Model Msg
@@ -123,12 +124,18 @@ update msg model =
 
             else if String.isEmpty model.email then
                 ( { model | warning = "Type your email!" }, Cmd.none )
+            
+            else if (isValidEmail model.email) /= True then
+                ( { model | warning = "Enter a valid email!" }, Cmd.none )
 
             else if String.isEmpty model.image then
                 ( { model | warning = "Type your image URL!" }, Cmd.none )
 
             else if String.isEmpty model.password then
                 ( { model | warning = "Type your password!" }, Cmd.none )
+            
+            else if (isValidPassword model.password) /= True then
+                ( { model | warning = "Password must contains of at least - one uppercase letter, one lowercase letter, one digit, one special character and must have minimum eight in lenght" }, Cmd.none )
 
             else
                 ( { model | warning = "Loading..." }, updateProfile model { onResponse = Updated } )

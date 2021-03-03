@@ -15,7 +15,7 @@ import Spa.Generated.Route as Route exposing (toString)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Time
-
+import Components.Validity exposing (isValidEmail, isValidPassword)
 
 page : Page Params Model Msg
 page =
@@ -97,11 +97,14 @@ update msg model =
             else if String.isEmpty model.email then
                 ( { model | warning = "Enter your email!" }, Cmd.none )
 
+            else if (isValidEmail model.email) /= True then
+                ( { model | warning = "Enter a valid email!" }, Cmd.none )
+
             else if String.isEmpty model.password then
                 ( { model | warning = "Enter your password!" }, Cmd.none )
 
-            else if passwordLength model.password then
-                ( { model | warning = "Password is short!" }, Cmd.none )
+            else if (isValidPassword model.password) /= True then
+                ( { model | warning = "Password must contains of at least - one uppercase letter, one lowercase letter, one digit, one special character and must have minimum eight in lenght" }, Cmd.none )
 
             else if String.isEmpty model.passwordAgain then
                 ( { model | warning = "Enter your password again!" }, Cmd.none )
@@ -259,12 +262,3 @@ registerUser model =
         , body = body
         , expect = Http.expectJson Response (field "accessToken" D.string)
         }
-
-
-passwordLength : String -> Bool
-passwordLength password =
-    if String.length password < 8 then
-        True
-
-    else
-        False
