@@ -275,3 +275,8 @@ h1 {
  .sign-out {
     cursor: pointer;
  }
+
+h2.my_recipes {
+  font-size: 50px;
+  color: #4CAF50;
+}

@@ -16,7 +16,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Json.Decode as D
-import Ports exposing (clearUser, saveUser)
+import Ports exposing (clearUser)
 import Spa.Document exposing (Document)
 import Url exposing (Url)
 
@@ -53,7 +53,6 @@ init json url key =
 
 type Msg
     = SignOutSignal
-    | SignInSignal User
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -61,9 +60,6 @@ update msg model =
     case msg of
         SignOutSignal ->
             ( { model | user = Nothing }, Cmd.batch [ Nav.pushUrl model.key "/", clearUser ] )
-
-        SignInSignal user ->
-            ( { model | user = Just user }, saveUser user )
 
 
 subscriptions : Model -> Sub Msg

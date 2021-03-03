@@ -9,6 +9,16 @@
       "image": "/assets/user_default.png",
       "created": "2021-03-03T15:41:23.489Z",
       "id": 1
+    },
+    {
+      "email": "Drogba11144@gmail.com",
+      "password": "$2a$10$quBiocABqfdXMHFC43nZvOzUm3P1v9u/dk0eQ.phdvUU0q4BTNxJa",
+      "firstname": "Patrik",
+      "lastname": "Villant",
+      "bio": "I am new here...",
+      "image": "/assets/user_default.png",
+      "created": "2021-03-03T18:07:13.098Z",
+      "id": 2
     }
   ],
   "posts": [
@@ -49,6 +59,44 @@
       },
       "created": "2021-03-03T15:09:07.962Z",
       "id": 2
+    },
+    {
+      "name": "Zelenkastý recept",
+      "ingredients": [
+        "dasd"
+      ],
+      "recipe": "asdasdsadsadsa",
+      "profile": {
+        "id": 1,
+        "email": "lolo@gmail.com",
+        "firstname": "Nikolas",
+        "lastname": "Villant",
+        "bio": "I am new here...",
+        "password": "$2a$10$dNLeLcnsd/WmgBEumZUEOeSURntyH.hWOIn9ups3F1DnYg.g7Wa8i",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-03T15:41:23.489Z"
+      },
+      "created": "2021-03-03T18:06:41.230Z",
+      "id": 3
+    },
+    {
+      "name": "Jelen na paprike",
+      "ingredients": [
+        "dasd"
+      ],
+      "recipe": "asdasdasdsad",
+      "profile": {
+        "id": 2,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "I am new here...",
+        "password": "$2a$10$quBiocABqfdXMHFC43nZvOzUm3P1v9u/dk0eQ.phdvUU0q4BTNxJa",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-03T18:07:13.098Z"
+      },
+      "created": "2021-03-03T18:08:15.298Z",
+      "id": 4
     }
   ],
   "comments": [
@@ -67,6 +115,54 @@
       },
       "created": "2021-03-03T15:09:17.200Z",
       "id": 1
+    },
+    {
+      "comment": "dobre to je",
+      "recipeid": 2,
+      "profile": {
+        "id": 1,
+        "email": "lolo@gmail.com",
+        "firstname": "Nikolas",
+        "lastname": "Villant",
+        "bio": "I am new here...",
+        "password": "$2a$10$dNLeLcnsd/WmgBEumZUEOeSURntyH.hWOIn9ups3F1DnYg.g7Wa8i",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-03T15:41:23.489Z"
+      },
+      "created": "2021-03-03T18:04:40.393Z",
+      "id": 2
+    },
+    {
+      "comment": "celkom dobry",
+      "recipeid": 2,
+      "profile": {
+        "id": 2,
+        "email": "Drogba11144@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "I am new here...",
+        "password": "$2a$10$quBiocABqfdXMHFC43nZvOzUm3P1v9u/dk0eQ.phdvUU0q4BTNxJa",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-03T18:07:13.098Z"
+      },
+      "created": "2021-03-03T18:07:40.297Z",
+      "id": 3
+    },
+    {
+      "comment": "hej aj podla mna",
+      "recipeid": 2,
+      "profile": {
+        "id": 1,
+        "email": "lolo@gmail.com",
+        "firstname": "Nikolas",
+        "lastname": "Villant",
+        "bio": "I am new here...",
+        "password": "$2a$10$dNLeLcnsd/WmgBEumZUEOeSURntyH.hWOIn9ups3F1DnYg.g7Wa8i",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-03T15:41:23.489Z"
+      },
+      "created": "2021-03-03T18:10:00.694Z",
+      "id": 4
     }
   ]
 }

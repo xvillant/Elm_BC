@@ -169,7 +169,7 @@ viewPosts posts =
     case posts of
         Success actualPosts ->
             div []
-                [ h2 [] [ text "My recipes" ]
+                [ h2 [class "my_recipes"] [ text "My recipes" ]
                 , div [ class "line_after_recipes" ] []
                 , if List.isEmpty actualPosts then
                     div [ class "articles_list" ]

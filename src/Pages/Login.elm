@@ -20,6 +20,7 @@ import Spa.Url as Url exposing (Url)
 import Task
 import FeatherIcons exposing (user)
 import Api.Data
+import Ports exposing (saveUser)
 
 
 page : Page Params Model Msg
@@ -113,8 +114,11 @@ update msg model =
                     ( { model | warning = httpErrorString err }, Cmd.none )
 
         GotUser user ->
-            ( { model | user = Api.Data.toMaybe user }, pushUrl model.key "/recipes" )
-
+            case user of
+               Api.Data.Success user_ ->
+                    ( { model | user = Api.Data.toMaybe user }, Cmd.batch[saveUser user_, pushUrl model.key "/recipes"] )
+               _ -> 
+                    ( model , Cmd.none )
 
 httpErrorString : Http.Error -> String
 httpErrorString error =
