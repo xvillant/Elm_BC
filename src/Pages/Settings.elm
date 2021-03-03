@@ -91,9 +91,7 @@ init shared { params } =
 
 
 type Msg
-    = FirstName String
-    | LastName String
-    | Email String
+    = Email String
     | Image String
     | Password String
     | Bio String
@@ -104,12 +102,6 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        FirstName firstname ->
-            ( { model | firstname = firstname }, Cmd.none )
-
-        LastName lastname ->
-            ( { model | lastname = lastname }, Cmd.none )
-
         Email email ->
             ( { model | email = email }, Cmd.none )
 
@@ -170,28 +162,6 @@ view model =
     , body =
         [ div []
             [ h1 [] [ text "Settings" ]
-            , div []
-                [ input
-                    [ id "firstname"
-                    , type_ "text"
-                    , placeholder "Type first name"
-                    , value model.firstname
-                    , onInput FirstName
-                    , class "form"
-                    ]
-                    []
-                ]
-            , div []
-                [ input
-                    [ id "lastname"
-                    , type_ "text"
-                    , placeholder "Type last name"
-                    , value model.lastname
-                    , onInput LastName
-                    , class "form"
-                    ]
-                    []
-                ]
             , div []
                 [ input
                     [ id "email"

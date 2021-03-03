@@ -1,53 +1,36 @@
 {
   "users": [
     {
-      "id": 1,
-      "firstname": "Janos",
-      "lastname": "Villant",
-      "password": "$2a$10$IARZ9xVjTei5EfZgIWZ8eeMDxyeKqNfvQt33mDkuAgEeEvmgDVcaS",
-      "bio": "",
-      "created": "2021-03-03T14:30:03.651Z",
       "email": "lolo@gmail.com",
-      "image": "/assets/user_default.png"
+      "password": "$2a$10$.q9yyv4nuN9kWCYuP7X3uetUomi0zwu76JXRjs5S7WL8NjNwyDaGG",
+      "firstname": "Nikolas",
+      "lastname": "Villant",
+      "bio": "I am new here...",
+      "image": "/assets/user_default.png",
+      "created": "2021-03-03T14:59:05.775Z",
+      "id": 1
     }
   ],
   "posts": [
     {
-      "name": "Dobry receptik",
+      "name": "Dobry recept",
       "ingredients": [
-        "dasdas"
+        "dasd"
       ],
-      "recipe": "dasdad",
+      "recipe": "asdas",
       "profile": {
         "id": 1,
         "email": "lolo@gmail.com",
         "firstname": "Nikolas",
         "lastname": "Villant",
         "bio": "I am new here...",
-        "password": "$2a$10$DkV0vHYF/ArCU/SgNQwqfOmAe.JOTJLtMg.H.aWp0gISpUO3yjXb2",
+        "password": "$2a$10$.q9yyv4nuN9kWCYuP7X3uetUomi0zwu76JXRjs5S7WL8NjNwyDaGG",
         "image": "/assets/user_default.png",
-        "created": "2021-03-03T14:30:03.651Z"
+        "created": "2021-03-03T14:59:05.775Z"
       },
-      "created": "2021-03-03T14:35:44.910Z",
+      "created": "2021-03-03T15:02:33.018Z",
       "id": 1
     }
   ],
-  "comments": [
-    {
-      "comment": "pravda",
-      "recipeid": 1,
-      "profile": {
-        "id": 1,
-        "email": "lolo@gmail.com",
-        "firstname": "Nikolas",
-        "lastname": "Villant",
-        "bio": "I am new here...",
-        "password": "$2a$10$DkV0vHYF/ArCU/SgNQwqfOmAe.JOTJLtMg.H.aWp0gISpUO3yjXb2",
-        "image": "/assets/user_default.png",
-        "created": "2021-03-03T14:30:03.651Z"
-      },
-      "created": "2021-03-03T14:36:12.793Z",
-      "id": 1
-    }
-  ]
+  "comments": []
 }

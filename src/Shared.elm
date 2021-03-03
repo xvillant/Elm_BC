@@ -60,7 +60,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         SignOutSignal ->
-            ( { model | user = Nothing }, Cmd.batch [ clearUser, Nav.pushUrl model.key "/" ] )
+            ( { model | user = Nothing }, Cmd.batch [ Nav.pushUrl model.key "/", clearUser ] )
 
         SignInSignal user ->
             ( { model | user = Just user }, saveUser user )
