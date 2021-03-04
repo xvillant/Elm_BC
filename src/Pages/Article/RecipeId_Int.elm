@@ -4,6 +4,7 @@ import Api.Article exposing (Article, articleDecoder)
 import Api.Comment exposing (Comment, commentDecoder, commentsDecoder)
 import Api.Data exposing (Data(..))
 import Api.Profile exposing (Profile, profileDecoder)
+import Api.User exposing (User)
 import Html exposing (..)
 import Html.Attributes exposing (class, cols, href, placeholder, rows, src)
 import Html.Events as Events exposing (onClick, onInput)
@@ -19,7 +20,6 @@ import Task
 import Time
 import TimeFormatting exposing (formatDate, formatTime)
 import TimeZone exposing (europe__bratislava)
-import Api.User exposing (User)
 
 
 page : Page Params Model Msg
@@ -47,7 +47,6 @@ type alias Model =
     , comments : Data (List Comment)
     , commentString : String
     , warning : String
-    , time : Time.Posix
     , zone : Time.Zone
     , user : Maybe User
     }
@@ -59,11 +58,10 @@ init shared { params } =
       , commentString = ""
       , comments = Loading
       , warning = ""
-      , time = Time.millisToPosix 0
       , zone = Time.utc
       , user = shared.user
       }
-    , Cmd.batch [ getArticleRequest params { onResponse = ReceivedArticle }, getCommentsRequest params { onResponse = CommentsReceived }, Task.perform GetTime Time.now, Task.perform Timezone Time.here ]
+    , Cmd.batch [ getArticleRequest params { onResponse = ReceivedArticle }, getCommentsRequest params { onResponse = CommentsReceived }, Task.perform Timezone Time.here ]
     )
 
 
@@ -75,8 +73,8 @@ type Msg
     = ReceivedArticle (Data Article)
     | CommentsReceived (Data (List Comment))
     | AddComment String
-    | SubmitComment
-    | GetTime Time.Posix
+    | SubmitComment Time.Posix
+    | GetTime (Time.Posix -> Msg)
     | Timezone Time.Zone
     | CommentResponse (Data Comment)
 
@@ -93,20 +91,20 @@ update msg model =
         AddComment comment ->
             ( { model | commentString = comment }, Cmd.none )
 
-        SubmitComment ->
+        SubmitComment time ->
             if String.isEmpty model.commentString then
                 ( { model | warning = "Type your comment!" }, Cmd.none )
 
             else
                 ( { model | commentString = "" }
-                , postComment model { onResponse = CommentResponse }
+                , postComment time model { onResponse = CommentResponse }
                 )
 
         Timezone tz ->
             ( { model | zone = tz }, Cmd.none )
 
         GetTime time ->
-            ( { model | time = time }, Cmd.none )
+            ( model, Task.perform time Time.now )
 
         CommentResponse comment ->
             ( case comment of
@@ -126,12 +124,12 @@ save model shared =
 
 load : Shared.Model -> Model -> ( Model, Cmd Msg )
 load shared model =
-    ( {model | user = shared.user}, Cmd.none )
+    ( { model | user = shared.user }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Time.every 1000 GetTime
+    Sub.none
 
 
 
@@ -232,55 +230,55 @@ viewComment comment =
         ]
 
 
-encodeComment : Model -> E.Value
-encodeComment model =
-    E.object
-        [ ( "comment", E.string model.commentString )
-        , ( "recipeid"
-          , E.int
-                (case model.article of
-                    Success article ->
-                        article.id
+postComment : Time.Posix -> Model -> { onResponse : Data Comment -> Msg } -> Cmd Msg
+postComment nowTime model options =
+    let
+        body =
+                [ ( "comment", E.string model.commentString )
+                , ( "recipeid"
+                  , E.int
+                        (case model.article of
+                            Success article ->
+                                article.id
 
-                    _ ->
-                        0
-                )
-          )
-        , ( "profile"
-          , case model.user of
-                    Just user ->
-                        E.object
-                            [ ( "id", E.int user.id )
-                            , ( "email", E.string user.email )
-                            , ( "firstname", E.string user.firstname )
-                            , ( "lastname", E.string user.lastname )
-                            , ( "bio", E.string user.bio )
-                            , ( "password", E.string user.password )
-                            , ( "image", E.string user.image )
-                            , ( "created", Iso8601.encode user.created )
-                            ]
+                            _ ->
+                                0
+                        )
+                  )
+                , ( "profile"
+                  , case model.user of
+                        Just user ->
+                            E.object
+                                [ ( "id", E.int user.id )
+                                , ( "email", E.string user.email )
+                                , ( "firstname", E.string user.firstname )
+                                , ( "lastname", E.string user.lastname )
+                                , ( "bio", E.string user.bio )
+                                , ( "password", E.string user.password )
+                                , ( "image", E.string user.image )
+                                , ( "created", Iso8601.encode user.created )
+                                ]
 
-                    Nothing ->
-                        E.object
-                            [ ( "id", E.int 0 )
-                            , ( "email", E.string "" )
-                            , ( "firstname", E.string "" )
-                            , ( "lastname", E.string "" )
-                            , ( "bio", E.string "" )
-                            , ( "password", E.string "" )
-                            , ( "image", E.string "" )
-                            , ( "created", E.string "" )
-                            ]
-          )
-        , ( "created", Iso8601.encode model.time )
-        ]
-
-
-postComment : Model -> { onResponse : Data Comment -> Msg } -> Cmd Msg
-postComment model options =
+                        Nothing ->
+                            E.object
+                                [ ( "id", E.int 0 )
+                                , ( "email", E.string "" )
+                                , ( "firstname", E.string "" )
+                                , ( "lastname", E.string "" )
+                                , ( "bio", E.string "" )
+                                , ( "password", E.string "" )
+                                , ( "image", E.string "" )
+                                , ( "created", E.string "" )
+                                ]
+                  )
+                , ( "created", Iso8601.encode nowTime )
+                ]
+                |> E.object
+                |> Http.jsonBody
+    in
     Http.post
         { url = Server.url ++ "/comments"
-        , body = Http.jsonBody <| encodeComment model
+        , body = body
         , expect = Api.Data.expectJson options.onResponse commentDecoder
         }
 
@@ -316,7 +314,7 @@ viewArticle model =
                     [ textarea [ placeholder "Type your comment here...", cols 70, rows 10, Html.Attributes.value model.commentString, onInput AddComment, class "form" ] []
                     ]
                 , div []
-                    [ button [ class "submit_button", onClick SubmitComment ] [ text "Share comment" ]
+                    [ button [ class "submit_button", onClick <| GetTime (SubmitComment) ] [ text "Share comment" ]
                     ]
                 ]
 

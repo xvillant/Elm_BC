@@ -16,6 +16,8 @@ import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Time
 import Components.Validity exposing (isValidEmail, isValidPassword)
+import Html exposing (time)
+import Task
 
 page : Page Params Model Msg
 page =
@@ -44,14 +46,13 @@ type alias Model =
     , firstname : String
     , lastname : String
     , warning : String
-    , time : Time.Posix
     , key : Key
     }
 
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( Model "" "" "" "" "" "" (Time.millisToPosix 0) shared.key, Cmd.none )
+    ( Model "" "" "" "" "" "" shared.key, Cmd.none )
 
 
 
@@ -64,8 +65,8 @@ type Msg
     | Password String
     | PasswordAgain String
     | Email String
-    | GetTime Time.Posix
-    | Submit
+    | GetTime (Time.Posix -> Msg)
+    | Submit Time.Posix
     | Response (Result Http.Error String)
 
 
@@ -87,7 +88,7 @@ update msg model =
         PasswordAgain password ->
             ( { model | passwordAgain = password }, Cmd.none )
 
-        Submit ->
+        Submit time ->
             if String.isEmpty model.firstname then
                 ( { model | warning = "Enter your first name!" }, Cmd.none )
 
@@ -113,10 +114,10 @@ update msg model =
                 ( { model | warning = "Passwords do not match!" }, Cmd.none )
 
             else
-                ( { model | warning = "Loading..." }, registerUser model )
+                ( { model | warning = "Loading..." }, registerUser time model )
 
         GetTime time ->
-            ( { model | time = time }, Cmd.none )
+            ( model, Task.perform time Time.now)
 
         Response response ->
             case response of
@@ -163,7 +164,7 @@ load shared model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Time.every 1000 GetTime
+    Sub.none
 
 
 
@@ -232,7 +233,7 @@ view model =
                     []
                 ]
             , div [ ]
-                [ button [ class "submit_button", onClick Submit ] [ text "Sign Up" ] ]
+                [ button [ class "submit_button", onClick <| GetTime (Submit) ] [ text "Sign Up" ] ]
             , div [ class "warning_form" ]
                 [ text model.warning ]
             , div [ ]
@@ -242,8 +243,8 @@ view model =
         ]
     }
 
-registerUser : Model -> Cmd Msg
-registerUser model =
+registerUser : Time.Posix -> Model -> Cmd Msg
+registerUser nowTime model =
     let
         body =
             [ ( "firstname", E.string model.firstname )
@@ -252,7 +253,7 @@ registerUser model =
             , ( "email", E.string model.email )
             , ( "bio", E.string "I am new here..." )
             , ( "image", E.string "/assets/user_default.png" )
-            , ( "created", Iso8601.encode model.time )
+            , ( "created", Iso8601.encode nowTime )
             ]
                 |> E.object
                 |> Http.jsonBody

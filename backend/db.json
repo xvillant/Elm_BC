@@ -19,6 +19,16 @@
       "image": "/assets/user_default.png",
       "created": "2021-03-03T18:07:13.098Z",
       "id": 2
+    },
+    {
+      "email": "lololol@gmail.com",
+      "password": "$2a$10$/KtLvAoxJ6tu97elXUrsTuUwwGROyIjRboPS2HfjHiEhi0HijaryO",
+      "firstname": "Dobry",
+      "lastname": "Den",
+      "bio": "I am new here...",
+      "image": "/assets/user_default.png",
+      "created": "2021-03-04T11:43:11.730Z",
+      "id": 3
     }
   ],
   "posts": [
@@ -97,6 +107,44 @@
       },
       "created": "2021-03-03T18:08:15.298Z",
       "id": 4
+    },
+    {
+      "name": "Dasd",
+      "ingredients": [
+        "dsasdasd"
+      ],
+      "recipe": "dasdasasdasd",
+      "profile": {
+        "id": 1,
+        "email": "lolo@gmail.com",
+        "firstname": "Nikolas",
+        "lastname": "Villant",
+        "bio": "I am new here...",
+        "password": "$2a$10$dNLeLcnsd/WmgBEumZUEOeSURntyH.hWOIn9ups3F1DnYg.g7Wa8i",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-03T15:41:23.489Z"
+      },
+      "created": "2021-03-04T11:33:47.298Z",
+      "id": 5
+    },
+    {
+      "name": "Dasdasd",
+      "ingredients": [
+        "sdasd"
+      ],
+      "recipe": "dasdsadasd",
+      "profile": {
+        "id": 1,
+        "email": "lolo@gmail.com",
+        "firstname": "Nikolas",
+        "lastname": "Villant",
+        "bio": "I am new here...",
+        "password": "$2a$10$dNLeLcnsd/WmgBEumZUEOeSURntyH.hWOIn9ups3F1DnYg.g7Wa8i",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-03T15:41:23.489Z"
+      },
+      "created": "2021-03-04T11:42:16.183Z",
+      "id": 6
     }
   ],
   "comments": [
@@ -163,6 +211,22 @@
       },
       "created": "2021-03-03T18:10:00.694Z",
       "id": 4
+    },
+    {
+      "comment": "dasdsadasd",
+      "recipeid": 6,
+      "profile": {
+        "id": 1,
+        "email": "lolo@gmail.com",
+        "firstname": "Nikolas",
+        "lastname": "Villant",
+        "bio": "I am new here...",
+        "password": "$2a$10$dNLeLcnsd/WmgBEumZUEOeSURntyH.hWOIn9ups3F1DnYg.g7Wa8i",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-03T15:41:23.489Z"
+      },
+      "created": "2021-03-04T11:42:24.810Z",
+      "id": 5
     }
   ]
 }

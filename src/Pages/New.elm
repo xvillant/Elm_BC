@@ -48,7 +48,6 @@ type alias Model =
     , ingredients : String
     , recipe : String
     , warning : String
-    , time : Time.Posix
     , key : Key
     , user : Maybe User
     }
@@ -56,7 +55,7 @@ type alias Model =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( { name = "", ingredients = "", recipe = "", warning = "", key = shared.key, time = Time.millisToPosix 0, user = shared.user }, Task.perform GetTime Time.now )
+    ( { name = "", ingredients = "", recipe = "", warning = "", key = shared.key, user = shared.user }, Cmd.none )
 
 
 
@@ -67,8 +66,8 @@ type Msg
     = Name String
     | Ingredients String
     | Recipe String
-    | Submit
-    | GetTime Time.Posix
+    | Submit Time.Posix
+    | GetTime (Time.Posix -> Msg)
     | Response (Data Article)
 
 
@@ -84,7 +83,10 @@ update msg model =
         Recipe recipe ->
             ( { model | recipe = recipe }, Cmd.none )
 
-        Submit ->
+        GetTime time ->
+            ( model, Task.perform time Time.now )
+
+        Submit time ->
             if String.isEmpty model.name then
                 ( { model | warning = "Enter recipe name!" }, Cmd.none )
 
@@ -95,10 +97,7 @@ update msg model =
                 ( { model | warning = "Enter recipe!" }, Cmd.none )
 
             else
-                ( { model | warning = "Loading..." }, postArticle model { onResponse = Response } )
-
-        GetTime time ->
-            ( { model | time = time }, Cmd.none )
+                ( { model | warning = "Loading..." }, postArticle time model { onResponse = Response } )
 
         Response response ->
             case response of
@@ -121,7 +120,7 @@ load shared model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Time.every 1000 GetTime
+    Sub.none
 
 
 
@@ -171,7 +170,7 @@ view model =
                     []
                 ]
             , div []
-                [ button [ class "submit_button", onClick Submit ] [ text "Share recipe" ] ]
+                [ button [ class "submit_button", onClick <| GetTime Submit ] [ text "Share recipe" ] ]
             , div [ class "warning_form" ]
                 [ text model.warning ]
             ]
@@ -179,8 +178,8 @@ view model =
     }
 
 
-postArticle : Model -> { onResponse : Data Article -> Msg } -> Cmd Msg
-postArticle model options =
+postArticle : Time.Posix -> Model -> { onResponse : Data Article -> Msg } -> Cmd Msg
+postArticle nowTime model options =
     let
         body =
             [ ( "name", E.string <| String.Extra.toSentenceCase <| model.name )
@@ -212,7 +211,7 @@ postArticle model options =
                             , ( "created", E.string "" )
                             ]
               )
-            , ( "created", Iso8601.encode model.time )
+            , ( "created", Iso8601.encode nowTime )
             ]
                 |> E.object
                 |> Http.jsonBody
