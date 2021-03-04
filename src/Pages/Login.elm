@@ -2,24 +2,23 @@ module Pages.Login exposing (Model, Msg, Params, page)
 
 import Api.Data exposing (Data(..))
 import Api.User exposing (User, userDecoder)
-import Browser.Navigation as Nav exposing (Key, pushUrl)
+import Browser.Navigation exposing (Key, pushUrl)
 import FeatherIcons exposing (user)
 import Html exposing (..)
 import Html.Attributes exposing (class, href, id, placeholder, type_, value)
 import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
 import Json.Decode as D exposing (Decoder, field)
-import Json.Decode.Extra as ED exposing (andMap)
+import Json.Decode.Extra exposing (andMap)
 import Json.Encode as E exposing (..)
-import Jwt exposing (JwtError)
+import Jwt
 import Ports exposing (saveUser)
 import Server
 import Shared
 import Spa.Document exposing (Document)
 import Spa.Generated.Route as Route
 import Spa.Page as Page exposing (Page)
-import Spa.Url as Url exposing (Url)
-import Task
+import Spa.Url exposing (Url)
 
 
 page : Page Params Model Msg

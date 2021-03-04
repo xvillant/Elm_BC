@@ -201,7 +201,3 @@ viewPost post =
         , div [ class "line_after_recipes" ] []
         ]
 
-
-makeZoneList : Time.Zone -> Int -> List Time.Zone
-makeZoneList zone number =
-    List.repeat number zone

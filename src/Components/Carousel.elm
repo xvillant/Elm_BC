@@ -1,13 +1,10 @@
 module Components.Carousel exposing (Model, Msg, init, subscriptions, update, view)
 
 import Array exposing (..)
-import Browser
 import FeatherIcons as Icons
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import Server
-import Task
 import Time exposing (..)
 
 
@@ -126,6 +123,7 @@ view model =
             div
                 [ class "container-fluid text-center image"
                 , style "height" "400px"
+                , style "postion" "static"
                 , style "width" "100%"
                 , style "background-image" url
                 , style "background-color" "gray"

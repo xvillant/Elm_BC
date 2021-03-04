@@ -9,12 +9,12 @@ import Http exposing (..)
 import Iso8601
 import Json.Decode as D exposing (field)
 import Json.Encode as E exposing (..)
-import Server exposing (url)
+import Server
 import Shared
 import Spa.Document exposing (Document)
-import Spa.Generated.Route as Route exposing (toString)
+import Spa.Generated.Route as Route
 import Spa.Page as Page exposing (Page)
-import Spa.Url as Url exposing (Url)
+import Spa.Url exposing (Url)
 import Task
 import Time
 

@@ -6,12 +6,11 @@ import Api.Profile exposing (Profile, profileDecoder)
 import Html exposing (..)
 import Html.Attributes exposing (class, height, href, src, width)
 import Http exposing (..)
-import Json.Decode as D exposing (field)
-import Server exposing (url)
+import Server
 import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
-import Spa.Url as Url exposing (Url)
+import Spa.Url exposing (Url)
 import Task
 import Time
 import Components.TimeFormatting exposing (formatDate, formatTime)

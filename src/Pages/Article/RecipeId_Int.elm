@@ -7,15 +7,15 @@ import Api.Data exposing (Data(..))
 import Api.User exposing (User)
 import Html exposing (..)
 import Html.Attributes exposing (class, cols, href, placeholder, rows, src)
-import Html.Events as Events exposing (onClick, onInput)
+import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
 import Iso8601
 import Json.Encode as E exposing (..)
-import Server exposing (url)
+import Server
 import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
-import Spa.Url as Url exposing (Url)
+import Spa.Url exposing (Url)
 import Task
 import Time
 import Components.TimeFormatting exposing (formatDate, formatTime)

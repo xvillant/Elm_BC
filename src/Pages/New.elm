@@ -3,7 +3,7 @@ module Pages.New exposing (Model, Msg, Params, page)
 import Api.Article exposing (Article, articleDecoder)
 import Api.Data exposing (Data(..))
 import Api.User exposing (User)
-import Browser.Navigation as Nav exposing (Key, pushUrl)
+import Browser.Navigation exposing (Key, pushUrl)
 import Elm.Module exposing (Name)
 import FeatherIcons exposing (user)
 import Html exposing (..)
@@ -11,13 +11,12 @@ import Html.Attributes exposing (autocomplete, class, cols, id, placeholder, row
 import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
 import Iso8601
-import Json.Decode as D exposing (field)
 import Json.Encode as E exposing (..)
-import Server exposing (url)
+import Server
 import Shared exposing (Model)
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
-import Spa.Url as Url exposing (Url)
+import Spa.Url exposing (Url)
 import String.Extra
 import Task
 import Time
