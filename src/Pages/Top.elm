@@ -36,11 +36,12 @@ init { params } =
     ( Model
         (Carousel.init
             (Array.fromList
-                [ "assets/caroussel/1.png"
+                [ "assets/caroussel/1.jpg"
                 , "assets/caroussel/2.jpg"
                 , "assets/caroussel/3.jpg"
                 , "assets/caroussel/4.jpg"
-                , "assets/caroussel/5.png"
+                , "assets/caroussel/5.jpg"
+                , "assets/caroussel/6.png"
                 ]
             )
         )
@@ -77,8 +78,12 @@ view model =
     { title = "Home"
     , body =
         [ div []
-            [ h1 [] [ text "Recipes Home" ]
-            , p [] [ text "This page was made for sharing your best meals" ]
+            [ h1 [] [ text "GoodFood" ]
+            , div [ class "quote" ]
+                [ blockquote [ class "quote__text" ] [ text "A recipe is a story that ends with a good meal." ]
+                , Html.cite [] [ text "Pat Conroy" ]
+                --https://codepen.io/JoeHastings/pen/MOdRVm
+                ]
             , br [] []
             , div [ class "carrousel" ] [ Carousel.view model.carousel |> Html.map UpdateCarousel ]
             ]

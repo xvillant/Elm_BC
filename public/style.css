@@ -16,6 +16,7 @@ li, a, button, textarea, input {
   font-size: 16px;
   text-decoration: none;
   color: #edf0f1;
+  outline: 0;
 }
 
 ul{
@@ -65,7 +66,7 @@ body {
   min-height: 100%;
  }
 
- footer {
+ footer.footer {
    text-align: center;
    padding: 5px;
    margin-top: auto;
@@ -73,12 +74,12 @@ body {
    color: whitesmoke;
  }
 
-footer a{
+footer.footer a{
   transition: all 0.3s ease 0s;
   font-size: 25px;
 }
 
-footer a:hover{
+footer.footer a:hover{
   color: #4CAF50;
 }
 
@@ -115,7 +116,8 @@ footer a:hover{
   text-align: center;
   outline: 0;
   display: inline-block;
-  transition: all 0.3s ease 0s;}
+  transition: all 0.3s ease 0s;
+}
 
 .active_category_button {
     background-color: #4CAF50;
@@ -206,7 +208,7 @@ h1 {
  }
 
  .link {
-   color: #4CAF50;
+   color: #4caf50;
    text-decoration: underline;
    text-decoration-color: transparent;
    transition: all 0.7s ease 0s;
@@ -279,4 +281,45 @@ h1 {
 h2.my_recipes {
   font-size: 50px;
   color: #4CAF50;
+}
+
+button.next__button:hover {
+  cursor: pointer;
+}
+
+blockquote {
+	font-weight: 100;
+	font-size: 20px;
+  width: 100%;
+	line-height: 1.4;
+	position: relative;
+	margin: 0;
+	padding: .5rem;
+}
+
+blockquote:before,
+blockquote:after {
+	position: absolute;
+	color: #000000;
+  opacity: 0.5;
+	font-size: 50px;
+	width: 4rem;
+	height: 4rem;
+}
+
+blockquote:before {
+	content: '“';
+	left: 12rem;
+	top: -1rem;
+}
+
+blockquote:after {
+	content: '”';
+	right: 12rem;
+	bottom: -5rem;
+}
+
+cite {
+	line-height: 3;
+	text-align: left;
 }

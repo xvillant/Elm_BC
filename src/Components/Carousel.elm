@@ -133,14 +133,16 @@ view model =
                 , style "overflow" "hidden"
                 , style "transition" "all .5s ease-in-out"
                 ]
-                [ div [ style "margin-top" "0px" ]
+                [ div [ style "margin-top" "150px" ]
                     [ button
-                        [ style "background" "Transparent"
+                        [ class "next__button"
+                        --, style "transition" "opacity 0.3s ease 0s"
+                        , style "background" "Transparent"
                         , style "border" "none"
-                        , style "color" "white"
+                        , style "color" "#24252a"
                         , style "position" "absolute"
-                        , style "left" "0px"
-                        , style "opacity" "0.7"
+                        , style "left" "50px"
+                        , style "opacity" "0.5"
                         , style "outline" "none"
 
                         --switch direction of movement to Left if we press the left arrow
@@ -149,12 +151,14 @@ view model =
                         [ Icons.chevronLeft |> Icons.withSize 80 |> Icons.withStrokeWidth 3 |> Icons.toHtml []
                         ]
                     , button
-                        [ style "background" "Transparent"
+                        [ class "next__button"
+                        --, style "transition" "background 0.3s ease 0s"
+                        , style "background" "transparent"
                         , style "border" "none"
-                        , style "color" "white"
+                        , style "color" "#24252a"
                         , style "position" "absolute"
-                        , style "right" "0px"
-                        , style "opacity" "0.7"
+                        , style "right" "50px"
+                        , style "opacity" "0.5"
                         , style "outline" "none"
 
                         --switch direction of movement to Right if we press the right arrow
@@ -184,7 +188,7 @@ viewBullet model index string =
         [ style "outline" "none"
         , style "border" "none"
         , style "background" "Transparent"
-        , style "opacity" "0.7"
+        , style "opacity" "0.9"
         , style "color" "white"
         , style "position" "relative"
         , class "preview"
