@@ -1,4 +1,4 @@
-module TimeFormatting exposing (formatDate, formatTime)
+module Components.TimeFormatting exposing (formatDate, formatTime)
 
 import DateFormat as DF
 import Time

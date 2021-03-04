@@ -14,7 +14,7 @@ import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Task
 import Time
-import TimeFormatting exposing (formatDate, formatTime)
+import Components.TimeFormatting exposing (formatDate, formatTime)
 import TimeZone exposing (europe__bratislava)
 
 
@@ -169,7 +169,7 @@ viewPosts posts =
     case posts of
         Success actualPosts ->
             div []
-                [ h2 [class "my_recipes"] [ text "My recipes" ]
+                [ h2 [ class "my_recipes" ] [ text "My recipes" ]
                 , div [ class "line_after_recipes" ] []
                 , if List.isEmpty actualPosts then
                     div [ class "articles_list" ]

@@ -1,7 +1,8 @@
 module Pages.Register exposing (Model, Msg, Params, page)
 
 import Browser.Navigation as Nav exposing (Key)
-import Html exposing (a, button, div, h1, input, text, br)
+import Components.Validity exposing (isValidEmail, isValidPassword)
+import Html exposing (a, br, button, div, h1, input, text, time)
 import Html.Attributes exposing (class, href, id, placeholder, type_, value)
 import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
@@ -14,10 +15,9 @@ import Spa.Document exposing (Document)
 import Spa.Generated.Route as Route exposing (toString)
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
-import Time
-import Components.Validity exposing (isValidEmail, isValidPassword)
-import Html exposing (time)
 import Task
+import Time
+
 
 page : Page Params Model Msg
 page =
@@ -98,13 +98,13 @@ update msg model =
             else if String.isEmpty model.email then
                 ( { model | warning = "Enter your email!" }, Cmd.none )
 
-            else if (isValidEmail model.email) /= True then
+            else if isValidEmail model.email /= True then
                 ( { model | warning = "Enter a valid email!" }, Cmd.none )
 
             else if String.isEmpty model.password then
                 ( { model | warning = "Enter your password!" }, Cmd.none )
 
-            else if (isValidPassword model.password) /= True then
+            else if isValidPassword model.password /= True then
                 ( { model | warning = "Password must contains of at least - one uppercase letter, one lowercase letter, one digit, one special character and must have minimum eight in lenght" }, Cmd.none )
 
             else if String.isEmpty model.passwordAgain then
@@ -117,7 +117,7 @@ update msg model =
                 ( { model | warning = "Loading..." }, registerUser time model )
 
         GetTime time ->
-            ( model, Task.perform time Time.now)
+            ( model, Task.perform time Time.now )
 
         Response response ->
             case response of
@@ -175,9 +175,9 @@ view : Model -> Document Msg
 view model =
     { title = "Sign Up"
     , body =
-        [ div [ ]
-            [ h1 [ ] [ text "Sign Up" ]
-            , div [  ]
+        [ div []
+            [ h1 [] [ text "Sign Up" ]
+            , div []
                 [ input
                     [ id "firstname"
                     , type_ "text"
@@ -188,7 +188,7 @@ view model =
                     ]
                     []
                 ]
-            , div [  ]
+            , div []
                 [ input
                     [ id "lastname"
                     , type_ "text"
@@ -199,7 +199,7 @@ view model =
                     ]
                     []
                 ]
-            , div [  ]
+            , div []
                 [ input
                     [ id "email"
                     , type_ "email"
@@ -210,7 +210,7 @@ view model =
                     ]
                     []
                 ]
-            , div [  ]
+            , div []
                 [ input
                     [ id "password"
                     , type_ "password"
@@ -221,7 +221,7 @@ view model =
                     ]
                     []
                 ]
-            , div [  ]
+            , div []
                 [ input
                     [ id "passwordAgain"
                     , type_ "password"
@@ -232,16 +232,18 @@ view model =
                     ]
                     []
                 ]
-            , div [ ]
-                [ button [ class "submit_button", onClick <| GetTime (Submit) ] [ text "Sign Up" ] ]
+            , div []
+                [ button [ class "submit_button", onClick <| GetTime Submit ] [ text "Sign Up" ] ]
             , div [ class "warning_form" ]
                 [ text model.warning ]
-            , div [ ]
+            , div []
                 [ br [] []
-                    ,a [ class "link", href (Route.toString Route.Login) ] [ text "Have an account?" ] ]
+                , a [ class "link", href (Route.toString Route.Login) ] [ text "Have an account?" ]
+                ]
             ]
         ]
     }
+
 
 registerUser : Time.Posix -> Model -> Cmd Msg
 registerUser nowTime model =

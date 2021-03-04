@@ -3,6 +3,7 @@ module Pages.Settings exposing (Model, Msg, Params, page)
 import Api.Data exposing (Data(..))
 import Api.User exposing (User, userDecoder)
 import Browser.Navigation exposing (Key, pushUrl)
+import Components.Validity exposing (isValidEmail, isValidPassword)
 import Html exposing (..)
 import Html.Attributes exposing (class, cols, id, placeholder, rows, type_, value)
 import Html.Events exposing (onClick, onInput)
@@ -15,7 +16,6 @@ import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
 import Time
-import Components.Validity exposing (isValidPassword, isValidEmail)
 
 
 page : Page Params Model Msg
@@ -124,8 +124,8 @@ update msg model =
 
             else if String.isEmpty model.email then
                 ( { model | warning = "Type your email!" }, Cmd.none )
-            
-            else if (isValidEmail model.email) /= True then
+
+            else if isValidEmail model.email /= True then
                 ( { model | warning = "Enter a valid email!" }, Cmd.none )
 
             else if String.isEmpty model.image then
@@ -133,8 +133,8 @@ update msg model =
 
             else if String.isEmpty model.password then
                 ( { model | warning = "Type your password!" }, Cmd.none )
-            
-            else if (isValidPassword model.password) /= True then
+
+            else if isValidPassword model.password /= True then
                 ( { model | warning = "Password must contains of at least - one uppercase letter, one lowercase letter, one digit, one special character and must have minimum eight in lenght" }, Cmd.none )
 
             else

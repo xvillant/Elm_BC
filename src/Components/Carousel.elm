@@ -220,3 +220,6 @@ subscriptions model =
         on the actions of the user!
       --}
             Time.every 1000 (\_ -> Reset)
+
+
+--Copied from Juraj Bedej's Bachelor thesis

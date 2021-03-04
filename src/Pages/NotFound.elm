@@ -34,9 +34,9 @@ view : Url Params -> Document Msg
 view { params } =
     { title = "404"
     , body =
-        [ div [  ]
-            [ h1 [  ] [ text "Page not found!" ]
-            , div [ ]
+        [ div []
+            [ h1 [] [ text "Page not found!" ]
+            , div []
                 [ a [ class "link", href (Route.toString Route.Top) ] [ text "Try this link" ] ]
             ]
         ]

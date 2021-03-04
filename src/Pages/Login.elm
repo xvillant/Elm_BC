@@ -3,6 +3,7 @@ module Pages.Login exposing (Model, Msg, Params, page)
 import Api.Data exposing (Data(..))
 import Api.User exposing (User, userDecoder)
 import Browser.Navigation as Nav exposing (Key, pushUrl)
+import FeatherIcons exposing (user)
 import Html exposing (..)
 import Html.Attributes exposing (class, href, id, placeholder, type_, value)
 import Html.Events exposing (onClick, onInput)
@@ -11,6 +12,7 @@ import Json.Decode as D exposing (Decoder, field)
 import Json.Decode.Extra as ED exposing (andMap)
 import Json.Encode as E exposing (..)
 import Jwt exposing (JwtError)
+import Ports exposing (saveUser)
 import Server
 import Shared
 import Spa.Document exposing (Document)
@@ -18,9 +20,6 @@ import Spa.Generated.Route as Route
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Task
-import FeatherIcons exposing (user)
-import Api.Data
-import Ports exposing (saveUser)
 
 
 page : Page Params Model Msg
@@ -103,22 +102,24 @@ update msg model =
                 ( { model | warning = "Type your password!" }, Cmd.none )
 
             else
-                ( {model | warning = "Loading..."}, loginRequest model )
+                ( { model | warning = "Loading..." }, loginRequest model )
 
         Response response ->
             case response of
                 Ok value ->
-                    ( {model | warning = "Loading..."}, getUser value model {onResponse = GotUser})
+                    ( { model | warning = "Loading..." }, getUser value model { onResponse = GotUser } )
 
                 Err err ->
                     ( { model | warning = httpErrorString err }, Cmd.none )
 
         GotUser user ->
             case user of
-               Api.Data.Success user_ ->
-                    ( { model | user = Api.Data.toMaybe user }, Cmd.batch[saveUser user_, pushUrl model.key "/recipes"] )
-               _ -> 
-                    ( model , Cmd.none )
+                Api.Data.Success user_ ->
+                    ( { model | user = Api.Data.toMaybe user }, Cmd.batch [ saveUser user_, pushUrl model.key "/recipes" ] )
+
+                _ ->
+                    ( model, Cmd.none )
+
 
 httpErrorString : Http.Error -> String
 httpErrorString error =
@@ -146,7 +147,7 @@ httpErrorString error =
 
 save : Model -> Shared.Model -> Shared.Model
 save model shared =
-    {shared | user = model.user}
+    { shared | user = model.user }
 
 
 load : Shared.Model -> Model -> ( Model, Cmd Msg )
@@ -221,7 +222,7 @@ loginRequest model =
         }
 
 
-getUser : String -> Model -> {onResponse : Data User -> Msg} -> Cmd Msg
+getUser : String -> Model -> { onResponse : Data User -> Msg } -> Cmd Msg
 getUser tokenString model options =
     let
         token =

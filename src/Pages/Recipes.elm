@@ -12,7 +12,7 @@ import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
 import Time
-import TimeFormatting exposing (formatDate, formatTime)
+import Components.TimeFormatting exposing (formatDate, formatTime)
 import TimeZone exposing (europe__bratislava)
 
 

@@ -18,7 +18,7 @@ import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Task
 import Time
-import TimeFormatting exposing (formatDate, formatTime)
+import Components.TimeFormatting exposing (formatDate, formatTime)
 import TimeZone exposing (europe__bratislava)
 
 
@@ -234,45 +234,45 @@ postComment : Time.Posix -> Model -> { onResponse : Data Comment -> Msg } -> Cmd
 postComment nowTime model options =
     let
         body =
-                [ ( "comment", E.string model.commentString )
-                , ( "recipeid"
-                  , E.int
-                        (case model.article of
-                            Success article ->
-                                article.id
+            [ ( "comment", E.string model.commentString )
+            , ( "recipeid"
+              , E.int
+                    (case model.article of
+                        Success article ->
+                            article.id
 
-                            _ ->
-                                0
-                        )
-                  )
-                , ( "profile"
-                  , case model.user of
-                        Just user ->
-                            E.object
-                                [ ( "id", E.int user.id )
-                                , ( "email", E.string user.email )
-                                , ( "firstname", E.string user.firstname )
-                                , ( "lastname", E.string user.lastname )
-                                , ( "bio", E.string user.bio )
-                                , ( "password", E.string user.password )
-                                , ( "image", E.string user.image )
-                                , ( "created", Iso8601.encode user.created )
-                                ]
+                        _ ->
+                            0
+                    )
+              )
+            , ( "profile"
+              , case model.user of
+                    Just user ->
+                        E.object
+                            [ ( "id", E.int user.id )
+                            , ( "email", E.string user.email )
+                            , ( "firstname", E.string user.firstname )
+                            , ( "lastname", E.string user.lastname )
+                            , ( "bio", E.string user.bio )
+                            , ( "password", E.string user.password )
+                            , ( "image", E.string user.image )
+                            , ( "created", Iso8601.encode user.created )
+                            ]
 
-                        Nothing ->
-                            E.object
-                                [ ( "id", E.int 0 )
-                                , ( "email", E.string "" )
-                                , ( "firstname", E.string "" )
-                                , ( "lastname", E.string "" )
-                                , ( "bio", E.string "" )
-                                , ( "password", E.string "" )
-                                , ( "image", E.string "" )
-                                , ( "created", E.string "" )
-                                ]
-                  )
-                , ( "created", Iso8601.encode nowTime )
-                ]
+                    Nothing ->
+                        E.object
+                            [ ( "id", E.int 0 )
+                            , ( "email", E.string "" )
+                            , ( "firstname", E.string "" )
+                            , ( "lastname", E.string "" )
+                            , ( "bio", E.string "" )
+                            , ( "password", E.string "" )
+                            , ( "image", E.string "" )
+                            , ( "created", E.string "" )
+                            ]
+              )
+            , ( "created", Iso8601.encode nowTime )
+            ]
                 |> E.object
                 |> Http.jsonBody
     in
@@ -314,7 +314,7 @@ viewArticle model =
                     [ textarea [ placeholder "Type your comment here...", cols 70, rows 10, Html.Attributes.value model.commentString, onInput AddComment, class "form" ] []
                     ]
                 , div []
-                    [ button [ class "submit_button", onClick <| GetTime (SubmitComment) ] [ text "Share comment" ]
+                    [ button [ class "submit_button", onClick <| GetTime SubmitComment ] [ text "Share comment" ]
                     ]
                 ]
 

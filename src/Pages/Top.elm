@@ -76,11 +76,11 @@ view : Model -> Document Msg
 view model =
     { title = "Home"
     , body =
-        [ div [ ]
-            [ h1 [ ] [ text "Recipes Home" ]
+        [ div []
+            [ h1 [] [ text "Recipes Home" ]
             , p [] [ text "This page was made for sharing your best meals" ]
             , br [] []
-            , div [class "carrousel"] [ Carousel.view model.carousel |> Html.map UpdateCarousel ]
+            , div [ class "carrousel" ] [ Carousel.view model.carousel |> Html.map UpdateCarousel ]
             ]
         ]
     }
