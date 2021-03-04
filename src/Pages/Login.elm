@@ -193,7 +193,7 @@ view model =
                     []
                 ]
             , div []
-                [ button [ class "submit_button", onClick Submit ] [ text "Log In" ] ]
+                [ button [ class "submit_button", onClick Submit ] [ text "Sign In" ] ]
             , div [ class "warning_form" ]
                 [ text model.warning ]
             , div []

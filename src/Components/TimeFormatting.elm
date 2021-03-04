@@ -1,25 +1,28 @@
 module Components.TimeFormatting exposing (formatDate, formatTime)
 
-import DateFormat as DF
-import Time
+import DateFormat exposing (dayOfMonthSuffix, text, monthNameFull, yearNumber, format, hourMilitaryNumber, minuteFixed)
+import Time exposing (Zone, Posix)
 
-formatDate : Time.Zone -> Time.Posix -> String
-formatDate zone time=
-    DF.format
-        [ DF.dayOfMonthSuffix
-        , DF.text " "
-        , DF.monthNameFull
-        , DF.text ", "
-        , DF.yearNumber
+
+formatDate : Zone -> Posix -> String
+formatDate zone time =
+    format
+        [ dayOfMonthSuffix
+        , text " "
+        , monthNameFull
+        , text ", "
+        , yearNumber
         ]
         zone
         time
-formatTime : Time.Zone -> Time.Posix -> String
+
+
+formatTime : Zone -> Posix -> String
 formatTime zone time =
-    DF.format
-        [ DF.hourMilitaryNumber
-        , DF.text ":"
-        , DF.minuteFixed
+    format
+        [ hourMilitaryNumber
+        , text ":"
+        , minuteFixed
         ]
         zone
         time
