@@ -142,7 +142,7 @@ viewHeaderNotLoggedIn options =
                         _ ->
                             class "navbar-elements"
                     ]
-                    [ i [ class "fas fa-home" ] [] ]
+                    [ i [ class "fas fa-home" ] [] , br [] [], p [ class "nav__links_text" ] [ text "home" ]]
                 ]
             , li []
                 [ a
@@ -154,7 +154,7 @@ viewHeaderNotLoggedIn options =
                         _ ->
                             class "navbar-elements"
                     ]
-                    [ text "sign in" ]
+                    [ i [ class "fas fa-sign-in-alt" ] [] , br [] [], p [ class "nav__links_text" ] [ text "sign in" ]]
                 ]
             , li []
                 [ a
@@ -166,7 +166,7 @@ viewHeaderNotLoggedIn options =
                         _ ->
                             class "navbar-elements"
                     ]
-                    [ text "sign up" ]
+                    [ i [ class "fas fa-user-plus" ] [] , br [] [], p [ class "nav__links_text" ] [ text "sign in" ]]
                 ]
             ]
         ]

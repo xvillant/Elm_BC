@@ -4,11 +4,11 @@
       "id": 1,
       "firstname": "Jozef",
       "lastname": "Mrkvicka",
-      "password": "$2a$10$ZzvRnusOf1pfx1aBBOYCTOjV9Aw10tcd.2TffMIGsVbGoBbLLR2K.",
+      "password": "$2a$10$8vga3iqVOhg7YLMRMW7uvuWRyMnH1zAngZJRHN52uFpNYdT.hTySm",
       "bio": "I am new here...hasdasd",
       "created": "2021-03-04T15:35:05.030Z",
       "email": "kolacik@gmail.com",
-      "image": "http://images6.fanpop.com/image/photos/40800000/Chow-Chow-Puppies-For-Sale-600x600-puppies-40835589-600-600.jpg"
+      "image": "https://images.unsplash.com/photo-1597042343165-57d0e98546b8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8ZWRpdHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"
     },
     {
       "id": 2,
@@ -58,6 +58,38 @@
       },
       "created": "2021-03-05T13:48:29.711Z",
       "id": 1
+    },
+    {
+      "comment": "cauko ako sa mas",
+      "recipeid": 1,
+      "profile": {
+        "id": 1,
+        "email": "kolacik@gmail.com",
+        "firstname": "Jozef",
+        "lastname": "Mrkvicka",
+        "bio": "I am new here...hasdasd",
+        "password": "$2a$10$8vga3iqVOhg7YLMRMW7uvuWRyMnH1zAngZJRHN52uFpNYdT.hTySm",
+        "image": "https://images.unsplash.com/photo-1597042343165-57d0e98546b8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8ZWRpdHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80",
+        "created": "2021-03-04T15:35:05.030Z"
+      },
+      "created": "2021-03-05T17:19:16.172Z",
+      "id": 2
+    },
+    {
+      "comment": "celkom fajn",
+      "recipeid": 1,
+      "profile": {
+        "id": 2,
+        "email": "huhu@gmail.com",
+        "firstname": "Gabriela",
+        "lastname": "Lendvaiová",
+        "bio": "Dobre to funguje",
+        "password": "$2a$10$y8XPuhoLG3A.2RJURTI6YOXHub3gm64bgRWPbNv8DonzESll02hYW",
+        "image": "https://snuggiepaws.co.uk/wp-content/uploads/2019/10/dog-1.png",
+        "created": "2021-03-05T16:01:03.879Z"
+      },
+      "created": "2021-03-05T17:20:09.683Z",
+      "id": 3
     }
   ]
 }
