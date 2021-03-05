@@ -11,9 +11,12 @@ module Spa.Page exposing
 
 -}
 
+import Server exposing (url)
 import Shared
 import Spa.Document exposing (Document)
 import Spa.Url exposing (Url)
+import Browser.Navigation as Nav
+import Spa.Generated.Route as Route
 
 
 type alias Page params model msg =
@@ -84,6 +87,34 @@ application :
 application page =
     page
 
+
+{--protectedApplication :
+    { init : Shared.Model -> Url params -> ( model, Cmd msg )
+    , update : msg -> model -> ( model, Cmd msg )
+    , view : model -> Document msg
+    , subscriptions : model -> Sub msg
+    , save : model -> Shared.Model -> Shared.Model
+    , load : Shared.Model -> model -> ( model, Cmd msg )
+    }
+    -> Page params model msg
+protectedApplication page =
+    { init =
+        \shared url ->
+            case shared.user of
+                Just user_ ->
+                    page.init user_ url |> Tuple.mapFirst Just
+
+                Nothing ->
+                    ( Nothing
+                    , Nav.pushUrl url.key (Route.toString Route.Login)
+                    )
+    , update = page.update
+    , view = page.view
+    , subscriptions = page.subscriptions
+    , save = page.save
+    , load = page.load
+    }
+--}
 
 ignoreEffect : model -> ( model, Cmd msg )
 ignoreEffect model =

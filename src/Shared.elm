@@ -39,7 +39,7 @@ init : Flags -> Url -> Key -> ( Model, Cmd Msg )
 init json url key =
     let
         user =
-            json |> D.decodeValue userDecoder |> Result.toMaybe
+            json |> D.decodeValue (D.field "user" userDecoder) |> Result.toMaybe
     in
     ( Model url key user
     , Cmd.none

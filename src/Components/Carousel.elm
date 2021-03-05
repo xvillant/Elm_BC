@@ -134,7 +134,6 @@ view model =
                 [ div [ style "margin-top" "150px" ]
                     [ button
                         [ class "next__button"
-                        --, style "transition" "opacity 0.3s ease 0s"
                         , style "background" "Transparent"
                         , style "border" "none"
                         , style "color" "#24252a"
@@ -150,7 +149,6 @@ view model =
                         ]
                     , button
                         [ class "next__button"
-                        --, style "transition" "background 0.3s ease 0s"
                         , style "background" "transparent"
                         , style "border" "none"
                         , style "color" "#24252a"
@@ -167,7 +165,7 @@ view model =
                     ]
 
                 --display bullets (the small dots) which allow jumping to a specific image in carousel
-                , div [ style "margin-top" "350px" ] (Array.toList (Array.indexedMap (viewBullet model) model.source))
+                , div [ style "margin-top" "378px" ] (Array.toList (Array.indexedMap (viewBullet model) model.source))
                 ]
 
         Nothing ->
