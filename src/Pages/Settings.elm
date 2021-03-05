@@ -10,6 +10,7 @@ import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
 import Iso8601
 import Json.Encode as E exposing (..)
+import Ports exposing (saveUser)
 import Server exposing (url)
 import Shared
 import Spa.Document exposing (Document)
@@ -140,8 +141,13 @@ update msg model =
             else
                 ( { model | warning = "Loading..." }, updateProfile model { onResponse = Updated } )
 
-        Updated response ->
-            ( { model | user = Api.Data.toMaybe response }, pushUrl model.key "/" )
+        Updated user ->
+            case user of
+                Api.Data.Success user_ ->
+                    ( { model | user = Api.Data.toMaybe user }, Cmd.batch [ saveUser user_, pushUrl model.key "/" ] )
+
+                _ ->
+                    ( model, Cmd.none )
 
 
 save : Model -> Shared.Model -> Shared.Model
@@ -151,7 +157,36 @@ save model shared =
 
 load : Shared.Model -> Model -> ( Model, Cmd Msg )
 load shared model =
-    ( model, Cmd.none )
+    ( case shared.user of
+        Just user ->
+            { image = user.image
+            , firstname = user.firstname
+            , lastname = user.lastname
+            , bio = user.bio
+            , email = user.email
+            , password = ""
+            , id = user.id
+            , created = user.created
+            , warning = ""
+            , key = shared.key
+            , user = shared.user
+            }
+
+        Nothing ->
+            { image = ""
+            , firstname = ""
+            , lastname = ""
+            , bio = ""
+            , email = ""
+            , id = 0
+            , password = ""
+            , warning = ""
+            , created = Time.millisToPosix 0
+            , key = shared.key
+            , user = Nothing
+            }
+    , Cmd.none
+    )
 
 
 subscriptions : Model -> Sub Msg
@@ -165,7 +200,7 @@ subscriptions model =
 
 view : Model -> Document Msg
 view model =
-    { title = "Settings"
+    { title = "Settings | GoodFood"
     , body =
         [ div []
             [ h1 [] [ text "Settings" ]

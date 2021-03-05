@@ -102,7 +102,7 @@ view : Model -> Document Msg
 view model =
     case model.profile of
         Success profile ->
-            { title = "Profile | " ++ profile.email
+            { title = "Profile | " ++ profile.email ++ " | GoodFood"
             , body =
                 [ viewProfile model.zone model.profile
                 , div [ class "warning_form" ]
@@ -112,7 +112,7 @@ view model =
             }
 
         _ ->
-            { title = "Profile"
+            { title = "Profile | GoodFood"
             , body =
                 [ viewProfile model.zone model.profile
                 , div [ class "warning_form" ]
@@ -135,7 +135,7 @@ viewProfile tz profile =
         Success value ->
             div []
                 [ h1 [] [ text (value.firstname ++ " " ++ value.lastname) ]
-                , img [ src value.image, width 80, height 80 ] []
+                , img [ src value.image, width 150, height 150 ] []
                 , div []
                     [ p [ class "title" ] [ text "email" ]
                     , p [ class "value" ] [ text value.email ]

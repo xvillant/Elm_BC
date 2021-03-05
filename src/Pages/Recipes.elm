@@ -98,7 +98,7 @@ subscriptions model =
 
 view : Model -> Document Msg
 view model =
-    { title = "Recipes"
+    { title = "Recipes | GoodFood"
     , body =
         [ viewPosts model ]
     }

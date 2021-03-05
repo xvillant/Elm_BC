@@ -173,7 +173,7 @@ subscriptions model =
 
 view : Model -> Document Msg
 view model =
-    { title = "Sign Up"
+    { title = "Sign Up | GoodFood"
     , body =
         [ div []
             [ h1 [] [ text "Sign Up" ]

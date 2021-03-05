@@ -140,7 +140,7 @@ view : Model -> Document Msg
 view model =
     case model.article of
         Success article ->
-            { title = "Article | " ++ article.name
+            { title = "Article | " ++ article.name ++ " | GoodFood"
             , body =
                 [ viewArticle model
                 , div [ class "warning_form" ] [ text model.warning ]
@@ -149,7 +149,7 @@ view model =
             }
 
         _ ->
-            { title = "Article"
+            { title = "Article | GoodFood"
             , body =
                 [ viewArticle model
                 , div [ class "warning_form" ] [ text model.warning ]

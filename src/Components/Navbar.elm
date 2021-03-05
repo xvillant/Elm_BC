@@ -56,7 +56,7 @@ viewHeaderLoggedIn options =
                         _ ->
                             class "navbar-elements"
                     ]
-                    [ i [ class "fas fa-home" ] [] ]
+                    [ i [ class "fas fa-home" ] [], br [] [], p [ class "nav__links_text" ] [ text "home" ] ]
                 ]
             , li []
                 [ a
@@ -68,7 +68,7 @@ viewHeaderLoggedIn options =
                         _ ->
                             class "navbar-elements"
                     ]
-                    [ i [ class "fas fa-book" ] [] ]
+                    [ i [ class "fas fa-book" ] [] , br [] [], p [ class "nav__links_text" ] [ text "recipes" ]]
                 ]
             , li []
                 [ a
@@ -80,7 +80,7 @@ viewHeaderLoggedIn options =
                         _ ->
                             class "navbar-elements"
                     ]
-                    [ i [ class "fas fa-plus-circle" ] [] ]
+                    [ i [ class "fas fa-plus" ] [] , br [] [], p [ class "nav__links_text" ] [ text "compose" ] ]
                 ]
             , li []
                 [ a
@@ -91,7 +91,7 @@ viewHeaderLoggedIn options =
                       else
                         class "navbar-elements"
                     ]
-                    [ i [ class "fas fa-user" ] [] ]
+                    [ i [ class "fas fa-user" ] [] , br [] [], p [ class "nav__links_text" ] [ text "profile" ] ]
                 ]
             , li []
                 [ a
@@ -103,9 +103,21 @@ viewHeaderLoggedIn options =
                         _ ->
                             class "navbar-elements"
                     ]
-                    [ i [ class "fas fa-cogs" ] [] ]
+                    [ i [ class "fas fa-cogs" ] [] , br [] [], p [ class "nav__links_text" ] [ text "settings" ]]
                 ]
-            , li [] [ a [ class "sign-out", onClick options.onSignOut ] [ i [ class "fas fa-sign-out-alt" ] [] ] ]
+            , li []
+                [ a
+                    [ href (Route.toString Route.Users)
+                    , case options.url.path of
+                        "/users" ->
+                            class "active_link"
+
+                        _ ->
+                            class "navbar-elements"
+                    ]
+                    [ i [ class "fas fa-address-book" ] [] , br [] [], p [ class "nav__links_text" ] [ text "users" ]]
+                ]
+            , li [] [ a [ class "sign-out", onClick options.onSignOut ] [ i [ class "fas fa-sign-out-alt" ] [] , br [] [], p [ class "nav__links_text" ] [ text "sign out" ] ] ]
             ]
         ]
 

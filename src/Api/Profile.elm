@@ -1,4 +1,4 @@
-module Api.Profile exposing (Profile, profileDecoder)
+module Api.Profile exposing (Profile, profileDecoder, profilesDecoder)
 import Json.Decode as D exposing (..)
 import Time
 import Iso8601
@@ -24,4 +24,9 @@ profileDecoder =
         (field "bio" D.string)
         (field "image" D.string)
         (field "created" Iso8601.decoder)
+
+
+profilesDecoder : Decoder (List Profile)
+profilesDecoder =
+    list profileDecoder
 

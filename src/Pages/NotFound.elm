@@ -32,7 +32,7 @@ page =
 
 view : Url Params -> Document Msg
 view { params } =
-    { title = "404"
+    { title = "Error | GoodFood"
     , body =
         [ div []
             [ h1 [] [ text "Page not found!" ]
