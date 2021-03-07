@@ -26,3 +26,6 @@ clearUser =
         { tag = "clearUser"
         , data = E.null
         }
+
+
+--https://github.com/ryannhg/elm-spa-realworld

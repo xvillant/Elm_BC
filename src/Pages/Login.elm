@@ -2,16 +2,14 @@ module Pages.Login exposing (Model, Msg, Params, page)
 
 import Api.Data exposing (Data(..))
 import Api.User exposing (User, userDecoder)
+import Api.Token exposing (Token, decodeJWT)
 import Browser.Navigation exposing (Key, pushUrl)
-import FeatherIcons exposing (user)
+--import FeatherIcons exposing (user)
 import Html exposing (..)
 import Html.Attributes exposing (class, href, id, placeholder, type_, value)
 import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
-import Json.Decode as D exposing (Decoder, field)
-import Json.Decode.Extra exposing (andMap)
 import Json.Encode as E exposing (..)
-import Jwt
 import Ports exposing (saveUser)
 import Server
 import Shared
@@ -19,6 +17,7 @@ import Spa.Document exposing (Document)
 import Spa.Generated.Route as Route
 import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
+import Json.Decode as D exposing (field)
 
 
 page : Page Params Model Msg
@@ -51,12 +50,7 @@ type alias Model =
     }
 
 
-type alias Token =
-    { iat : Int
-    , exp : Int
-    , userId : String
-    , email : String
-    }
+
 
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
@@ -247,15 +241,4 @@ getUser tokenString model options =
         }
 
 
-decodeJWT : String -> Result Jwt.JwtError Token
-decodeJWT tokenString =
-    Jwt.decodeToken jwtDecoder tokenString
 
-
-jwtDecoder : Decoder Token
-jwtDecoder =
-    D.succeed Token
-        |> andMap (field "iat" D.int)
-        |> andMap (field "exp" D.int)
-        |> andMap (field "sub" D.string)
-        |> andMap (field "email" D.string)

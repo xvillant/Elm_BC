@@ -15,8 +15,6 @@ import Server exposing (url)
 import Shared
 import Spa.Document exposing (Document)
 import Spa.Url exposing (Url)
-import Browser.Navigation as Nav
-import Spa.Generated.Route as Route
 
 
 type alias Page params model msg =

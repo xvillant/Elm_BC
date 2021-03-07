@@ -88,3 +88,8 @@ fromResult result =
 
         Err reasons ->
             Failure reasons
+
+
+
+
+--https://www.elm-spa.dev/guide/using-apis

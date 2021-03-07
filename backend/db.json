@@ -4,8 +4,8 @@
       "id": 1,
       "firstname": "Jozef",
       "lastname": "Mrkvicka",
-      "password": "$2a$10$8vga3iqVOhg7YLMRMW7uvuWRyMnH1zAngZJRHN52uFpNYdT.hTySm",
-      "bio": "I am new here...hasdasd",
+      "password": "$2a$10$nsT3Y1TMMIxfXUdbQ9965eYeU7CCGCmKZ4fjB2GHBUFrlSoWwgxxW",
+      "bio": "I am new here...hasdasdcauko",
       "created": "2021-03-04T15:35:05.030Z",
       "email": "kolacik@gmail.com",
       "image": "https://images.unsplash.com/photo-1597042343165-57d0e98546b8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8ZWRpdHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"
@@ -19,6 +19,16 @@
       "created": "2021-03-05T16:01:03.879Z",
       "email": "huhu@gmail.com",
       "image": "https://snuggiepaws.co.uk/wp-content/uploads/2019/10/dog-1.png"
+    },
+    {
+      "email": "jozsko123@gmail.com",
+      "password": "$2a$10$6Elt3M4y1TlPeKQ0IkcdvOJNJOXjpRAjLxcIV1nVc9p7FWnARLXxK",
+      "firstname": "Orsolya",
+      "lastname": "Bodzsár",
+      "bio": "I am new here...",
+      "image": "/assets/user_default.png",
+      "created": "2021-03-05T19:57:56.747Z",
+      "id": 3
     }
   ],
   "posts": [
@@ -40,6 +50,47 @@
       },
       "created": "2021-03-04T15:39:32.038Z",
       "id": 1
+    },
+    {
+      "name": "Zelenka",
+      "ingredients": [
+        "adasdasd",
+        "asdasd",
+        "dasdasdasd",
+        "dasdsad"
+      ],
+      "recipe": "dasdsads",
+      "profile": {
+        "id": 1,
+        "email": "kolacik@gmail.com",
+        "firstname": "Jozef",
+        "lastname": "Mrkvicka",
+        "bio": "I am new here...hasdasd",
+        "password": "$2a$10$8vga3iqVOhg7YLMRMW7uvuWRyMnH1zAngZJRHN52uFpNYdT.hTySm",
+        "image": "https://images.unsplash.com/photo-1597042343165-57d0e98546b8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8ZWRpdHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80",
+        "created": "2021-03-04T15:35:05.030Z"
+      },
+      "created": "2021-03-05T19:41:48.958Z",
+      "id": 2
+    },
+    {
+      "name": "Dsadsad",
+      "ingredients": [
+        "dasd"
+      ],
+      "recipe": "dasaas",
+      "profile": {
+        "id": 3,
+        "email": "jozsko123@gmail.com",
+        "firstname": "Orsolya",
+        "lastname": "Bodzsár",
+        "bio": "I am new here...",
+        "password": "$2a$10$6Elt3M4y1TlPeKQ0IkcdvOJNJOXjpRAjLxcIV1nVc9p7FWnARLXxK",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-05T19:57:56.747Z"
+      },
+      "created": "2021-03-05T19:59:05.985Z",
+      "id": 3
     }
   ],
   "comments": [
@@ -90,6 +141,54 @@
       },
       "created": "2021-03-05T17:20:09.683Z",
       "id": 3
+    },
+    {
+      "comment": "azta ez nagyon finom",
+      "recipeid": 3,
+      "profile": {
+        "id": 3,
+        "email": "jozsko123@gmail.com",
+        "firstname": "Orsolya",
+        "lastname": "Bodzsár",
+        "bio": "I am new here...",
+        "password": "$2a$10$6Elt3M4y1TlPeKQ0IkcdvOJNJOXjpRAjLxcIV1nVc9p7FWnARLXxK",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-05T19:57:56.747Z"
+      },
+      "created": "2021-03-05T19:59:54.053Z",
+      "id": 4
+    },
+    {
+      "comment": "dasdasdsad",
+      "recipeid": 3,
+      "profile": {
+        "id": 0,
+        "email": "",
+        "firstname": "",
+        "lastname": "",
+        "bio": "",
+        "password": "",
+        "image": "",
+        "created": ""
+      },
+      "created": "2021-03-05T20:01:55.179Z",
+      "id": 5
+    },
+    {
+      "comment": "cauko",
+      "recipeid": 2,
+      "profile": {
+        "id": 1,
+        "email": "kolacik@gmail.com",
+        "firstname": "Jozef",
+        "lastname": "Mrkvicka",
+        "bio": "I am new here...",
+        "password": "$2a$10$81uTQJxatrhDFjjIsCwVi.2Hr2gXFH2du2kC6QD7h/9Zx2Xf3kRuC",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-04T15:35:05.030Z"
+      },
+      "created": "2021-03-06T11:19:53.547Z",
+      "id": 6
     }
   ]
 }

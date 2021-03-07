@@ -4,7 +4,7 @@
   "description": "Fake Rest API",
   "main": "index.js",
   "scripts": {
-    "json:server": "json-server --watch db.json --port 3000", 
+    "json:server": "json-server --watch db.json --port 3000",
     "json:server": "json-server db.json -m ./node_modules/json-server-auth",
     "json:server": "json-server-auth db.json"
   },
