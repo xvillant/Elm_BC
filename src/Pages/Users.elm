@@ -1,6 +1,6 @@
 module Pages.Users exposing (Model, Msg, Params, page)
 
-import Api.Data exposing (Data(..), expectJson)
+import Api.Data exposing (Data(..))
 import Api.Profile exposing (Profile, profilesDecoder)
 import Html exposing (..)
 import Html.Attributes exposing (class, height, href, placeholder, src, type_, value, width)
@@ -10,7 +10,7 @@ import Server exposing (url)
 import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
-import Spa.Url as Url exposing (Url)
+import Spa.Url exposing (Url)
 
 
 page : Page Params Model Msg
@@ -124,7 +124,7 @@ viewProfiles model =
                             class "category_button"
                     , onClick <| ChangeSorting "lastname"
                     ]
-                    [ text "Search by last name" ]
+                    [ text "Sort by last name" ]
                 , button
                     [ case model.sorting of
                         "email" ->
@@ -134,7 +134,7 @@ viewProfiles model =
                             class "category_button"
                     , onClick <| ChangeSorting "email"
                     ]
-                    [ text "Search by email" ]
+                    [ text "Sort by email" ]
                 , br [] []
                 , input [ class "search_input", type_ "search", placeholder "Search...", onInput Search, value model.search ] []
                 , div [ class "line_after_recipes" ] []

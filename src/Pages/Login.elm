@@ -46,7 +46,6 @@ type alias Model =
     , warning : String
     , key : Key
     , user : Maybe User
-    , token : Maybe Token
     }
 
 
@@ -58,7 +57,6 @@ init shared { params } =
     ( { email = ""
       , password = ""
       , warning = ""
-      , token = Nothing
       , key = shared.key
       , user = shared.user
       }
@@ -100,7 +98,7 @@ update msg model =
         Response response ->
             case response of
                 Ok value ->
-                    ( { model | warning = "Loading..." }, getUser value model { onResponse = GotUser } )
+                    ( { model | warning = "Loading..." }, getUser value { onResponse = GotUser } )
 
                 Err err ->
                     ( { model | warning = httpErrorString err }, Cmd.none )
@@ -111,7 +109,7 @@ update msg model =
                     ( { model | user = Api.Data.toMaybe user }, Cmd.batch [ saveUser user_, pushUrl model.key "/recipes" ] )
 
                 _ ->
-                    ( model, Cmd.none )
+                    ( {model | warning = "Something went wrong!"}, Cmd.none )
 
 
 httpErrorString : Http.Error -> String
@@ -215,8 +213,8 @@ loginRequest model =
         }
 
 
-getUser : String -> Model -> { onResponse : Data User -> Msg } -> Cmd Msg
-getUser tokenString model options =
+getUser : String -> { onResponse : Data User -> Msg } -> Cmd Msg
+getUser tokenString options =
     let
         token =
             decodeJWT tokenString
