@@ -2,6 +2,7 @@ module Pages.Recipes exposing (Model, Msg, Params, page)
 
 import Api.Article exposing (Article, articlesDecoder)
 import Api.Data exposing (Data(..))
+import Components.TimeFormatting exposing (formatDate, formatTime)
 import Html exposing (..)
 import Html.Attributes exposing (class, href, placeholder, src, type_, value)
 import Html.Events exposing (onClick, onInput)
@@ -12,7 +13,6 @@ import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
 import Time
-import Components.TimeFormatting exposing (formatDate, formatTime)
 import TimeZone exposing (europe__bratislava)
 
 
@@ -72,6 +72,7 @@ type Msg
     = PostsReceived (Data (List Article))
     | Search String
     | ChangeSorting String String
+    | Tick Time.Posix
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -86,10 +87,14 @@ update msg model =
         ChangeSorting sorting order ->
             ( { model | sorting = sorting, order = order }, getContentRequest model.search sorting order { onResponse = PostsReceived } )
 
+        Tick time ->
+            ( model, getContentRequest model.search model.sorting model.order { onResponse = PostsReceived } )
+
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    Time.every 30000 Tick
+
 
 
 
@@ -200,4 +205,3 @@ viewPost post =
         , a [ href ("/article/" ++ String.fromInt post.id) ] [ button [ class "submit_button" ] [ text "Comment" ] ]
         , div [ class "line_after_recipes" ] []
         ]
-

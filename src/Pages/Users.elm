@@ -11,7 +11,7 @@ import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
-
+import Time
 
 page : Page Params Model Msg
 page =
@@ -53,7 +53,7 @@ type Msg
     = ProfilesReceived (Data (List Profile))
     | Search String
     | ChangeSorting String
-
+    | Tick Time.Posix
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -67,6 +67,8 @@ update msg model =
         ChangeSorting sorting ->
             ( { model | sorting = sorting }, getUsers model.search sorting { onResponse = ProfilesReceived } )
 
+        Tick time -> 
+            ( model, getUsers model.search model.sorting { onResponse = ProfilesReceived } )
 
 save : Model -> Shared.Model -> Shared.Model
 save model shared =
@@ -80,7 +82,7 @@ load shared model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    Time.every 30000 Tick
 
 
 

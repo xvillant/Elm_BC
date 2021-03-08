@@ -1,10 +1,12 @@
 module Pages.Article.RecipeId_Int exposing (Model, Msg, Params, page)
 
+--import Api.Profile exposing (Profile, profileDecoder)
+
 import Api.Article exposing (Article, articleDecoder)
 import Api.Comment exposing (Comment, commentDecoder, commentsDecoder)
 import Api.Data exposing (Data(..))
---import Api.Profile exposing (Profile, profileDecoder)
 import Api.User exposing (User)
+import Components.TimeFormatting exposing (formatDate, formatTime)
 import Html exposing (..)
 import Html.Attributes exposing (class, cols, href, placeholder, rows, src)
 import Html.Events exposing (onClick, onInput)
@@ -18,7 +20,6 @@ import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
 import Task
 import Time
-import Components.TimeFormatting exposing (formatDate, formatTime)
 import TimeZone exposing (europe__bratislava)
 
 
@@ -49,6 +50,7 @@ type alias Model =
     , warning : String
     , zone : Time.Zone
     , user : Maybe User
+    , parameters : Params
     }
 
 
@@ -60,6 +62,7 @@ init shared { params } =
       , warning = ""
       , zone = Time.utc
       , user = shared.user
+      , parameters = params
       }
     , Cmd.batch [ getArticleRequest params { onResponse = ReceivedArticle }, getCommentsRequest params { onResponse = CommentsReceived }, Task.perform Timezone Time.here ]
     )
@@ -77,6 +80,7 @@ type Msg
     | GetTime (Time.Posix -> Msg)
     | Timezone Time.Zone
     | CommentResponse (Data Comment)
+    | Tick Time.Posix
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -116,6 +120,9 @@ update msg model =
             , Cmd.none
             )
 
+        Tick time ->
+            ( model, getCommentsRequest model.parameters { onResponse = CommentsReceived } )
+
 
 save : Model -> Shared.Model -> Shared.Model
 save model shared =
@@ -129,7 +136,7 @@ load shared model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    Time.every 30000 Tick
 
 
 
