@@ -2,7 +2,7 @@ module Pages.Recipes exposing (Model, Msg, Params, page)
 
 import Api.Article exposing (Article, articlesDecoder)
 import Api.Data exposing (Data(..))
-import Browser.Navigation
+import Browser.Navigation exposing (pushUrl)
 import Components.TimeFormatting exposing (formatDate, formatTime)
 import Html exposing (..)
 import Html.Attributes exposing (class, href, placeholder, src, type_, value)
@@ -14,7 +14,6 @@ import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
 import Time
-import Browser.Navigation exposing (pushUrl)
 import TimeZone exposing (europe__bratislava)
 
 

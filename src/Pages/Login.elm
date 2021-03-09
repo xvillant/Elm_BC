@@ -1,14 +1,16 @@
 module Pages.Login exposing (Model, Msg, Params, page)
 
-import Api.Data exposing (Data(..))
-import Api.User exposing (User, userDecoder)
-import Api.Token exposing (Token, decodeJWT)
-import Browser.Navigation exposing (Key, pushUrl)
 --import FeatherIcons exposing (user)
+
+import Api.Data exposing (Data(..))
+import Api.Token exposing (Token, decodeJWT)
+import Api.User exposing (User, userDecoder)
+import Browser.Navigation exposing (Key, pushUrl)
 import Html exposing (..)
 import Html.Attributes exposing (class, href, id, placeholder, type_, value)
 import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
+import Json.Decode as D exposing (field)
 import Json.Encode as E exposing (..)
 import Ports exposing (saveUser)
 import Server
@@ -17,7 +19,6 @@ import Spa.Document exposing (Document)
 import Spa.Generated.Route as Route
 import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
-import Json.Decode as D exposing (field)
 
 
 page : Page Params Model Msg
@@ -47,9 +48,6 @@ type alias Model =
     , key : Key
     , user : Maybe User
     }
-
-
-
 
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
@@ -109,7 +107,7 @@ update msg model =
                     ( { model | user = Api.Data.toMaybe user }, Cmd.batch [ saveUser user_, pushUrl model.key "/recipes" ] )
 
                 _ ->
-                    ( {model | warning = "Something went wrong!"}, Cmd.none )
+                    ( { model | warning = "Something went wrong!" }, Cmd.none )
 
 
 httpErrorString : Http.Error -> String
@@ -237,6 +235,3 @@ getUser tokenString options =
         , timeout = Nothing
         , tracker = Nothing
         }
-
-
-

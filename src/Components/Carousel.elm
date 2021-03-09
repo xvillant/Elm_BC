@@ -222,4 +222,5 @@ subscriptions model =
             Time.every 1000 (\_ -> Reset)
 
 
+
 --Copied from Juraj Bedej's Bachelor thesis

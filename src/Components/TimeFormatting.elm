@@ -1,7 +1,7 @@
 module Components.TimeFormatting exposing (formatDate, formatTime)
 
-import DateFormat exposing (dayOfMonthSuffix, text, monthNameFull, yearNumber, format, hourMilitaryNumber, minuteFixed)
-import Time exposing (Zone, Posix)
+import DateFormat exposing (dayOfMonthSuffix, format, hourMilitaryNumber, minuteFixed, monthNameFull, text, yearNumber)
+import Time exposing (Posix, Zone)
 
 
 formatDate : Zone -> Posix -> String

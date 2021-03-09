@@ -99,7 +99,7 @@ update msg model =
             ( { model | comments = response }, Cmd.none )
 
         AddComment comment ->
-            ( { model | commentString = comment, warning = ""}, Cmd.none )
+            ( { model | commentString = comment, warning = "" }, Cmd.none )
 
         SubmitComment time ->
             if String.isEmpty model.commentString then

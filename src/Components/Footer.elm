@@ -7,7 +7,7 @@ import Html.Attributes exposing (class, href, style, target)
 view : Html msg
 view =
     footer
-        [class "footer"]
+        [ class "footer" ]
         [ text "This single-page application was created by Patrik Villant © 2021"
         , br [] []
         , a [ style "margin-right" "10px", target "_blank", href "https://github.com/xvillant" ] [ i [ class "fab fa-github" ] [] ]

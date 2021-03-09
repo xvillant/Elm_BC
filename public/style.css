@@ -91,6 +91,16 @@ footer.footer a:hover{
    word-wrap: break-word;
   text-align: center;
   flex: 1;
+  /*animation: pagefade 2s;*/
+}
+
+@keyframes pagefade {
+  from{
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 

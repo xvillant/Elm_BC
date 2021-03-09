@@ -82,6 +82,7 @@ view model =
             , div [ class "quote" ]
                 [ blockquote [ class "quote__text" ] [ text "A recipe is a story that ends with a good meal." ]
                 , Html.cite [] [ text "Pat Conroy" ]
+
                 --https://codepen.io/JoeHastings/pen/MOdRVm
                 ]
             , br [] []
