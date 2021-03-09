@@ -3,6 +3,8 @@ module Pages.Profile.ProfileId_Int exposing (Model, Msg, Params, page)
 import Api.Article exposing (Article, articlesDecoder)
 import Api.Data exposing (Data(..))
 import Api.Profile exposing (Profile, profileDecoder)
+import Browser.Navigation exposing (pushUrl)
+import Components.TimeFormatting exposing (formatDate, formatTime)
 import Html exposing (..)
 import Html.Attributes exposing (class, height, href, src, width)
 import Http exposing (..)
@@ -13,7 +15,6 @@ import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
 import Task
 import Time
-import Components.TimeFormatting exposing (formatDate, formatTime)
 import TimeZone exposing (europe__bratislava)
 
 
@@ -52,7 +53,12 @@ init shared { params } =
       , warning = ""
       , zone = Time.utc
       }
-    , Cmd.batch [ getUserRequest params { onResponse = ReceivedUser }, getContentRequest params { onResponse = ReceivedPosts }, Task.perform Timezone Time.here ]
+    , case shared.user of
+        Just user_ ->
+            Cmd.batch [ getUserRequest params { onResponse = ReceivedUser }, getContentRequest params { onResponse = ReceivedPosts }, Task.perform Timezone Time.here ]
+
+        Nothing ->
+            pushUrl shared.key "/login"
     )
 
 

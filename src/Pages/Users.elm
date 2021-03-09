@@ -2,6 +2,7 @@ module Pages.Users exposing (Model, Msg, Params, page)
 
 import Api.Data exposing (Data(..))
 import Api.Profile exposing (Profile, profilesDecoder)
+import Browser.Navigation exposing (pushUrl)
 import Html exposing (..)
 import Html.Attributes exposing (class, height, href, placeholder, src, type_, value, width)
 import Html.Events exposing (onClick, onInput)
@@ -12,6 +13,7 @@ import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
 import Time
+
 
 page : Page Params Model Msg
 page =
@@ -42,7 +44,19 @@ type alias Model =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( { search = "", sorting = "lastname", profiles = Loading }, getUsers "" "lastname" { onResponse = ProfilesReceived } )
+    ( initialModel
+    , case shared.user of
+        Just user_ ->
+            getUsers "" "lastname" { onResponse = ProfilesReceived }
+
+        Nothing ->
+            pushUrl shared.key "/login"
+    )
+
+
+initialModel : Model
+initialModel =
+    { search = "", sorting = "lastname", profiles = Loading }
 
 
 
@@ -54,6 +68,7 @@ type Msg
     | Search String
     | ChangeSorting String
     | Tick Time.Posix
+
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -67,8 +82,9 @@ update msg model =
         ChangeSorting sorting ->
             ( { model | sorting = sorting }, getUsers model.search sorting { onResponse = ProfilesReceived } )
 
-        Tick time -> 
+        Tick time ->
             ( model, getUsers model.search model.sorting { onResponse = ProfilesReceived } )
+
 
 save : Model -> Shared.Model -> Shared.Model
 save model shared =

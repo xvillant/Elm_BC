@@ -3,6 +3,7 @@ module Pages.New exposing (Model, Msg, Params, page)
 import Api.Article exposing (Article, articleDecoder)
 import Api.Data exposing (Data(..))
 import Api.User exposing (User)
+import Array exposing (push)
 import Browser.Navigation exposing (Key, pushUrl)
 import Elm.Module exposing (Name)
 import FeatherIcons exposing (user)
@@ -54,7 +55,19 @@ type alias Model =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( { name = "", ingredients = "", recipe = "", warning = "", key = shared.key, user = shared.user }, Cmd.none )
+    ( initialModel shared
+    , case shared.user of
+        Just user_ ->
+            Cmd.none
+
+        Nothing ->
+            pushUrl shared.key "/login"
+    )
+
+
+initialModel : Shared.Model -> Model
+initialModel shared =
+    { name = "", ingredients = "", recipe = "", warning = "", key = shared.key, user = shared.user }
 
 
 

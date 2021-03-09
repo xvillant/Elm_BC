@@ -91,6 +91,44 @@
       },
       "created": "2021-03-05T19:59:05.985Z",
       "id": 3
+    },
+    {
+      "name": "SAS",
+      "ingredients": [
+        "asAS"
+      ],
+      "recipe": "SADASD",
+      "profile": {
+        "id": 1,
+        "email": "kolacik@gmail.com",
+        "firstname": "Jozef",
+        "lastname": "Mrkvicka",
+        "bio": "I am new here...hasdasdcauko",
+        "password": "$2a$10$nsT3Y1TMMIxfXUdbQ9965eYeU7CCGCmKZ4fjB2GHBUFrlSoWwgxxW",
+        "image": "https://images.unsplash.com/photo-1597042343165-57d0e98546b8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8ZWRpdHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80",
+        "created": "2021-03-04T15:35:05.030Z"
+      },
+      "created": "2021-03-09T14:21:57.719Z",
+      "id": 4
+    },
+    {
+      "name": "Dsa",
+      "ingredients": [
+        "dasd"
+      ],
+      "recipe": "dasd",
+      "profile": {
+        "id": 1,
+        "email": "kolacik@gmail.com",
+        "firstname": "Jozef",
+        "lastname": "Mrkvicka",
+        "bio": "I am new here...hasdasdcauko",
+        "password": "$2a$10$nsT3Y1TMMIxfXUdbQ9965eYeU7CCGCmKZ4fjB2GHBUFrlSoWwgxxW",
+        "image": "https://images.unsplash.com/photo-1597042343165-57d0e98546b8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8ZWRpdHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80",
+        "created": "2021-03-04T15:35:05.030Z"
+      },
+      "created": "2021-03-09T14:23:59.322Z",
+      "id": 5
     }
   ],
   "comments": [
@@ -189,6 +227,38 @@
       },
       "created": "2021-03-06T11:19:53.547Z",
       "id": 6
+    },
+    {
+      "comment": "dsad",
+      "recipeid": 3,
+      "profile": {
+        "id": 1,
+        "email": "kolacik@gmail.com",
+        "firstname": "Jozef",
+        "lastname": "Mrkvicka",
+        "bio": "I am new here...hasdasdcauko",
+        "password": "$2a$10$nsT3Y1TMMIxfXUdbQ9965eYeU7CCGCmKZ4fjB2GHBUFrlSoWwgxxW",
+        "image": "https://images.unsplash.com/photo-1597042343165-57d0e98546b8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8ZWRpdHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80",
+        "created": "2021-03-04T15:35:05.030Z"
+      },
+      "created": "2021-03-09T14:20:17.707Z",
+      "id": 7
+    },
+    {
+      "comment": "d",
+      "recipeid": 4,
+      "profile": {
+        "id": 1,
+        "email": "kolacik@gmail.com",
+        "firstname": "Jozef",
+        "lastname": "Mrkvicka",
+        "bio": "I am new here...hasdasdcauko",
+        "password": "$2a$10$nsT3Y1TMMIxfXUdbQ9965eYeU7CCGCmKZ4fjB2GHBUFrlSoWwgxxW",
+        "image": "https://images.unsplash.com/photo-1597042343165-57d0e98546b8?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8ZWRpdHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80",
+        "created": "2021-03-04T15:35:05.030Z"
+      },
+      "created": "2021-03-09T14:22:42.224Z",
+      "id": 8
     }
   ]
 }

@@ -6,6 +6,7 @@ import Api.Article exposing (Article, articleDecoder)
 import Api.Comment exposing (Comment, commentDecoder, commentsDecoder)
 import Api.Data exposing (Data(..))
 import Api.User exposing (User)
+import Browser.Navigation exposing (pushUrl)
 import Components.TimeFormatting exposing (formatDate, formatTime)
 import Html exposing (..)
 import Html.Attributes exposing (class, cols, href, placeholder, rows, src)
@@ -64,7 +65,12 @@ init shared { params } =
       , user = shared.user
       , parameters = params
       }
-    , Cmd.batch [ getArticleRequest params { onResponse = ReceivedArticle }, getCommentsRequest params { onResponse = CommentsReceived }, Task.perform Timezone Time.here ]
+    , case shared.user of
+        Just user_ ->
+            Cmd.batch [ getArticleRequest params { onResponse = ReceivedArticle }, getCommentsRequest params { onResponse = CommentsReceived }, Task.perform Timezone Time.here ]
+
+        Nothing ->
+            pushUrl shared.key "/login"
     )
 
 
@@ -93,7 +99,7 @@ update msg model =
             ( { model | comments = response }, Cmd.none )
 
         AddComment comment ->
-            ( { model | commentString = comment }, Cmd.none )
+            ( { model | commentString = comment, warning = ""}, Cmd.none )
 
         SubmitComment time ->
             if String.isEmpty model.commentString then

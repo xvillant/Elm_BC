@@ -58,7 +58,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         SignOutSignal ->
-            ( { model | user = Nothing }, Cmd.batch [ pushUrl model.key "/", clearUser ] )
+            ( { model | user = Nothing }, Cmd.batch [ pushUrl model.key "/login", clearUser ] )
 
 
 subscriptions : Model -> Sub Msg

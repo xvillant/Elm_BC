@@ -2,6 +2,7 @@ module Pages.Recipes exposing (Model, Msg, Params, page)
 
 import Api.Article exposing (Article, articlesDecoder)
 import Api.Data exposing (Data(..))
+import Browser.Navigation
 import Components.TimeFormatting exposing (formatDate, formatTime)
 import Html exposing (..)
 import Html.Attributes exposing (class, href, placeholder, src, type_, value)
@@ -13,6 +14,7 @@ import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
 import Time
+import Browser.Navigation exposing (pushUrl)
 import TimeZone exposing (europe__bratislava)
 
 
@@ -56,7 +58,14 @@ type alias Model =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( initialModel, getContentRequest "" "created" "desc" { onResponse = PostsReceived } )
+    ( initialModel
+    , case shared.user of
+        Just user_ ->
+            getContentRequest "" "created" "desc" { onResponse = PostsReceived }
+
+        Nothing ->
+            pushUrl shared.key "/login"
+    )
 
 
 initialModel : Model
@@ -94,7 +103,6 @@ update msg model =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Time.every 30000 Tick
-
 
 
 

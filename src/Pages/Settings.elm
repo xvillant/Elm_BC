@@ -56,36 +56,38 @@ type alias Model =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( case shared.user of
+    case shared.user of
         Just user ->
-            { image = user.image
-            , firstname = user.firstname
-            , lastname = user.lastname
-            , bio = user.bio
-            , email = user.email
-            , password = ""
-            , id = user.id
-            , created = user.created
-            , warning = ""
-            , key = shared.key
-            , user = shared.user
-            }
+            ( { image = user.image
+              , firstname = user.firstname
+              , lastname = user.lastname
+              , bio = user.bio
+              , email = user.email
+              , password = ""
+              , id = user.id
+              , created = user.created
+              , warning = ""
+              , key = shared.key
+              , user = shared.user
+              }
+            , Cmd.none
+            )
 
         Nothing ->
-            { image = ""
-            , firstname = ""
-            , lastname = ""
-            , bio = ""
-            , email = ""
-            , id = 0
-            , password = ""
-            , warning = ""
-            , created = Time.millisToPosix 0
-            , key = shared.key
-            , user = Nothing
-            }
-    , Cmd.none
-    )
+            ( { image = ""
+              , firstname = ""
+              , lastname = ""
+              , bio = ""
+              , email = ""
+              , id = 0
+              , password = ""
+              , warning = ""
+              , created = Time.millisToPosix 0
+              , key = shared.key
+              , user = Nothing
+              }
+            , pushUrl shared.key "/login"
+            )
 
 
 
