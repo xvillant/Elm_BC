@@ -194,8 +194,8 @@ postArticle : Time.Posix -> Model -> { onResponse : Data Article -> Msg } -> Cmd
 postArticle nowTime model options =
     let
         body =
-            [ ( "name", E.string <| String.Extra.toSentenceCase <| model.name )
-            , ( "ingredients", E.list E.string <| List.map String.trim <| String.split "," model.ingredients )
+            [ ( "name", E.string <| String.Extra.toSentenceCase <| String.toLower <| model.name )
+            , ( "ingredients", E.list E.string <| List.map String.trim <| String.split "," <| String.toLower <| model.ingredients )
             , ( "recipe", E.string model.recipe )
             , ( "profile"
               , case model.user of

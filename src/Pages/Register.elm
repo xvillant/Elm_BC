@@ -17,7 +17,7 @@ import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
 import Task
 import Time
-
+import String.Extra
 
 page : Page Params Model Msg
 page =
@@ -283,8 +283,8 @@ registerUser : Time.Posix -> Model -> Cmd Msg
 registerUser nowTime model =
     let
         body =
-            [ ( "firstname", E.string model.firstname )
-            , ( "lastname", E.string model.lastname )
+            [ ( "firstname", E.string <| String.Extra.toSentenceCase <| String.toLower <| model.firstname )
+            , ( "lastname", E.string <| String.Extra.toSentenceCase <| String.toLower <| model.lastname )
             , ( "password", E.string model.password )
             , ( "email", E.string model.email )
             , ( "bio", E.string "I am new here..." )
