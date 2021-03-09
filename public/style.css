@@ -362,7 +362,7 @@ img.profile__image_users:hover{
 }
 
 .green__check{
-  color: green;
+  color: #4CAF50;
   padding: 20px 0;
   text-align: center;
   width: 30px;
@@ -375,7 +375,7 @@ img.profile__image_users:hover{
 
 
 .red__check {
-  color: red;
+  color: rgb(255, 75, 75);
   padding: 20px 0;
   width: 30px;
   text-align: center;
@@ -389,4 +389,17 @@ img.profile__image_users:hover{
 
 i.red__check, i.green__check, i.check, input.form {
   display: table-cell;
+}
+
+.warner {
+  color: rgb(255, 75, 75);
+  font-size: 25px;
+  font-weight: bold;
+}
+
+li.req__items{
+  color: rgb(255, 75, 75);
+  font-size: 14px;
+  list-style-type: disc;
+  margin: 10px 0;
 }

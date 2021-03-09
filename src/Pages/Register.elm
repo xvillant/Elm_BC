@@ -2,7 +2,7 @@ module Pages.Register exposing (Model, Msg, Params, page)
 
 import Browser.Navigation as Nav exposing (Key)
 import Components.Validity exposing (isValidEmail, isValidPassword)
-import Html exposing (a, br, button, div, h1, i, input, text, time)
+import Html exposing (a, br, button, div, h1, i, input, li, p, text, time, ul)
 import Html.Attributes exposing (class, href, id, placeholder, type_, value)
 import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
@@ -15,9 +15,10 @@ import Spa.Document exposing (Document)
 import Spa.Generated.Route as Route
 import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
+import String.Extra
 import Task
 import Time
-import String.Extra
+
 
 page : Page Params Model Msg
 page =
@@ -105,7 +106,7 @@ update msg model =
                 ( { model | warning = "Enter your password!" }, Cmd.none )
 
             else if isValidPassword model.password /= True then
-                ( { model | warning = "Password must contains of at least - one uppercase letter, one lowercase letter, one digit, one special character and must have minimum eight in lenght" }, Cmd.none )
+                ( { model | warning = "Enter a valid password" }, Cmd.none )
 
             else if String.isEmpty model.passwordAgain then
                 ( { model | warning = "Enter your password again!" }, Cmd.none )
@@ -266,6 +267,20 @@ view model =
                   else
                     i [ class "fas fa-times", class "red__check" ] []
                 ]
+            , if isValidPassword model.password || String.isEmpty model.password then
+                div [ class "warner" ] []
+
+              else
+                div [ class "warner" ]
+                    [ p [] [ text "Password requirements:" ]
+                    , ul []
+                        [ li [ class "req__items" ] [ text "Must contain of at least one uppercase letter" ]
+                        , li [ class "req__items" ] [ text "Must contain of at least one lowercase letter" ]
+                        , li [ class "req__items" ] [ text "Must contain of at least one digit" ]
+                        , li [ class "req__items" ] [ text "Must contain of at least one special character" ]
+                        , li [ class "req__items" ] [ text "Password's minimum lenght is 8 characters" ]
+                        ]
+                    ]
             , div []
                 [ button [ class "submit_button", onClick <| GetTime Submit ] [ text "Sign Up" ] ]
             , div [ class "warning_form" ]
