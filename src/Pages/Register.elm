@@ -2,7 +2,7 @@ module Pages.Register exposing (Model, Msg, Params, page)
 
 import Browser.Navigation as Nav exposing (Key)
 import Components.Validity exposing (isValidEmail, isValidPassword)
-import Html exposing (a, br, button, div, h1, input, text, time)
+import Html exposing (a, br, button, div, h1, i, input, text, time)
 import Html.Attributes exposing (class, href, id, placeholder, type_, value)
 import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
@@ -177,7 +177,7 @@ view model =
     , body =
         [ div []
             [ h1 [] [ text "Sign Up" ]
-            , div []
+            , div [class "input__container"]
                 [ input
                     [ id "firstname"
                     , type_ "text"
@@ -187,8 +187,16 @@ view model =
                     , class "form"
                     ]
                     []
+                , if String.isEmpty model.firstname then
+                    i [class "check"] []
+
+                  else if checkName model.firstname then
+                    i [ class "fas fa-check", class "green__check" ] []
+
+                  else
+                    i [ class "fas fa-times", class "red__check" ] []
                 ]
-            , div []
+            , div [class "input__container"]
                 [ input
                     [ id "lastname"
                     , type_ "text"
@@ -198,8 +206,16 @@ view model =
                     , class "form"
                     ]
                     []
+                , if String.isEmpty model.lastname then
+                    i [class "check"] []
+
+                  else if checkName model.lastname then
+                    i [ class "fas fa-check", class "green__check" ] []
+
+                  else
+                    i [ class "fas fa-times", class "red__check" ] []
                 ]
-            , div []
+            , div [class "input__container"]
                 [ input
                     [ id "email"
                     , type_ "email"
@@ -209,8 +225,16 @@ view model =
                     , class "form"
                     ]
                     []
+                , if String.isEmpty model.email then
+                    i [class "check"] []
+
+                  else if isValidEmail model.email then
+                    i [ class "fas fa-check", class "green__check" ] []
+
+                  else
+                    i [ class "fas fa-times", class "red__check" ] []
                 ]
-            , div []
+            , div [class "input__container"]
                 [ input
                     [ id "password"
                     , type_ "password"
@@ -220,8 +244,16 @@ view model =
                     , class "form"
                     ]
                     []
+                , if String.isEmpty model.password then
+                    i [class "check"] []
+
+                  else if isValidPassword model.password then
+                    i [ class "fas fa-check", class "green__check" ] []
+
+                  else
+                    i [ class "fas fa-times", class "red__check" ] []
                 ]
-            , div []
+            , div [class "input__container"]
                 [ input
                     [ id "passwordAgain"
                     , type_ "password"
@@ -231,6 +263,14 @@ view model =
                     , class "form"
                     ]
                     []
+                , if String.isEmpty model.passwordAgain then
+                    i [class "check"] []
+
+                  else if model.password == model.passwordAgain then
+                    i [ class "fas fa-check", class "green__check" ] []
+
+                  else
+                    i [ class "fas fa-times", class "red__check" ] []
                 ]
             , div []
                 [ button [ class "submit_button", onClick <| GetTime Submit ] [ text "Sign Up" ] ]
@@ -265,3 +305,12 @@ registerUser nowTime model =
         , body = body
         , expect = Http.expectJson Response (field "accessToken" D.string)
         }
+
+
+checkName : String -> Bool
+checkName firstname =
+    if String.length firstname > 1 then
+        True
+
+    else
+        False

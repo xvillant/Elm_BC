@@ -15,7 +15,8 @@ import Server exposing (url)
 import Shared
 import Spa.Document exposing (Document)
 import Spa.Url exposing (Url)
-
+--import Spa.Generated.Route as Route
+--import Browser.Navigation as Nav
 
 type alias Page params model msg =
     { init : Shared.Model -> Url params -> ( model, Cmd msg )
@@ -100,7 +101,7 @@ protectedApplication page =
         \shared url ->
             case shared.user of
                 Just user_ ->
-                    page.init user_ url |> Tuple.mapFirst Just
+                    page.init  url |> Tuple.mapFirst Just
 
                 Nothing ->
                     ( Nothing
@@ -113,7 +114,6 @@ protectedApplication page =
     , load = page.load
     }
 --}
-
 ignoreEffect : model -> ( model, Cmd msg )
 ignoreEffect model =
     ( model, Cmd.none )

@@ -350,3 +350,33 @@ img.profile__image_users{
 img.profile__image_users:hover{
   opacity: 1;
 }
+
+.green__check{
+  color: green;
+  padding: 20px 0;
+  text-align: center;
+  width: 30px;
+}
+
+
+.check{
+  width: 30px;
+  text-align: center;}
+
+
+.red__check {
+  color: red;
+  padding: 20px 0;
+  width: 30px;
+  text-align: center;
+}
+
+.input__container {
+  display: table;
+  margin: 0 auto;
+  width: 100%;
+}
+
+i.red__check, i.green__check, i.check, input.form {
+  display: table-cell;
+}
