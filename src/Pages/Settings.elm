@@ -105,16 +105,16 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Email email ->
-            ( { model | email = email }, Cmd.none )
+            ( { model | email = email, warning = "" }, Cmd.none )
 
         Password password ->
-            ( { model | password = password }, Cmd.none )
+            ( { model | password = password, warning = "" }, Cmd.none )
 
         Bio bio ->
-            ( { model | bio = bio }, Cmd.none )
+            ( { model | bio = bio, warning = "" }, Cmd.none )
 
         Image image ->
-            ( { model | image = image }, Cmd.none )
+            ( { model | image = image, warning = "" }, Cmd.none )
 
         SubmitUpdate ->
             if String.isEmpty model.firstname then

@@ -80,10 +80,10 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Email email ->
-            ( { model | email = email }, Cmd.none )
+            ( { model | email = email, warning = "" }, Cmd.none )
 
         Password password ->
-            ( { model | password = password }, Cmd.none )
+            ( { model | password = password, warning = "" }, Cmd.none )
 
         Submit ->
             if String.isEmpty model.email then

@@ -74,19 +74,19 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         FirstName firstname ->
-            ( { model | firstname = firstname }, Cmd.none )
+            ( { model | firstname = firstname, warning = "" }, Cmd.none )
 
         LastName lastname ->
-            ( { model | lastname = lastname }, Cmd.none )
+            ( { model | lastname = lastname, warning = "" }, Cmd.none )
 
         Email email ->
-            ( { model | email = email }, Cmd.none )
+            ( { model | email = email, warning = "" }, Cmd.none )
 
         Password password ->
-            ( { model | password = password }, Cmd.none )
+            ( { model | password = password, warning = "" }, Cmd.none )
 
         PasswordAgain password ->
-            ( { model | passwordAgain = password }, Cmd.none )
+            ( { model | passwordAgain = password, warning = "" }, Cmd.none )
 
         Submit time ->
             if String.isEmpty model.firstname then
@@ -177,7 +177,7 @@ view model =
     , body =
         [ div []
             [ h1 [] [ text "Sign Up" ]
-            , div [class "input__container"]
+            , div [ class "input__container" ]
                 [ input
                     [ id "firstname"
                     , type_ "text"
@@ -188,15 +188,12 @@ view model =
                     ]
                     []
                 , if String.isEmpty model.firstname then
-                    i [class "check"] []
-
-                  else if checkName model.firstname then
-                    i [ class "fas fa-check", class "green__check" ] []
+                    i [ class "check" ] []
 
                   else
-                    i [ class "fas fa-times", class "red__check" ] []
+                    i [ class "fas fa-check", class "green__check" ] []
                 ]
-            , div [class "input__container"]
+            , div [ class "input__container" ]
                 [ input
                     [ id "lastname"
                     , type_ "text"
@@ -207,15 +204,12 @@ view model =
                     ]
                     []
                 , if String.isEmpty model.lastname then
-                    i [class "check"] []
-
-                  else if checkName model.lastname then
-                    i [ class "fas fa-check", class "green__check" ] []
+                    i [ class "check" ] []
 
                   else
-                    i [ class "fas fa-times", class "red__check" ] []
+                    i [ class "fas fa-check", class "green__check" ] []
                 ]
-            , div [class "input__container"]
+            , div [ class "input__container" ]
                 [ input
                     [ id "email"
                     , type_ "email"
@@ -226,7 +220,7 @@ view model =
                     ]
                     []
                 , if String.isEmpty model.email then
-                    i [class "check"] []
+                    i [ class "check" ] []
 
                   else if isValidEmail model.email then
                     i [ class "fas fa-check", class "green__check" ] []
@@ -234,7 +228,7 @@ view model =
                   else
                     i [ class "fas fa-times", class "red__check" ] []
                 ]
-            , div [class "input__container"]
+            , div [ class "input__container" ]
                 [ input
                     [ id "password"
                     , type_ "password"
@@ -245,7 +239,7 @@ view model =
                     ]
                     []
                 , if String.isEmpty model.password then
-                    i [class "check"] []
+                    i [ class "check" ] []
 
                   else if isValidPassword model.password then
                     i [ class "fas fa-check", class "green__check" ] []
@@ -253,7 +247,7 @@ view model =
                   else
                     i [ class "fas fa-times", class "red__check" ] []
                 ]
-            , div [class "input__container"]
+            , div [ class "input__container" ]
                 [ input
                     [ id "passwordAgain"
                     , type_ "password"
@@ -264,7 +258,7 @@ view model =
                     ]
                     []
                 , if String.isEmpty model.passwordAgain then
-                    i [class "check"] []
+                    i [ class "check" ] []
 
                   else if model.password == model.passwordAgain then
                     i [ class "fas fa-check", class "green__check" ] []
@@ -305,12 +299,3 @@ registerUser nowTime model =
         , body = body
         , expect = Http.expectJson Response (field "accessToken" D.string)
         }
-
-
-checkName : String -> Bool
-checkName firstname =
-    if String.length firstname > 1 then
-        True
-
-    else
-        False

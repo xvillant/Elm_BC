@@ -74,13 +74,13 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Name name ->
-            ( { model | name = name }, Cmd.none )
+            ( { model | name = name, warning = "" }, Cmd.none )
 
         Ingredients ingredients ->
-            ( { model | ingredients = ingredients }, Cmd.none )
+            ( { model | ingredients = ingredients, warning = "" }, Cmd.none )
 
         Recipe recipe ->
-            ( { model | recipe = recipe }, Cmd.none )
+            ( { model | recipe = recipe, warning = "" }, Cmd.none )
 
         GetTime time ->
             ( model, Task.perform time Time.now )
