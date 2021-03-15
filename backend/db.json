@@ -1,5 +1,59 @@
 {
-  "users": [],
-  "posts": [],
+  "users": [
+    {
+      "email": "kolacik@gmail.com",
+      "password": "$2a$10$.B1YF2C2T/dMBSTJpzKT6eyz82Y/amTc5O/sujRQoyQ0ZmY7.qxQ6",
+      "firstname": "Patrik",
+      "lastname": "Villant",
+      "bio": "I am new here...",
+      "image": "/assets/user_default.png",
+      "created": "2021-03-10T11:48:40.522Z",
+      "id": 1
+    }
+  ],
+  "posts": [
+    {
+      "name": "Adasdsad",
+      "ingredients": [
+        "dkaslôdas",
+        "asdmsadlaslkd",
+        "kusodasdasd"
+      ],
+      "recipe": "dasdasdaddadasdas",
+      "duration": 5,
+      "profile": {
+        "id": 1,
+        "email": "kolacik@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "I am new here...",
+        "password": "$2a$10$.B1YF2C2T/dMBSTJpzKT6eyz82Y/amTc5O/sujRQoyQ0ZmY7.qxQ6",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-10T11:48:40.522Z"
+      },
+      "created": "2021-03-15T21:04:41.637Z",
+      "id": 1
+    },
+    {
+      "name": "Assdasdasd",
+      "ingredients": [
+        "dasdasd"
+      ],
+      "recipe": "adasdsa",
+      "duration": 1,
+      "profile": {
+        "id": 1,
+        "email": "kolacik@gmail.com",
+        "firstname": "Patrik",
+        "lastname": "Villant",
+        "bio": "I am new here...",
+        "password": "$2a$10$.B1YF2C2T/dMBSTJpzKT6eyz82Y/amTc5O/sujRQoyQ0ZmY7.qxQ6",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-10T11:48:40.522Z"
+      },
+      "created": "2021-03-15T21:12:09.471Z",
+      "id": 2
+    }
+  ],
   "comments": []
 }

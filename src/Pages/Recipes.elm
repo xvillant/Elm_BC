@@ -200,10 +200,13 @@ viewPost post =
         , p [ class "datetime" ] [ text (formatTime timezone post.created) ]
         , p [ class "title" ] [ text "ingredients" ]
         , li [ class "value" ]
-            [ String.join ", " post.ingredients |> text ]
+            [ renderList post.ingredients ]
         , p [ class "title" ] [ text "recipe" ]
         , li [ class "value" ]
             [ text post.recipe ]
+        , p [ class "title" ] [ text "duration" ]
+        , li [ class "value" ]
+            [ text <| String.fromInt post.duration ++ " minutes" ]
         , p [ class "title" ] [ text "shared by" ]
         , li [ class "recipe_names" ]
             [ a [ class "link", href ("/profile/" ++ String.fromInt post.profile.id) ] [ text (post.profile.firstname ++ " " ++ post.profile.lastname) ]
@@ -212,3 +215,8 @@ viewPost post =
         , a [ href ("/article/" ++ String.fromInt post.id) ] [ button [ class "submit_button" ] [ text "Comment" ] ]
         , div [ class "line_after_recipes" ] []
         ]
+
+renderList : List String -> Html msg
+renderList lst =
+    ol [ class "ingredients__" ]
+        (List.map (\l -> li [class "value" ] [ text l ]) lst)

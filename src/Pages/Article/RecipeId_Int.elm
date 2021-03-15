@@ -313,7 +313,7 @@ viewArticle model =
                 , p [ class "datetime" ] [ text (formatTime model.zone value.created) ]
                 , div []
                     [ p [ class "title" ] [ text "ingredients " ]
-                    , p [ class "value" ] [ text <| String.join ", " value.ingredients ]
+                    , p [ class "value" ] [ renderList value.ingredients ]
                     ]
                 , div []
                     [ p [ class "title" ] [ text "recipe " ]
@@ -322,6 +322,11 @@ viewArticle model =
                 , div []
                     [ p [ class "title" ] [ text "shared by " ]
                     , a [ class "link", href ("/profile/" ++ String.fromInt value.profile.id) ] [ text (value.profile.firstname ++ " " ++ value.profile.lastname) ]
+                    ]
+                , div []
+                    [ p [ class "title" ] [ text "duration" ]
+                    , p [ class "value" ]
+                        [ text <| String.fromInt value.duration ++ " minutes" ]
                     ]
                 , div []
                     [ textarea [ placeholder "Type your comment here...", cols 70, rows 10, Html.Attributes.value model.commentString, onInput AddComment, class "form" ] []
@@ -333,3 +338,7 @@ viewArticle model =
 
         Failure _ ->
             viewFetchError "article" "Something went wrong!"
+renderList : List String -> Html msg
+renderList lst =
+    ol [ class "ingredients__" ]
+        (List.map (\l -> li [class "value" ] [ text l ]) lst)

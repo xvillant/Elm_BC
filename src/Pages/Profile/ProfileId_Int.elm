@@ -210,9 +210,12 @@ viewPost post =
         , p [ class "datetime" ] [ text (formatDate timezone post.created) ]
         , p [ class "datetime" ] [ text (formatTime timezone post.created) ]
         , p [ class "title" ] [ text "ingredients" ]
-        , li [ class "value" ] [ String.join ", " post.ingredients |> text ]
+        , li [ class "value" ] [ renderList post.ingredients ]
         , p [ class "title" ] [ text "recipe" ]
         , li [ class "value" ] [ text post.recipe ]
+        , p [ class "title" ] [ text "duration" ]
+        , li [ class "value" ]
+            [ text <| String.fromInt post.duration ++ " minutes" ]
         , br [] []
         , a [ href ("/article/" ++ String.fromInt post.id) ] [ button [ class "submit_button" ] [ text "Comment" ] ]
         , div [ class "line_after_recipes" ] []
@@ -229,3 +232,9 @@ viewFetchError items errorMessage =
         [ h1 [] [ text errorHeading ]
         , text ("Error: " ++ errorMessage)
         ]
+
+
+renderList : List String -> Html msg
+renderList lst =
+    ol [ class "ingredients__" ]
+        (List.map (\l -> li [ class "value" ] [ text l ]) lst)

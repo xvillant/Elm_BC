@@ -11,18 +11,20 @@ type alias Article =
     , recipe : String
     , profile : Profile
     , created : Time.Posix
+    , duration : Int
     }
 
 
 articleDecoder : Decoder Article
 articleDecoder =
-    map6 Article
+    map7 Article
         (field "id" D.int)
         (field "name" D.string)
         (field "ingredients" (D.list D.string))
         (field "recipe" D.string)
         (field "profile" profileDecoder)
         (field "created" Iso8601.decoder)
+        (field "duration" D.int)
 
 
 articlesDecoder : Decoder (List Article)

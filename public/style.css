@@ -403,3 +403,34 @@ li.req__items{
   list-style-type: disc;
   margin: 10px 0;
 }
+
+.list__ingredients{
+  color: black;
+}
+
+ol {
+  list-style: none;
+  counter-reset: steps;
+}
+ol li {
+  counter-increment: steps;
+}
+ol li::before {
+  content: counter(steps);
+  margin-right: 0.5rem;
+  background: #4CAF50;
+  color: white;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  line-height: 1.2em;
+}
+
+.ingerdients__container {
+  width: 500px;
+  border: solid 1px rgba(0,0,0,0.2);
+  margin: 10px auto;
+  border-radius: 10px;
+}

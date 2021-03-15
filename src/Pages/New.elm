@@ -46,8 +46,10 @@ type alias Params =
 type alias Model =
     { name : String
     , ingredients : String
+    , ingredientsList : List String
     , recipe : String
     , warning : String
+    , duration : String
     , key : Key
     , user : Maybe User
     }
@@ -67,7 +69,7 @@ init shared { params } =
 
 initialModel : Shared.Model -> Model
 initialModel shared =
-    { name = "", ingredients = "", recipe = "", warning = "", key = shared.key, user = shared.user }
+    { name = "", ingredients = "", recipe = "", warning = "", key = shared.key, user = shared.user, duration = "", ingredientsList = [] }
 
 
 
@@ -78,9 +80,11 @@ type Msg
     = Name String
     | Ingredients String
     | Recipe String
+    | Duration String
     | Submit Time.Posix
     | GetTime (Time.Posix -> Msg)
     | Response (Data Article)
+    | AddToIngredients
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -95,6 +99,9 @@ update msg model =
         Recipe recipe ->
             ( { model | recipe = recipe, warning = "" }, Cmd.none )
 
+        Duration duration ->
+            ( { model | duration = duration, warning = "" }, Cmd.none )
+
         GetTime time ->
             ( model, Task.perform time Time.now )
 
@@ -102,14 +109,46 @@ update msg model =
             if String.isEmpty model.name then
                 ( { model | warning = "Enter recipe name!" }, Cmd.none )
 
-            else if String.isEmpty model.ingredients then
+            else if List.isEmpty model.ingredientsList then
                 ( { model | warning = "Enter ingredients!" }, Cmd.none )
 
             else if String.isEmpty model.recipe then
                 ( { model | warning = "Enter recipe!" }, Cmd.none )
 
+            else if
+                String.isEmpty model.duration
+                    || (case String.toInt model.duration of
+                            Nothing ->
+                                1
+
+                            Just number ->
+                                number
+                       )
+                    <= 0
+            then
+                ( { model | warning = "Enter a valid duration in minutes!" }, Cmd.none )
+
             else
                 ( { model | warning = "Loading..." }, postArticle time model { onResponse = Response } )
+
+        AddToIngredients ->
+            ( { model
+                | ingredients = ""
+                , ingredientsList =
+                    if String.isEmpty model.ingredients then
+                        model.ingredientsList
+
+                    else
+                        model.ingredientsList ++ [ String.trim <| String.toLower model.ingredients ]
+                , warning =
+                    if String.isEmpty model.ingredients then
+                        "Enter ingredient!"
+
+                    else
+                        ""
+              }
+            , Cmd.none
+            )
 
         Response response ->
             case response of
@@ -162,12 +201,20 @@ view model =
                     [ id "ingredients"
                     , type_ "text"
                     , autocomplete False
-                    , placeholder "Ingredients - divide (,)"
+                    , placeholder "Type your ingredient"
                     , value model.ingredients
                     , onInput Ingredients
                     , class "form"
                     ]
                     []
+                ]
+            , button [ class "submit_button", onClick AddToIngredients ] [ text "Add ingredient" ]
+            , div [ class "ingerdients__container" ]
+                [ if List.isEmpty model.ingredientsList then
+                    text "No ingredients added yet..."
+
+                  else
+                    renderList model.ingredientsList
                 ]
             , div []
                 [ textarea
@@ -177,6 +224,19 @@ view model =
                     , onInput Recipe
                     , rows 10
                     , cols 70
+                    , class "form"
+                    ]
+                    []
+                ]
+            , div []
+                [ input
+                    [ id "duration"
+                    , type_ "number"
+                    , autocomplete False
+                    , Html.Attributes.min "1"
+                    , placeholder "Type duration in minutes"
+                    , value model.duration
+                    , onInput Duration
                     , class "form"
                     ]
                     []
@@ -195,8 +255,18 @@ postArticle nowTime model options =
     let
         body =
             [ ( "name", E.string <| String.Extra.toSentenceCase <| String.toLower <| model.name )
-            , ( "ingredients", E.list E.string <| List.map String.trim <| String.split "," <| String.toLower <| model.ingredients )
+            , ( "ingredients", E.list E.string model.ingredientsList )
             , ( "recipe", E.string model.recipe )
+            , ( "duration"
+              , E.int
+                    (case String.toInt model.duration of
+                        Nothing ->
+                            0
+
+                        Just number ->
+                            number
+                    )
+              )
             , ( "profile"
               , case model.user of
                     Just user ->
@@ -224,6 +294,16 @@ postArticle nowTime model options =
                             ]
               )
             , ( "created", Iso8601.encode nowTime )
+            , ( "duration"
+              , E.int
+                    (case String.toInt model.duration of
+                        Nothing ->
+                            0
+
+                        Just number ->
+                            number
+                    )
+              )
             ]
                 |> E.object
                 |> Http.jsonBody
@@ -233,3 +313,9 @@ postArticle nowTime model options =
         , body = body
         , expect = Api.Data.expectJson options.onResponse articleDecoder
         }
+
+
+renderList : List String -> Html msg
+renderList lst =
+    ol [ class "ingredients__" ]
+        (List.map (\l -> li [ class "list__ingredients" ] [ text l ]) lst)
