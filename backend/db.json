@@ -1,59 +1,841 @@
 {
   "users": [
     {
-      "email": "kolacik@gmail.com",
-      "password": "$2a$10$.B1YF2C2T/dMBSTJpzKT6eyz82Y/amTc5O/sujRQoyQ0ZmY7.qxQ6",
-      "firstname": "Patrik",
-      "lastname": "Villant",
+      "id": 1,
+      "firstname": "Orsi",
+      "lastname": "Bodzsár",
+      "password": "$2a$10$hrmm9dAcwXzou8bDVhVeFeNYCqUCbgOYNrmRYr0h0L5l8Rx5ClncW",
+      "bio": "I am new here...",
+      "created": "2021-03-14T16:13:52.455Z",
+      "email": "bodzsarorsolya@gmail.com",
+      "image": "https://static.promotions.hu/article/77314/crop/1588179309_fleh/1588179309_fleh_1180_550_5.jpg"
+    },
+    {
+      "email": "erikaszabo@gmail.com",
+      "password": "$2a$10$FjLlGmbtHSFCNsp.0KvuEe0hqTy9a.Eb1wzonAAPnipxIdyh1FkQy",
+      "firstname": "Erika",
+      "lastname": "Szabó",
       "bio": "I am new here...",
       "image": "/assets/user_default.png",
-      "created": "2021-03-10T11:48:40.522Z",
-      "id": 1
+      "created": "2021-03-15T17:52:45.775Z",
+      "id": 2
+    },
+    {
+      "email": "jankavargova@gmail.com",
+      "password": "$2a$10$IZnha9xQ.4OLL0IeijyIXOhDRrj9.rZBtjJF.GE/cLD/h4nJyD/k2",
+      "firstname": "Janka",
+      "lastname": "Vargová",
+      "bio": "I am new here...",
+      "image": "/assets/user_default.png",
+      "created": "2021-03-15T18:05:56.862Z",
+      "id": 3
+    },
+    {
+      "email": "annatoth@gmail.com",
+      "password": "$2a$10$MCvQpA.Vb.JGPUmoLUfCPOZ9WsIGE5phujQMWZW4zLk5/izRfPh7a",
+      "firstname": "Anna",
+      "lastname": "Tóth",
+      "bio": "I am new here...",
+      "image": "/assets/user_default.png",
+      "created": "2021-03-15T18:23:17.499Z",
+      "id": 4
+    },
+    {
+      "email": "katalinkovacova@gmail.com",
+      "password": "$2a$10$7mtlZqNYoFyirHDsZDR9h.09GsW2XpuXQQ5R5mPrmU/XmliHW5DjW",
+      "firstname": "Katalin",
+      "lastname": "Kováčová",
+      "bio": "I am new here...",
+      "image": "/assets/user_default.png",
+      "created": "2021-03-15T18:36:30.066Z",
+      "id": 5
+    },
+    {
+      "email": "jozefberezutsky@gmail.com",
+      "password": "$2a$10$.dJci4Wy.bktClmuaV6PHeOpiCAe8eHkujnnKdufhjrZa99deImnG",
+      "firstname": "Jozef",
+      "lastname": "Berezutsky",
+      "bio": "I am new here...",
+      "image": "/assets/user_default.png",
+      "created": "2021-03-15T19:19:29.110Z",
+      "id": 6
+    },
+    {
+      "email": "michallenivec@gmail.com",
+      "password": "$2a$10$1juj..W6gE2Yl966r66GwO/hJivOHC5RNLstKnwnQsRC2Yc2.Gjh.",
+      "firstname": "Michal",
+      "lastname": "Lenivec",
+      "bio": "I am new here...",
+      "image": "/assets/user_default.png",
+      "created": "2021-03-15T19:33:55.332Z",
+      "id": 7
     }
   ],
   "posts": [
     {
-      "name": "Adasdsad",
+      "name": "Rýchla krémová pórová polievka",
       "ingredients": [
-        "dkaslôdas",
-        "asdmsadlaslkd",
-        "kusodasdasd"
+        "2 pl     maslo",
+        "1 ks     veľký pór",
+        "1 ks     cibuľa",
+        "2 strúčiky     cesnak",
+        "4 hrnčeky     zemiaky",
+        "1 liter     zeleninový vývar (bujón)",
+        "100 ml     smotana na šľahanie",
+        "podľa chuti soľ",
+        "mleté černe korenie"
       ],
-      "recipe": "dasdasdaddadasdas",
-      "duration": 5,
+      "recipe": "V hrnci zahrejeme maslo.\nZ póru odrežeme korienky a listy (listy odložíme do zeleninového alebo mäsového vývaru), strednú časť dobre opláchneme pod vodou a nakrájame na tenučké kolieska.\nNakrájaný pór, spolu s nasekanou cibuľkou vložíme do hrnca a opackáme na masle zhruba 5 minút, kým zelenina nezmäkne.\nPotom do hrnca pridáme pretlačený cesnak, soľ a čierne korenie a prisypeme na kocky pokrájané zemiaky. \nVšetko zalejeme vývarom, premiešame, privedieme k varu a povaríme zhruba 25 minút, kým zemiaky nezmäknú.\nPotom polievku odstavíme a rozmixujeme do krémova s ponorným mixérom.\nNakoniec polievku zjemníme kvapkou smotany, dochutíme ka treba a môžeme podávať.",
       "profile": {
         "id": 1,
-        "email": "kolacik@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
+        "email": "bodzsarorsolya@gmail.com",
+        "firstname": "Orsi",
+        "lastname": "Bodzsár",
         "bio": "I am new here...",
-        "password": "$2a$10$.B1YF2C2T/dMBSTJpzKT6eyz82Y/amTc5O/sujRQoyQ0ZmY7.qxQ6",
-        "image": "/assets/user_default.png",
-        "created": "2021-03-10T11:48:40.522Z"
+        "password": "$2a$10$hrmm9dAcwXzou8bDVhVeFeNYCqUCbgOYNrmRYr0h0L5l8Rx5ClncW",
+        "image": "https://static.promotions.hu/article/77314/crop/1588179309_fleh/1588179309_fleh_1180_550_5.jpg",
+        "created": "2021-03-14T16:13:52.455Z"
       },
-      "created": "2021-03-15T21:04:41.637Z",
+      "created": "2021-03-15T17:41:33.853Z",
+      "duration" : 15,
+      "id": 2
+    },
+    {
+      "name": "Vyprážané kuracie roládky s mozzarellou",
+      "ingredients": [
+        "2 ks kuracie prsia",
+        "2 pl horčica",
+        "2 strúčiky cesnak",
+        "podľa chuti soľ",
+        "mleté čierne korenie",
+        "sušený tymian",
+        "100 g strúhaná mozzarella",
+        "trochu olej na vyprážanie"
+      ],
+      "recipe": "Kuracie prsia pozdĺžne rozrežeme a pod fóliou jemne naklepeme na tenké plátky.\nZ horčice, pretlačeného cesnaku, soli, korenia a tymianu pripravíme pastu, ktorou potrieme mäsko.\nPotom na každý plát posypeme strúhaným syrom, preložíme na kúsok fólie, zrolujeme a dobre zabalíme. Uložíme do chladu na cca 30 minút.\nRolky obalíme z fólie a postupne obaľujeme v múke, zľahka posolenom vajíčku a nakoniec v strúhanke.\nRolky vyprážame v horúcom oleji približne 8 minút z každej strany, odsajeme prebytočný tuk na papierovej utierke a môžeme servírovať.\nPodávame so šalátom z čerstvej zeleniny alebo varenými zemiakmi.",
+      "profile": {
+        "id": 1,
+        "email": "bodzsarorsolya@gmail.com",
+        "firstname": "Orsi",
+        "lastname": "Bodzsár",
+        "bio": "I am new here...",
+        "password": "$2a$10$hrmm9dAcwXzou8bDVhVeFeNYCqUCbgOYNrmRYr0h0L5l8Rx5ClncW",
+        "image": "https://static.promotions.hu/article/77314/crop/1588179309_fleh/1588179309_fleh_1180_550_5.jpg",
+        "created": "2021-03-14T16:13:52.455Z"
+      },
+      "created": "2021-03-15T17:44:59.689Z",
+      "duration" : 30,
+      "id": 3
+    },
+    {
+      "name": "Nepečený malinový cheesecake",
+      "ingredients": [
+        "150 g maslové sušienky",
+        "70 g rozpustené maslo",
+        "krém:      1.5 kl  prášková želatína",
+        "2 pl  citrónová šťava",
+        "2 pl  kukuričný škrob",
+        "50 g  kryštálový cukor",
+        "300 g  maliny (čerstvé alebo mrazené)",
+        "400 g  smotanový syr (lučina",
+        "philadelphia",
+        "...)",
+        "70 g  práškový cukor",
+        "1 kl  vanilkový extrakt",
+        "180 ml  smotana na šľahanie"
+      ],
+      "recipe": "Sušienky podrvíme na prach, premiešame s roztopeným maslom a utlačíme na dno tortovej formy (26 cm). Vznikne naozaj tenučký korpus, ktorý spolu s formou uložíme do chladu, kým si pripravíme krém.\nKrém: želatínu rozmiešame v citrónovej šťave a necháme cca 5 minút napučať.\nPotom ju vložíme do panvice spolu s kukuričným škrobom, cukrom, malinami a na strednom plameni všetko spolu privedieme k varu. Veríme kým sa maliny úplne nerozpadnú. Výsledom bude hustá malinová omáčka.\nMalinovú omáčku prepasírujeme cez sitko (zbavíme sa zrniečok) a necháme vychladnúť.\nMedzitým si v miske vyšľaháme syr s cukrom, vanilkou a postupne zašľaháme aj vychladnutú malinovú omáčku.\nDo krému nakoniec zľahka zapracujeme vyšľahanú smotanu a navrstvíme ho na korpus. Zarovnáme a uložíme do chladničky na aspoň 8 hodín.\nStuhnutý cheesecake prejdeme po obvode ostrým nožom, uvoľníme obruč a krájame na trojuholníky, ktoré môžeme dozdobiť strúhanou čokoládou, mätovými lístkami a čerstvými malinami.",
+      "profile": {
+        "id": 1,
+        "email": "bodzsarorsolya@gmail.com",
+        "firstname": "Orsi",
+        "lastname": "Bodzsár",
+        "bio": "I am new here...",
+        "password": "$2a$10$hrmm9dAcwXzou8bDVhVeFeNYCqUCbgOYNrmRYr0h0L5l8Rx5ClncW",
+        "image": "https://static.promotions.hu/article/77314/crop/1588179309_fleh/1588179309_fleh_1180_550_5.jpg",
+        "created": "2021-03-14T16:13:52.455Z"
+      },
+      "created": "2021-03-15T17:51:03.663Z",
+      "duration" : 25,
+      "id": 4
+    },
+    {
+      "name": "Zeleninová frittata",
+      "ingredients": [
+        "2 pl olivový olej",
+        "2 ks jarná cibuľka",
+        "100 g mrazený hrášok",
+        "1 ks mrkva",
+        "5 ks vajce",
+        "50 ml smotana na šľahanie",
+        "podľa chuti soľ",
+        "mleté čierne korenie",
+        "mletá paprika",
+        "1 ks mozzarella",
+        "2 hrste rukola (na vrch)"
+      ],
+      "recipe": "Rúru s funkciou gril rozohrejeme na 200°C.\nNa panvici zahrejeme olej a pridáme na kolieska nakrájanú jarnú cibuľku.\nPotom pridáme mrazený hrášok a na malé kocky pokrájanú mrkvu. Zľahka posolíme a restujeme zhruba 5 minút.\nMedzitým si v miske rozšľaháme vajce so smotanou, soľou a korením.\nVajíčkovú zmes nalejeme k zelenine a opekáme na panvici zhruba 5 minút. Na vrch pridáme plátky mozzarelly.\nPanvicu vložíme pod gril a pečieme do zlato-hneda (zhruba 8 minút).\nFrittatu podávame s čerstvou rukolou.",
+      "profile": {
+        "id": 2,
+        "email": "erikaszabo@gmail.com",
+        "firstname": "Erika",
+        "lastname": "Szabó",
+        "bio": "I am new here...",
+        "password": "$2a$10$FjLlGmbtHSFCNsp.0KvuEe0hqTy9a.Eb1wzonAAPnipxIdyh1FkQy",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T17:52:45.775Z"
+      },
+      "created": "2021-03-15T17:55:06.844Z",
+      "id": 5,
+      "duration" : 78
+    },
+    {
+      "name": "Tradičná gulášová polievka ",
+      "ingredients": [
+        "2 pl olej alebo bravčová masť",
+        "500 g hovädzie stehno (zadné)",
+        "2 ks väčšia cibuľa",
+        "1 kl soľ",
+        "1 pl mletá červená paprika",
+        "1 ks kápia",
+        "1 ks biela paprika",
+        "2 ks paradajka",
+        "4 ks stredne veľké zemiaky",
+        "3 strúčiky cesnak",
+        "podľa chuti mleté čierne korenie",
+        "majorán",
+        "rasca drvená"
+      ],
+      "recipe": "Vo väčšom hrnci rozohrejeme olej alebo masť a pridáme na väčšie kocky pokrájané mäsko.\nOpekáme, kým sa mäso nezatiahne a potom posolíme a pridáme na kocky pokrájanú cibuľku.\nSpoločne restujeme, kým cibuľka nezmäkne a následne zaprášime paprikou.\nPridáme tiež na kolieska pokrájanú papriku, kapiu a  väčšie kocky paradajok.\nVšetko zalejeme vodou tak, aby mäsko nebolo úplne ponorené  a varíme s občasným dolievaním asi 70 minút, kým nebude hovädzie takmer mäkké.\nPotom prilejeme viac vody a pridáme na kocky pokrájané zemiaky. Spoločne varíme ešte asi pol hodinku.\nNakoniec polievku dosolíme, pretlačíme do nej cesnak a dochutíme korením, majoránom a drvenou rascou.",
+      "profile": {
+        "id": 2,
+        "email": "erikaszabo@gmail.com",
+        "firstname": "Erika",
+        "lastname": "Szabó",
+        "bio": "I am new here...",
+        "password": "$2a$10$FjLlGmbtHSFCNsp.0KvuEe0hqTy9a.Eb1wzonAAPnipxIdyh1FkQy",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T17:52:45.775Z"
+      },
+      "created": "2021-03-15T17:59:37.551Z",
+      "id": 6,
+      "duration" : 35
+    },
+    {
+      "name": "Mangovo-kokosové guličky",
+      "ingredients": [
+        "200 g  strúhaný kokos",
+        "1 ks zrelé mango (menšie)",
+        "1/2 konzervy  kondenzované mlieko sladené",
+        "trochu strúhaný kokos na obaľovanie"
+      ],
+      "recipe": "Mango ošúpeme, dužinu pokrájame na menšie kúsky a rozmixujeme.\nV hlbokej panvici na sucho opražíme kokos, kým nezačne jemne hnednúť a aromatizovať. Presypeme ho do misky.\nDo panvice navrstvime rozmixované mango, prilejeme kondenzované mlieko a spolu na miernom ohni varíme, kým zmes jemne nezhustne.\nPotom primiešame opražený kokos a spolu ďalej za stáleho miešania varíme, kým sa neodparí všetka tekutina a nevznikne celistvé lepivé cesto, ktoré premiestnime do misky a necháme vychladnúť.\nNeskôr v dlaniach formujeme malé guličky a obaľujeme ich v strúhanom kokose.",
+      "profile": {
+        "id": 2,
+        "email": "erikaszabo@gmail.com",
+        "firstname": "Erika",
+        "lastname": "Szabó",
+        "bio": "I am new here...",
+        "password": "$2a$10$FjLlGmbtHSFCNsp.0KvuEe0hqTy9a.Eb1wzonAAPnipxIdyh1FkQy",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T17:52:45.775Z"
+      },
+      "created": "2021-03-15T18:01:58.805Z",
+      "id": 7,
+      "duration" : 15
+    },
+    {
+      "name": "Hrachová polievka s párkom ",
+      "ingredients": [
+        "250 g žltý polený hrach",
+        "2 ks  bobkový list",
+        "2 ks stredne veľké mrkvy",
+        "3 ks stredne veľké zemiaky",
+        "3 ks  obyčajné párky",
+        "2 pl olej",
+        "1 ks  cibuľa",
+        "2 strúčiky  cesnak",
+        "1 kl  mletá sladká paprika",
+        "2 pl hladká múka",
+        "1 pl  sušená alebo čerstvá majoránka",
+        "podľa chuti soľ",
+        "mleté čierne korenie"
+      ],
+      "recipe": "Hrach premyjeme a necháme namočený vo vode deň vopred alebo aspoň 2 hodiny pred varením.\nPred varením hrach scedíme, zalejeme vodou vo väčšom hrnci a dáme variť spolu s bobkovým listom.\nKeď je hrach polomäkký, do hrnca dolejeme vodu a pridáme na malé kocky pokrájanú mrkvu a zemiaky.  Všetko spolu varíme ešte zhruba 20 minút.\nAsi v polovici času (po 10 minútach) do polievky pridáme na kolieska pokrájané párky.\nV panvici zahrejeme olej, na ktorom opražíme nadrobno pokrájanú cibuľku a pretlačený cesnak. Pridáme múku, mletú papriku a vzniknutú zápražku zriedime vodou. Keď sa začne variť, prilejeme ju do vriacej polievky.\nNakoniec polievku dochutíme soľou, korením a majoránom.\nPolievku podávame s krajcom čerstvého chlebíka.",
+      "profile": {
+        "id": 3,
+        "email": "jankavargova@gmail.com",
+        "firstname": "Janka",
+        "lastname": "Vargová",
+        "bio": "I am new here...",
+        "password": "$2a$10$IZnha9xQ.4OLL0IeijyIXOhDRrj9.rZBtjJF.GE/cLD/h4nJyD/k2",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T18:05:56.862Z"
+      },
+      "created": "2021-03-15T18:10:30.467Z",
+      "id": 8,
+      "duration" : 69
+    },
+    {
+      "name": "Šampiňónové rizoto",
+      "ingredients": [
+        "3 pl olivový olej",
+        "2 pl maslo",
+        "1 ks menšia cibuľa",
+        "2 strúčiky cesnak",
+        "300 g ryža na rizoto (arborio",
+        "carnaroli",
+        "baldo...)",
+        "120 ml biele víno",
+        "300 g hnedé šampiňóny",
+        "1.7 litra zeleninový vývar (bujón)",
+        "1 hrsť petržlenová vňať",
+        "50 g strúhaný parmezán",
+        "podľa chuti soľ",
+        "mleté čierne korenie",
+        "tymian"
+      ],
+      "recipe": "Na panvici zahrejeme olej (2 PL) a pridáme na kocky pokrájané šampiňóny.\nOpekáme ich zhruba 5 minút, kým nepustia šťavu. Potom ich posolíme, okoreníme, a keď sa šťava odparí huby vytiahneme z panvice.\nNa panvicu pridáme opäť kvapku oleja (1 PL), maslo (1 PL) a nadrobno naseknú cibuľu, pretlačený cesnak a spolu restujeme zhruba 2 minúty.\nPridáme ryžu a miešame, kým zrnká nenasiaknu tuk. Zalejeme vínom a varíme na miernom ohni za občasného premiešavania a postupného prilievania horúceho vývaru. Vždy keď ryža absorbuje vývar, pridáme ďalšiu naberačku.\nKeď je ryža takmer hotová, primiešame huby, nasekanú petržlenovú, lyžičku tymianu, parmezán a rizoto odstavíme z plameňa.\nNakoniec ešte zjemníme maslom a môžeme servírovať.",
+      "profile": {
+        "id": 3,
+        "email": "jankavargova@gmail.com",
+        "firstname": "Janka",
+        "lastname": "Vargová",
+        "bio": "I am new here...",
+        "password": "$2a$10$IZnha9xQ.4OLL0IeijyIXOhDRrj9.rZBtjJF.GE/cLD/h4nJyD/k2",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T18:05:56.862Z"
+      },
+      "created": "2021-03-15T18:15:04.745Z",
+      "duration" : 55,
+      "id": 9
+    },
+    {
+      "name": "Jahodová torta so šľahačkou ",
+      "ingredients": [
+        "4 ks  vajce",
+        "100 g  kryštálový cukor",
+        "1 pl  med",
+        "100 g  hladká múka",
+        "1 kl  kypriaci prášok",
+        "50 ml  mlieko",
+        "50 g  maslo",
+        "500 ml  smotana na šľahanie",
+        "50 g  práškový cukor",
+        "1 balíček  vanilkový cukor",
+        "čerstvé jahody"
+      ],
+      "recipe": "Rúru rozohrejeme 180°C.\nMenšiu tortovú formu (20 cm) vystelieme papierom na pečenie (dno i steny).\nVajíčka (ideálne izbovej teploty) rozklepneme do misky a spolu s cukrom ich vyšľaháme do bledej peny.\nPridáme med a ďalej šľaháme zhruba minútku. Potom do zmesi preosejeme múku a zľahka zapracujeme.\nNakoniec primiešame mlieko a rozpustené maslo (nie horúce).\nCesto nalejeme do formy, formu jemne pobúchame o pracovnú dosku (zbavíme sa bubliniek), teplotu v rúre znížime na 160°C a korpus pečieme zhruba 30 minút.\nMedzitým si vyšľaháme tuhú šľahačku z práškového, vanilkového cukru a smotany. Uložíme ju do chladu.\nVychladnutý korpus rozrežeme na dva pláty a jahody pokrájame na rovnaké kúsky.  \nNa prvý korpus rozotrieme pár lyžíc šľahačky, poukladáme na ňu jahody, potrieme ďalšou vrstvou šľahačky, opatrne priložíme druhý korpus a tortu potrieme z vrchu i bokou šľahačkou.\nTortu uložíme do chladu, a keď stuhne dekorujeme zvyšnou šľahačkou a jahodami.\n",
+      "profile": {
+        "id": 3,
+        "email": "jankavargova@gmail.com",
+        "firstname": "Janka",
+        "lastname": "Vargová",
+        "bio": "I am new here...",
+        "password": "$2a$10$IZnha9xQ.4OLL0IeijyIXOhDRrj9.rZBtjJF.GE/cLD/h4nJyD/k2",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T18:05:56.862Z"
+      },
+      "created": "2021-03-15T18:19:12.832Z",
+      "duration" : 66,
+      "id": 10
+    },
+    {
+      "name": "Zapekané cestoviny bolognese",
+      "ingredients": [
+        "300 g cestoviny",
+        "500 g mleté mäso",
+        "300 ml hovädzí vývar",
+        "350 g lúpané paradajky",
+        "4 pl olivový olej",
+        "3 pl paradajkový pretlak",
+        "1 ks cibuľa",
+        "3 strúčiky cesnak",
+        "podľa chuti soľ",
+        "podľa chuti mleté čierne korenie",
+        "podľa chuti mletá červená paprika",
+        "podľa chuti bazalka (čerstvá alebo sušená)"
+      ],
+      "recipe": "Cestoviny si uvaríme v osolenej vode. \nCibuľu a cesnak ošúpeme a nakrájame nadrobno. Na panvici rozhorúčime olivový olej a vysypeme cibuľu s cesnakom. Posolíme a opečieme dozlatista.\nPotom pridáme mleté mäso a opekáme kým nám mäso nezhnedne. Následne pridáme mleté čierne korenie a mletú červenú papriku - premiešame a krátko opekáme. Nalejeme hovädzí vývar, premiešame a varíme 15 až 20 minút.\nMedzitým si pripravíme paradajkovú omáčku. Lúpané paradajky rozmixujeme a zmiešame s paradajkovým pretlakom. Pridáme podľa chuti soľ, mletú červenú papriku, mleté čierne korenie, nasekanú bazalku a prelisovaný alebo nastrúhaný cesnak. Všetko spolu dobre premiešame.\nParadajkovú omáčku pridáme k mäsu, premiešame a varíme ďalších 10 minút. Potom môžeme podľa chuti pridať ešte nasekanú bazalku. Premiešame a odstavíme.\nPripravenú bolonskú omáčku zmiešame s uvarenými cestovinami a dáme do zapekacej misy. Vrch bohato posypeme strúhaným syrom (ideálne aj parmezánom).\nPripravené cestoviny dáme do rúry vyhriatej na 180 °C a odkryté zapekáme cca 10 až 15 minút.",
+      "profile": {
+        "id": 4,
+        "email": "annatoth@gmail.com",
+        "firstname": "Anna",
+        "lastname": "Tóth",
+        "bio": "I am new here...",
+        "password": "$2a$10$MCvQpA.Vb.JGPUmoLUfCPOZ9WsIGE5phujQMWZW4zLk5/izRfPh7a",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T18:23:17.499Z"
+      },
+      "created": "2021-03-15T18:27:42.509Z",
+      "id": 11,
+      "duration" : 66
+    },
+    {
+      "name": "Rýchla karfiolovo-zemiaková polievka",
+      "ingredients": [
+        "1 ks menší karfiol",
+        "3 ks stredne veľký zemiak",
+        "1 ks väčšia mrkva",
+        "1 ks petržlen",
+        "podľa chuti soľ",
+        "mleté čierne korenie",
+        "mletá rasca",
+        "1 ks vajce",
+        "trochu petržlenová vňať"
+      ],
+      "recipe": "Karfiol nakrájame na ružičky.\nZemiaky, mrkvu a petržlen pokrájame na malé kocky.\nVšetku zeleninu nasypeme do hrnca, zalejeme studenou vodou, osolíme, okoreníme a dáme variť.\nKeď polievka zovrie, zakryjeme ju pokrievkou, znížime plameň a všetko spolu povaríme zhruba 20 minút.\nUvarenú zeleninu zľahka podrvíme drvičom na zemiaky, rozpadne sa na menšie kúsky a trochu polievku zahustí.\nNakoniec pridáme nasekanú petržlenovú vňať a do polievky minútku zavaríme rozšľahané vajíčko.",
+      "profile": {
+        "id": 4,
+        "email": "annatoth@gmail.com",
+        "firstname": "Anna",
+        "lastname": "Tóth",
+        "bio": "I am new here...",
+        "password": "$2a$10$MCvQpA.Vb.JGPUmoLUfCPOZ9WsIGE5phujQMWZW4zLk5/izRfPh7a",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T18:23:17.499Z"
+      },
+      "created": "2021-03-15T18:29:20.391Z",
+      "duration" : 78,
+      "id": 12
+    },
+    {
+      "name": "Pohánkové sušienky s vlašskými orieškami",
+      "ingredients": [
+        "60 g kokosový cukor (al. trstinový cukor)",
+        "80 g zmäknuté maslo",
+        "50 g nasekané vlašské orechy",
+        "50 g sušené hrozienka al. brusnice",
+        "120 g pohánková múka",
+        "1/2 kl škorica",
+        "trochu mlieko (podľa konzistencie cesta)"
+      ],
+      "recipe": "V miske vymiešame zmäknuté maslo s cukrom do pasty.\nPridáme nasekané oriešky, sušené ovocie a opäť premiešame.\nNakoniec do cesta v dvoch várkach zapracujeme naváženú pohánkovú múku so škoricou. Ak je cesto príliš mrvivé, zjemníme ho 1 až 2 lyžicami mlieka.\nMisku s hladkým cestom prekryjeme fóliou a uložíme do chladničky na cca 30 minút.\nZo stuhnutého cesta tvarujeme malé guličky, ktoré jemne sploštíme medzi dlaňami a ukladáme na plech vystlaný papierom na pečenie.\nPohánkové sušienky pečieme v rúre vyhriatej na 180°C zhruba 7 až 8 minút.",
+      "profile": {
+        "id": 4,
+        "email": "annatoth@gmail.com",
+        "firstname": "Anna",
+        "lastname": "Tóth",
+        "bio": "I am new here...",
+        "password": "$2a$10$MCvQpA.Vb.JGPUmoLUfCPOZ9WsIGE5phujQMWZW4zLk5/izRfPh7a",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T18:23:17.499Z"
+      },
+      "created": "2021-03-15T18:31:41.268Z",
+      "duration" : 44,
+      "id": 13
+    },
+    {
+      "name": "Karfiolovo-syrové fašírky",
+      "ingredients": [
+        "1 ks  menší karfiol",
+        "100 g tavený syr",
+        "100 g strúhaný tvrdý syr (eidam",
+        "gouda",
+        "čedar",
+        "...)",
+        "1 pl  hladká múka",
+        "podľa chuti  soľ",
+        "mleté čierne korenie",
+        "trochu olej na vyprážanie",
+        "hladká múka",
+        "vajce",
+        "strúhanka"
+      ],
+      "recipe": "Karfiol umyjeme a ostrým nožom nasekáme, alebo rozmixujeme na malé kúsky, ktoré uvaríme v slanej vode a popučíme na pyré (s kvapkou vody, v ktorej sa varil).\nKarfiolovú kašu dáme do misky a pridáme tavený a postrúhaný syr, zľahka osolíme a okoreníme. Potom primiešame hladkú múku.\nZo zmesi navlhčenými rukami tvarujeme malé kroketky, ktoré následne obaľujeme v múke, vyšľahanom vajíčku a strúhanke.   \nKarfiolové kroketky vyprážame do zlatova  z oboch strán a podávame s varenými zemiakmi a domácim dresingom.",
+      "profile": {
+        "id": 4,
+        "email": "annatoth@gmail.com",
+        "firstname": "Anna",
+        "lastname": "Tóth",
+        "bio": "I am new here...",
+        "password": "$2a$10$MCvQpA.Vb.JGPUmoLUfCPOZ9WsIGE5phujQMWZW4zLk5/izRfPh7a",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T18:23:17.499Z"
+      },
+      "created": "2021-03-15T18:35:18.857Z",
+      "duration" : 60,
+      "id": 14
+    },
+    {
+      "name": "Rýchla kuracia polievka s cestovinou a ružičkovým kelom",
+      "ingredients": [
+        "2 pl  olivový olej",
+        "1 ks  menšia cibuľa",
+        "1 ks zeler (stonka)",
+        "1 ks  kuracie prsia",
+        "1 ks  kápia",
+        "10 ks  ružičkový kel",
+        "trochu  petržlenová vňať",
+        "podľa chuti  soľ",
+        "mleté čierne korenie",
+        "tymian",
+        "300 g  menšie cestoviny (kolienka, malé mušle, písmenká a pod.)"
+      ],
+      "recipe": "V hrnci, na oleji speníme nasekanú cibuľku a pridáme na plátky pokrájaný zeler. Spolu restujeme, kým cibuľa nezmäkne.\nPotom pridáme na kocky pokrájané kuracie prsia a opekáme, kým sa nezatiahnu.\nNakoniec k mäsku prihodíme na kúsky pokrájanú kapiu a všetko zalejeme studenou vodou. Osolíme, okoreníme a pridáme tiež sušený tymian.\nVaríme pod pokrievkou na miernom plameni zhruba 20 minút.\nMedzitým si v inom hrnci v slanej vode uvaríme cestoviny al dente, scedíme ich a prepláchneme studenou vodou.\nDo polievky zhruba 5 minút pred dokončením varenia pridáme ružičkový kel, ktorý sme opláchli a odrezali z neho konce.\nCestoviny uložíme do taniera a zalejeme horúcou polievkou. Môžeme dozdobiť petržlenovou vňaťou.",
+      "profile": {
+        "id": 5,
+        "email": "katalinkovacova@gmail.com",
+        "firstname": "Katalin",
+        "lastname": "Kováčová",
+        "bio": "I am new here...",
+        "password": "$2a$10$7mtlZqNYoFyirHDsZDR9h.09GsW2XpuXQQ5R5mPrmU/XmliHW5DjW",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T18:36:30.066Z"
+      },
+      "created": "2021-03-15T18:39:49.413Z",
+      "duration" : 66,
+      "id": 15
+    },
+    {
+      "name": "Hovädzie a brokolica s ustricovou omáčkou",
+      "ingredients": [
+        "200 g falošná sviečkovica",
+        "200 g brokolica",
+        "3 strúčiky cesnak",
+        "1 ks zázvor (2 cm)",
+        "1 ks malá cibuľa",
+        "2 pl ustricová omáčka",
+        "1 pl svetlá sójová omáčka",
+        "1/2 kl mleté čierne korenie",
+        "1 kl cukor",
+        "3 kl kukuričný škrob",
+        "1 pl ryžové víno"
+      ],
+      "recipe": "Cibuľu a brokolicu nakrájame na väčšie kúsky.\nCesnak a zázvor nasekáme nadrobno.\nHovädzie mäso narežeme na tenučké plátky, vložíme ho do misky a prilejeme ryžové víno, kukuričný škrob (2 KL), dobre premiešame a necháme odpočívať zhruba 10 minút.\nV inej miske spolu vymiešame zvyšok škrobu (1 KL) a zhruba 4 PL vody.\nVo woku alebo hlbokej panvici rozohrejeme lyžicu oleja a sprudka na ňom opražíme marinované mäso. Opekáme zhruba 2 minútky a potom mäso vytiahneme.\nPotom opäť zahrejeme zhruba lyžicu oleja a opražíme na ňom cibuľu a brokolicu.\nOpekáme zhruba minútku, prilejeme ustricovú i sójovú omáčku, pridáme cukor, cesnak, zázvor a čierne korenie. Všetko podlejeme troškou vody, pár sekúnd povaríme a nakoniec zahustíme škrobom rozpusteným vo vode. Povaríme asi minútku.\nDo woku vrátime hovädzie a všetko spolu minútku premiešame.\nPodávame samotné, s ryžovými rezancami alebo dusenou ryžou.  ",
+      "profile": {
+        "id": 5,
+        "email": "katalinkovacova@gmail.com",
+        "firstname": "Katalin",
+        "lastname": "Kováčová",
+        "bio": "I am new here...",
+        "password": "$2a$10$7mtlZqNYoFyirHDsZDR9h.09GsW2XpuXQQ5R5mPrmU/XmliHW5DjW",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T18:36:30.066Z"
+      },
+      "created": "2021-03-15T18:42:19.532Z",
+      "duration" : 120,
+      "id": 16
+    },
+    {
+      "name": "Rýchle croissanty s nutellou a lieskovcami",
+      "ingredients": [
+        "1 balíček  sušené droždie (7g)",
+        "3 pl  kryštálový cukor",
+        "120 ml  vlažné mlieko",
+        "250 g  polohrubá múka",
+        "1/2 kl   soľ",
+        "150 g  studené maslo",
+        "5 pl orieškovo-čokoládová nátierka",
+        "1 hrsť  nasekané orechy (lieskovce",
+        "mandle",
+        "kešu",
+        "1 ks  žĺtok zriedený",
+        "1 pl mlieka (na potretie)"
+      ],
+      "recipe": "Zo sušeného droždia, mlieka a cukru vymiešame kvások a necháme ho vzísť (cca 10 minút).\nPotom v miske zmiešame múku so soľou, pridáme na kocky pokrájané studené maslo a vidličkou spracujeme mrveničku s väčšími kúskami masla.\nK zmesi potom prilejeme kvások a suroviny spojíme dohromady do celistvého cesta iba natoľko, aby kúsky masla ostali neporušené. Teraz cesto zabalíme do fólie a uložíme do mrazničky na 30 minút.\nNásledne chladné cesto na pomúčenej pracovnej doske rozvaľkáme na plát asi 1 cm hrubý, tretinu cesta preložíme dovnútra z jednej strany, druhú tretinu preložíme z druhej strany a opäť ho rozvaľkáme na plát. Proces opakujeme ešte dvakrát a výsledné cesto opäť zabalíme do fólie a opäť ho vložíme do mrazničky na 30 minút.\nNakoniec cesto rozvaľkáme na dlhý obdĺžnik (zhruba 40x20 cm) a pomocou radielka ho rozrežeme na cca 9 až 10 trojuholníkov.\nKaždý zľahka natrieme nutellou a posypeme nasekanými orechmi. Trojuholníky opatrene zrolujeme od dlhšej strany smerom k špičke a ukladáme na plech vystlaný papierom na pečenie. Plech prekryjeme vlhkou utierkou a necháme ich podkysnúť zhruba 30 a 40 minút.\nCroissanty pred pečením potrieme žĺtkom vyšľahaným s mliekom a následne pečieme v rúre vyhriatej na 220°C prvých 10 minút, potom teplotu znížime na 190°C a pečieme ešte zhruba 12 minút, kým nie krásne zlatohnedé.",
+      "profile": {
+        "id": 5,
+        "email": "katalinkovacova@gmail.com",
+        "firstname": "Katalin",
+        "lastname": "Kováčová",
+        "bio": "I am new here...",
+        "password": "$2a$10$7mtlZqNYoFyirHDsZDR9h.09GsW2XpuXQQ5R5mPrmU/XmliHW5DjW",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T18:36:30.066Z"
+      },
+      "created": "2021-03-15T18:46:15.770Z",
+      "duration" : 66,
+      "id": 17
+    },
+    {
+      "name": "Rýchla hubová omáčka",
+      "ingredients": [
+        "1 pl maslo",
+        "1 pl olej",
+        "1 ks cibuľa",
+        "300 g čerstvé huby",
+        "1/2 kl mletá rasca",
+        "1/2 kl mleté čierne korenie",
+        "1 liter zeleninový vývar (bujón alebo voda)",
+        "180 ml smotana na varenie",
+        "2 pl hladká múka",
+        "podľa chuti soľ",
+        "cukor",
+        "ocot"
+      ],
+      "recipe": "Maslo a olej rozpálime v hlbšej panvici a pridáme nadrobno pokrájanú cibuľku.\nCibuľku podusíme do sklovita a medzitým si pokrájame huby. My sme použili michalky, takže sme ich len opláchli.\nHuby pridáme k cibuľke, okoreníme rascou, korením a zalejeme vývarom či vodou. Všetko spolu privedieme k varu a nezakryté varíme asi 30 minút.\nZa ten čas omáčka stratí asi tretinu objemu, a vtedy do nej prilejeme zátrepku zo smotany a múky. Opäť privedieme k varu a povaríme asi tri minúty.\nOmáčku odstavíme a podľa chuti osolíme, ocukríme a okyslíme octom.\nPodávame s knedľou, haluškami alebo horúcou cestovinou.",
+      "profile": {
+        "id": 5,
+        "email": "katalinkovacova@gmail.com",
+        "firstname": "Katalin",
+        "lastname": "Kováčová",
+        "bio": "I am new here...",
+        "password": "$2a$10$7mtlZqNYoFyirHDsZDR9h.09GsW2XpuXQQ5R5mPrmU/XmliHW5DjW",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T18:36:30.066Z"
+      },
+      "created": "2021-03-15T18:50:06.055Z",
+      "duration" : 79,
+      "id": 18
+    },
+    {
+      "name": "Rýchle cesto na vafle",
+      "ingredients": [
+        "130 g  hladká múka",
+        "1 pl  kypriaci prášok",
+        "1/4 kl  soľ",
+        "1 pl  kryštálový cukor",
+        "1 pl  vanilkový cukor",
+        "2 ks  vajce (m)",
+        "180 ml  plnotučné mlieko",
+        "50 g  maslo"
+      ],
+      "recipe": "V miske premiešame naváženú múku s kypriacim práškom, soľou, kryštálovým cukrom a vanilkovým cukrom.\nV inej miske vymiešame mlieko, celé vajíčka a roztopené maslo.\nV strede sypkých surovín urobíme jamku, do ktorej nalejeme vajíčkovú zmes a vymiešame redšie cesto.\nVafľovač potrieme troškou oleja a dáme zahriať.\nCesto nalievame do rozpáleného vafľovača žufankou. Ideálne, nie úplne ku krajom, aby nevytekalo. Zavrieme a pečieme podľa potreby.\nVafle podávame s našimi obľúbenými prílohami: roztopeným maslom, medom,  džemom, javorovým sirupom, ovocím, čokoládou, šľahačkou...\n",
+      "profile": {
+        "id": 6,
+        "email": "jozefberezutsky@gmail.com",
+        "firstname": "Jozef",
+        "lastname": "Berezutsky",
+        "bio": "I am new here...",
+        "password": "$2a$10$.dJci4Wy.bktClmuaV6PHeOpiCAe8eHkujnnKdufhjrZa99deImnG",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T19:19:29.110Z"
+      },
+      "created": "2021-03-15T19:23:11.820Z",
+      "duration" : 56,
+      "id": 19
+    },
+    {
+      "name": "Polievka z maslovej tekvice",
+      "ingredients": [
+        "1 ks  tekvica maslová (menšia)",
+        "2 ks  mrkva",
+        "1 ks  cibuľa",
+        "1 strúčik  cesnak",
+        "700 ml   zeleninový vývar",
+        "1 pl  olivový olej",
+        "1 pl  maslo",
+        "podľa chuti   soľ",
+        "podľa chuti  čierne korenie"
+      ],
+      "recipe": "Cibuľu si očistíme a opražíme ju na oleji do zlatista. \nTekvicu a mrkvu očistíme a nakrájame na menšie kúsky. \nDo hrnca pridáme maslo a nakrájanú zeleninu a chvíľku restujeme. Pridáme cesnak a všetko zalejeme vývarom. \nKeď je zelenina zmäknutá, všetko rozmixujeme ponorným mixérom a podľa chutí dosolíme a dokoreníme. \nVrátime na oheň a ešte minútku prevaríme. Na záver zjemníme smotanou.",
+      "profile": {
+        "id": 6,
+        "email": "jozefberezutsky@gmail.com",
+        "firstname": "Jozef",
+        "lastname": "Berezutsky",
+        "bio": "I am new here...",
+        "password": "$2a$10$.dJci4Wy.bktClmuaV6PHeOpiCAe8eHkujnnKdufhjrZa99deImnG",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T19:19:29.110Z"
+      },
+      "created": "2021-03-15T19:26:23.018Z",
+      "duration" : 88,
+      "id": 20
+    },
+    {
+      "name": "Pečený losos s makadamovo-koriandrovou kôrkou",
+      "ingredients": [
+        "2 hrste čerstvý koriander",
+        "70 g strúhanka",
+        "70 g nasekané makadamové orechy",
+        "60 g roztopené maslo",
+        "1 kg filet lososa",
+        "trochu soľ",
+        "mleté čierne korenie"
+      ],
+      "recipe": "Čerstvý koriander nasekáme na drobno.\nKoriander zmiešame spolu so strúhankou a nasekanými makadamovými orieškami. Premiešame.\nZmes prelejeme roztopeným maslom a vymiešame hmotu mrveničkovej konzistencie.\nFilet lososa položíme kožou na dol na plech vystlaný alobalom, zľahka ho posolíme, okoreníme a na vrch navrstvíme pripravenú zmes.\nLososa vložíme do rúry vyhriatej na 200°C na 15 až 20 minút v závislosti od hrúbky filetu.\nPodávame s varenými zemiakmi, čerstvým šalátom alebo varenou špargľou a mesiačikom citróna.  ",
+      "profile": {
+        "id": 6,
+        "email": "jozefberezutsky@gmail.com",
+        "firstname": "Jozef",
+        "lastname": "Berezutsky",
+        "bio": "I am new here...",
+        "password": "$2a$10$.dJci4Wy.bktClmuaV6PHeOpiCAe8eHkujnnKdufhjrZa99deImnG",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T19:19:29.110Z"
+      },
+      "created": "2021-03-15T19:29:17.413Z",
+      "duration" : 96,
+      "id": 21
+    },
+    {
+      "name": "Pečená kačka s červenou kapustou",
+      "ingredients": [
+        "1 ks  kačica",
+        "rasca",
+        "soľ",
+        "1 ks  červená kapusta",
+        "2 ks  jablko",
+        "2 pl  masť alebo rastlinný olej",
+        "2 ks  menšia cibuľa",
+        "ocot",
+        "kryštálový cukor",
+        "bobkový list",
+        "mleté čierne korenie",
+        "soľ"
+      ],
+      "recipe": "Kačku dobre osolíme a posypeme rascou zvonku i zvnútra. Necháme ju odležať aspoň 2 hodiny. Potom ju premiestnime na pekáč (s pokrievkou), podlejeme trochou vody a dáme piecť na 180 °C asi 90 minút. Ak nemáme pekáč s pokrievkou – kačicu uzavrieme v pekáči alobalom.\nPo asi hodine pečenia vidlicou poprepichujeme kožu (aby vytiekol prebytočný tuk), zakryjeme a vrátime naspäť do rúry. Po polhodine zložíme pokrievku, zvýšime teplotu na 200 °C a za občasného polievania výpekom pečieme kačku ďalšiu hodinu, pekne do chrumkava.  \nKým sa kačka pečie pripravíme si dusenú kapustu. Kapustu nakrájame na tenké prúžky alebo spolu s jabĺčkami (nemusíme šúpať) postrúhame na strúhadle či v kuchynskom robotovi.\nVo väčšom hrnci roztopíme masť a pridáme nakrájanú cibuľku. Keď získa sklovitý nádych prisypeme kapustu a necháme ju chvíľku podusiť. Pridáme niekoľko lyžíc cukru a tiež bobkový list a trochu octu. Dobre premiešame, kým sa cukor nerozpustí. Keď kapusta trochu stratí objem pridáme aj jabĺčka. Osolíme, okoreníme a premiešame. Necháme zovrieť, podlejeme vodou, zakryjeme a dusíme domäkka. Nakoniec ochutnáme a podľa potreby pridávame jednotlivé koreniny (prípadne aj ocot či cukor), aby sme dosiahli nami požadovanú chuť a vyváženosť jednotlivých chutí.\nPodávame s domácou knedľou alebo zemiakovými lokšami.",
+      "profile": {
+        "id": 6,
+        "email": "jozefberezutsky@gmail.com",
+        "firstname": "Jozef",
+        "lastname": "Berezutsky",
+        "bio": "I am new here...",
+        "password": "$2a$10$.dJci4Wy.bktClmuaV6PHeOpiCAe8eHkujnnKdufhjrZa99deImnG",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T19:19:29.110Z"
+      },
+      "created": "2021-03-15T19:32:53.214Z",
+      "duration" : 58,
+      "id": 22
+    },
+    {
+      "name": "15 minútová ramen polievka",
+      "ingredients": [
+        "1 pl repkový olej",
+        "2 strúčiky cesnak",
+        "4 ks jarná cibuľka",
+        "1 kl čerstvý zázvor (strúhaný)",
+        "1 liter kurací vývar (bujón)",
+        "1/2 litra hovädzí vývar (bujón)",
+        "1 pl sójová omáčka",
+        "1 pl rybacia omáčka",
+        "2 ks vajce",
+        "1 balíček ryžové rezance"
+      ],
+      "recipe": "Na dne väčšieho hrnca rozpálime olej a pridáme nasekaný cesnak, na kolieska nakrájanú jarnú cibuľku a trochu strúhaného zázvoru. Minútku - dve restujeme.\nVšetko zalejeme kuracím a hovädzím vývarom, pridáme rybaciu a sójovú omáčku a privedieme k varu.\nKeď sa polievka začne variť, ochutnáme ju. Ak sa nám kombinácia vývarov a omáčok zdá príliš slaná pridáme cca 2 dcl vody.\nDo vriacej polievky rozklepneme vajíčka a po cca 5 minútach ich vytiahneme pomocou dierkovanej naberačky.\nPotom priamo v polievke povaríme ryžové rezance (po dobu uvedenú na obale).\nDo väčších misiek potom servírujeme rezance, a vajce, ktoré zalejeme vývarom. Môžeme dozdobiť nasekanou jarnou cibuľkou.  ",
+      "profile": {
+        "id": 7,
+        "email": "michallenivec@gmail.com",
+        "firstname": "Michal",
+        "lastname": "Lenivec",
+        "bio": "I am new here...",
+        "password": "$2a$10$1juj..W6gE2Yl966r66GwO/hJivOHC5RNLstKnwnQsRC2Yc2.Gjh.",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T19:33:55.332Z"
+      },
+      "created": "2021-03-15T19:36:36.949Z",
+      "duration" : 68,
+      "id": 23
+    },
+    {
+      "name": "Pizza s bryndzou a oravskou slaninkou",
+      "ingredients": [
+        "250 g   polohrubá múka",
+        "1/2 kl  soľ",
+        "1 balíček  sušené droždie (7g)",
+        "170 ml vlažná voda",
+        "1 pl  olivový olej (vymastenie misky)",
+        "125 g  bryndza",
+        "100 ml kyslá smotana",
+        "1 ks  väčšia cibuľa",
+        "100 g oravská slanina",
+        "1 vetvička",
+        "rozmarín",
+        "soľ",
+        "korenie"
+      ],
+      "recipe": "Droždie zamiešame do vlažnej vody a necháme pár minút postáť, aby sa aktivovalo.\nV miske zmiešame múku a soľ, zalejeme vodou s droždím a spracujeme varechou. Cesto premiestnime na pracovnú dosku (ak treba prisypeme múku) a začneme miesiť, tak aby sme dostali elastické cesto. Toto potom vložíme naspäť do misky, ktorú sme vymastili olivovým olejom a zakryté utierkou necháme nakysnúť minimálne 1 hodinu.\nNa panvici orestujeme slaninku. Keď pustí masť pridáme na mesiačiky nakrájanú cibuľku a restujeme ešte zhruba 2 minúty.\nRúru rozohrejeme na 220 °C.\nCesto vypracujeme na požadovaný tvar a položíme na plech vystlaný papierom na pečenie. Potrieme mixom kyslej smotany a bryndze, pridáme slaninku, cibuľku aj výpek. Osolíme a okoreníme a pečieme zhruba 7 minút. Ešte horúcu pizzu posypeme rozmarínom.  ",
+      "profile": {
+        "id": 7,
+        "email": "michallenivec@gmail.com",
+        "firstname": "Michal",
+        "lastname": "Lenivec",
+        "bio": "I am new here...",
+        "password": "$2a$10$1juj..W6gE2Yl966r66GwO/hJivOHC5RNLstKnwnQsRC2Yc2.Gjh.",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T19:33:55.332Z"
+      },
+      "created": "2021-03-15T19:40:14.186Z",
+      "duration" : 78,
+      "id": 24
+    },
+    {
+      "name": "Čokoládové brownies (základný recept)",
+      "ingredients": [
+        "200 g  horká čokoláda (aspoň 70% kakaa)",
+        "200 g  maslo",
+        "1 štipka  soľ alebo lyžička instantnej kávy",
+        "200 g  cukor",
+        "3 ks  vajce",
+        "3 pl  hladká múka",
+        "1 kl  kypriaci prášok",
+        "2 pl  kakao"
+      ],
+      "recipe": "Čokoládu spolu s maslom rozpustíme vo vodnom kúpeli.\nKeď je hmota tekutá a lesklá, odložíme ju bokom, aby trochu vychladla.\nRúru rozohrejeme na 180°C.\nVo väčšej miske spolu vyšľaháme celé vajcia s cukrom do peny.\nPotom do misky preosejeme múku, kypriaci prášok a kakao a zľahka zapracujeme tak, aby sme stratili čo najmenej vzduchu. Proces opatrného zamiešania opakujeme aj s čokoládovo-maslovou zmesou.\nVymiešané cesto nalejeme do hlbšieho plechu (20x20 cm), ktorý sme vystlali papierom na pečenie.\nBrownies pečieme v rúre vyhriatej na 180°C zhruba 30 minút. Okraje by mali byť pevné a stred by sa mal ešte trochu triasť, keď vyberáme koláč z rúry.\nKoláč necháme vychladnúť v plechu 15-20 minút a môžeme servírovať. Chutí vynikajúco samotný, ale ešte lepší bude s lyžicou čerstvo ušľahanej smotany alebo kopčekom vanilkovej zmrzliny.",
+      "profile": {
+        "id": 7,
+        "email": "michallenivec@gmail.com",
+        "firstname": "Michal",
+        "lastname": "Lenivec",
+        "bio": "I am new here...",
+        "password": "$2a$10$1juj..W6gE2Yl966r66GwO/hJivOHC5RNLstKnwnQsRC2Yc2.Gjh.",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T19:33:55.332Z"
+      },
+      "created": "2021-03-15T19:43:02.874Z",
+      "duration" : 45,
+      "id": 25
+    },
+    {
+      "name": "Gaštanové poháre s mascarpone krémom",
+      "ingredients": [
+        "250 g gaštanové pyré",
+        "250 g mascarpone",
+        "50 g práškový cukor",
+        "250 ml smotana na šľahanie (33%)",
+        "1 pl rum"
+      ],
+      "recipe": "Mascarpone dobre vyšľaháme s práškovým cukrom.\nPotom prilejeme dobre vychladenú smotanu a ušľaháme ľahučký krém.\nDo krému pridáme kvapku rumu alebo orieškového likéru a zľahka primiešame.\nVychladené (čiastočne rozmrazené) gaštanové pyré postrúhame na strednom strúhadle.\nDo vychladených pohárov alebo misiek striedavo vrstvíme mascarpone krém a postrúhané gaštanové pyré.",
+      "profile": {
+        "id": 7,
+        "email": "michallenivec@gmail.com",
+        "firstname": "Michal",
+        "lastname": "Lenivec",
+        "bio": "I am new here...",
+        "password": "$2a$10$1juj..W6gE2Yl966r66GwO/hJivOHC5RNLstKnwnQsRC2Yc2.Gjh.",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T19:33:55.332Z"
+      },
+      "created": "2021-03-15T19:46:00.718Z",
+      "duration" : 59,
+      "id": 26
+    }
+  ],
+  "comments": [
+    {
+      "comment": "ez valami nagyon szupi recept! meg soha nem csinaltam ilyen jo palacsintat!\nkoszonom Orsi a receptet hala neked mar tudom hogyan kell a vilag legjobb palijat :D",
+      "recipeid": 1,
+      "profile": {
+        "id": 1,
+        "email": "bodzsarorsolya@gmail.com",
+        "firstname": "Orsi",
+        "lastname": "Bodzsár",
+        "bio": "I am new here...",
+        "password": "$2a$10$cdaDomqyJDf05SDJuVroUODl0gkeII0Xjm6kgpkTQkNu8yrH//u1i",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-14T16:13:52.455Z"
+      },
+      "created": "2021-03-14T16:17:23.496Z",
       "id": 1
     },
     {
-      "name": "Assdasdasd",
-      "ingredients": [
-        "dasdasd"
-      ],
-      "recipe": "adasdsa",
-      "duration": 1,
+      "comment": "remelem minel tobb receptet fogsz ide feltolteni mert nagyon izlik ez a pali recept! \nkiraly vagy",
+      "recipeid": 1,
       "profile": {
         "id": 1,
-        "email": "kolacik@gmail.com",
-        "firstname": "Patrik",
-        "lastname": "Villant",
+        "email": "bodzsarorsolya@gmail.com",
+        "firstname": "Orsi",
+        "lastname": "Bodzsár",
         "bio": "I am new here...",
-        "password": "$2a$10$.B1YF2C2T/dMBSTJpzKT6eyz82Y/amTc5O/sujRQoyQ0ZmY7.qxQ6",
-        "image": "/assets/user_default.png",
-        "created": "2021-03-10T11:48:40.522Z"
+        "password": "$2a$10$hrmm9dAcwXzou8bDVhVeFeNYCqUCbgOYNrmRYr0h0L5l8Rx5ClncW",
+        "image": "https://static.promotions.hu/article/77314/crop/1588179309_fleh/1588179309_fleh_1180_550_5.jpg",
+        "created": "2021-03-14T16:13:52.455Z"
       },
-      "created": "2021-03-15T21:12:09.471Z",
+      "created": "2021-03-14T16:34:53.482Z",
       "id": 2
     }
-  ],
-  "comments": []
+  ]
 }
