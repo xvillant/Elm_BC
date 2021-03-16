@@ -99,7 +99,7 @@ update msg model =
                     ( { model | warning = "Loading..." }, getUser value { onResponse = GotUser } )
 
                 Err err ->
-                    ( { model | warning = httpErrorString err }, Cmd.none )
+                    ( { model | warning = httpErrorString err, password = "", email = "" }, Cmd.none )
 
         GotUser user ->
             case user of

@@ -799,5 +799,22 @@
       "id": 26
     }
   ],
-  "comments": []
+  "comments": [
+    {
+      "comment": "dasd",
+      "recipeid": 12,
+      "profile": {
+        "id": 4,
+        "email": "annatoth@gmail.com",
+        "firstname": "Anna",
+        "lastname": "Tóth",
+        "bio": "I am new here...",
+        "password": "$2a$10$MCvQpA.Vb.JGPUmoLUfCPOZ9WsIGE5phujQMWZW4zLk5/izRfPh7a",
+        "image": "/assets/user_default.png",
+        "created": "2021-03-15T18:23:17.499Z"
+      },
+      "created": "2021-03-16T19:44:10.733Z",
+      "id": 1
+    }
+  ]
 }

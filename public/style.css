@@ -467,15 +467,22 @@ ol li::before {
 
 button.page_numbers {
   padding: 10px;
+  width: 40px;
   outline: 0;
   color: white;
+  border-radius: 10px;
+  border: 1px solid;
   background-color: #b1f5b2;
   cursor: pointer;
   margin: 0 5px;
+  transition: all 0.3s ease 0s;
 }
 
 button.page_numbers_active {
   background-color: #4CAF50;
+  width: 40px;
+  border-radius: 10px;
+  border: 1px solid;
   padding: 10px;
   outline: 0;
   color: white;
