@@ -478,6 +478,10 @@ button.page_numbers {
   transition: all 0.3s ease 0s;
 }
 
+button.page_numbers:hover {
+  background-color: #4CAF50;
+}
+
 button.page_numbers_active {
   background-color: #4CAF50;
   width: 40px;

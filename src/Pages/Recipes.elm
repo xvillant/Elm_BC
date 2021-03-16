@@ -2,6 +2,7 @@ module Pages.Recipes exposing (Model, Msg, Params, page)
 
 import Api.Article exposing (Article, articlesDecoder)
 import Api.Data exposing (Data(..))
+import Browser.Dom as Dom
 import Browser.Navigation exposing (pushUrl)
 import Components.TimeFormatting exposing (formatDate, formatTime)
 import Dict
@@ -14,6 +15,7 @@ import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
+import Task
 import Time
 import TimeZone exposing (europe__bratislava)
 
@@ -85,6 +87,7 @@ initialModel =
 
 type Msg
     = PostsReceived (Data (List Article))
+    | NoOp
     | Search String
     | ChangeSorting String String
     | ChangePaging Int
@@ -95,6 +98,9 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        NoOp ->
+            ( model, Cmd.none )
+
         PostsReceived response ->
             ( { model | posts = response }, Cmd.none )
 
@@ -108,7 +114,7 @@ update msg model =
             ( model, Cmd.batch [ getContentRequest model.paging model.search model.sorting model.order { onResponse = PostsReceived }, getContentRequestHeader model.paging model.search model.sorting model.order ] )
 
         ChangePaging number ->
-            ( { model | paging = number }, Cmd.batch [ getContentRequest number model.search model.sorting model.order { onResponse = PostsReceived }, getContentRequestHeader number model.search model.sorting model.order ] )
+            ( { model | paging = number }, Cmd.batch [ getContentRequest number model.search model.sorting model.order { onResponse = PostsReceived }, getContentRequestHeader number model.search model.sorting model.order, resetViewport ] )
 
         WatchCount resp ->
             case resp of
@@ -311,3 +317,8 @@ expectHeader toMsg =
 
                         Nothing ->
                             Ok 0
+
+
+resetViewport : Cmd Msg
+resetViewport =
+    Task.perform (\_ -> NoOp) (Dom.setViewport 0 0)
