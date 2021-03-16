@@ -464,3 +464,29 @@ ol li::before {
   display: inline-block;
   cursor: pointer;
 }
+
+button.page_numbers {
+  padding: 10px;
+  outline: 0;
+  color: white;
+  background-color: #b1f5b2;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+button.page_numbers_active {
+  background-color: #4CAF50;
+  padding: 10px;
+  outline: 0;
+  color: white;
+  margin: 0 5px;
+}
+
+.justify__content__recipe {
+  text-align: justify;
+}
+
+.justify__content {
+  text-align: left;
+  margin-left: 38%;
+}

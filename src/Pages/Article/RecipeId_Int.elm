@@ -313,11 +313,13 @@ viewArticle model =
                 , p [ class "datetime" ] [ text (formatTime model.zone value.created) ]
                 , div []
                     [ p [ class "title" ] [ text "ingredients " ]
-                    , p [ class "value" ] [ renderList value.ingredients ]
+                    , div [ class "justify__content" ][
+                    p [ class "value" ] [ renderList value.ingredients ]]
                     ]
                 , div []
                     [ p [ class "title" ] [ text "recipe " ]
-                    , p [ class "value" ] [ text value.recipe ]
+                    , div [ class "justify__content__recipe" ]
+                        [ p [ class "value" ] [ text value.recipe ] ]
                     ]
                 , div []
                     [ p [ class "title" ] [ text "shared by " ]
@@ -338,7 +340,9 @@ viewArticle model =
 
         Failure _ ->
             viewFetchError "article" "Something went wrong!"
+
+
 renderList : List String -> Html msg
 renderList lst =
     ol [ class "ingredients__" ]
-        (List.map (\l -> li [class "value" ] [ text l ]) lst)
+        (List.map (\l -> li [ class "value" ] [ text l ]) lst)

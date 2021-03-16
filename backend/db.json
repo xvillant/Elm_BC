@@ -132,14 +132,12 @@
       "ingredients": [
         "150 g maslové sušienky",
         "70 g rozpustené maslo",
-        "krém:      1.5 kl  prášková želatína",
+        "1.5 kl  prášková želatína",
         "2 pl  citrónová šťava",
         "2 pl  kukuričný škrob",
         "50 g  kryštálový cukor",
         "300 g  maliny (čerstvé alebo mrazené)",
-        "400 g  smotanový syr (lučina",
-        "philadelphia",
-        "...)",
+        "400 g  smotanový syr (lučina, philadelphia ...)",
         "70 g  práškový cukor",
         "1 kl  vanilkový extrakt",
         "180 ml  smotana na šľahanie"
@@ -430,10 +428,7 @@
       "ingredients": [
         "1 ks  menší karfiol",
         "100 g tavený syr",
-        "100 g strúhaný tvrdý syr (eidam",
-        "gouda",
-        "čedar",
-        "...)",
+        "100 g strúhaný tvrdý syr (eidam, gouda, čedar, ...)",
         "1 pl  hladká múka",
         "podľa chuti  soľ",
         "mleté čierne korenie",
@@ -717,7 +712,7 @@
         "created": "2021-03-15T19:33:55.332Z"
       },
       "created": "2021-03-15T19:36:36.949Z",
-      "duration": 68,
+      "duration": 15,
       "id": 23
     },
     {
