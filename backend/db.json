@@ -97,7 +97,7 @@
         "created": "2021-03-14T16:13:52.455Z"
       },
       "created": "2021-03-15T17:41:33.853Z",
-      "duration" : 15,
+      "duration": 15,
       "id": 2
     },
     {
@@ -124,7 +124,7 @@
         "created": "2021-03-14T16:13:52.455Z"
       },
       "created": "2021-03-15T17:44:59.689Z",
-      "duration" : 30,
+      "duration": 30,
       "id": 3
     },
     {
@@ -156,7 +156,7 @@
         "created": "2021-03-14T16:13:52.455Z"
       },
       "created": "2021-03-15T17:51:03.663Z",
-      "duration" : 25,
+      "duration": 25,
       "id": 4
     },
     {
@@ -187,7 +187,7 @@
       },
       "created": "2021-03-15T17:55:06.844Z",
       "id": 5,
-      "duration" : 78
+      "duration": 78
     },
     {
       "name": "Tradičná gulášová polievka ",
@@ -219,7 +219,7 @@
       },
       "created": "2021-03-15T17:59:37.551Z",
       "id": 6,
-      "duration" : 35
+      "duration": 35
     },
     {
       "name": "Mangovo-kokosové guličky",
@@ -242,7 +242,7 @@
       },
       "created": "2021-03-15T18:01:58.805Z",
       "id": 7,
-      "duration" : 15
+      "duration": 15
     },
     {
       "name": "Hrachová polievka s párkom ",
@@ -274,7 +274,7 @@
       },
       "created": "2021-03-15T18:10:30.467Z",
       "id": 8,
-      "duration" : 69
+      "duration": 69
     },
     {
       "name": "Šampiňónové rizoto",
@@ -307,7 +307,7 @@
         "created": "2021-03-15T18:05:56.862Z"
       },
       "created": "2021-03-15T18:15:04.745Z",
-      "duration" : 55,
+      "duration": 55,
       "id": 9
     },
     {
@@ -337,7 +337,7 @@
         "created": "2021-03-15T18:05:56.862Z"
       },
       "created": "2021-03-15T18:19:12.832Z",
-      "duration" : 66,
+      "duration": 66,
       "id": 10
     },
     {
@@ -369,7 +369,7 @@
       },
       "created": "2021-03-15T18:27:42.509Z",
       "id": 11,
-      "duration" : 66
+      "duration": 66
     },
     {
       "name": "Rýchla karfiolovo-zemiaková polievka",
@@ -396,7 +396,7 @@
         "created": "2021-03-15T18:23:17.499Z"
       },
       "created": "2021-03-15T18:29:20.391Z",
-      "duration" : 78,
+      "duration": 78,
       "id": 12
     },
     {
@@ -422,7 +422,7 @@
         "created": "2021-03-15T18:23:17.499Z"
       },
       "created": "2021-03-15T18:31:41.268Z",
-      "duration" : 44,
+      "duration": 44,
       "id": 13
     },
     {
@@ -454,7 +454,7 @@
         "created": "2021-03-15T18:23:17.499Z"
       },
       "created": "2021-03-15T18:35:18.857Z",
-      "duration" : 60,
+      "duration": 60,
       "id": 14
     },
     {
@@ -484,7 +484,7 @@
         "created": "2021-03-15T18:36:30.066Z"
       },
       "created": "2021-03-15T18:39:49.413Z",
-      "duration" : 66,
+      "duration": 66,
       "id": 15
     },
     {
@@ -514,7 +514,7 @@
         "created": "2021-03-15T18:36:30.066Z"
       },
       "created": "2021-03-15T18:42:19.532Z",
-      "duration" : 120,
+      "duration": 120,
       "id": 16
     },
     {
@@ -545,7 +545,7 @@
         "created": "2021-03-15T18:36:30.066Z"
       },
       "created": "2021-03-15T18:46:15.770Z",
-      "duration" : 66,
+      "duration": 66,
       "id": 17
     },
     {
@@ -576,7 +576,7 @@
         "created": "2021-03-15T18:36:30.066Z"
       },
       "created": "2021-03-15T18:50:06.055Z",
-      "duration" : 79,
+      "duration": 79,
       "id": 18
     },
     {
@@ -603,7 +603,7 @@
         "created": "2021-03-15T19:19:29.110Z"
       },
       "created": "2021-03-15T19:23:11.820Z",
-      "duration" : 56,
+      "duration": 56,
       "id": 19
     },
     {
@@ -631,7 +631,7 @@
         "created": "2021-03-15T19:19:29.110Z"
       },
       "created": "2021-03-15T19:26:23.018Z",
-      "duration" : 88,
+      "duration": 88,
       "id": 20
     },
     {
@@ -657,7 +657,7 @@
         "created": "2021-03-15T19:19:29.110Z"
       },
       "created": "2021-03-15T19:29:17.413Z",
-      "duration" : 96,
+      "duration": 96,
       "id": 21
     },
     {
@@ -688,7 +688,7 @@
         "created": "2021-03-15T19:19:29.110Z"
       },
       "created": "2021-03-15T19:32:53.214Z",
-      "duration" : 58,
+      "duration": 58,
       "id": 22
     },
     {
@@ -717,7 +717,7 @@
         "created": "2021-03-15T19:33:55.332Z"
       },
       "created": "2021-03-15T19:36:36.949Z",
-      "duration" : 68,
+      "duration": 68,
       "id": 23
     },
     {
@@ -749,7 +749,7 @@
         "created": "2021-03-15T19:33:55.332Z"
       },
       "created": "2021-03-15T19:40:14.186Z",
-      "duration" : 78,
+      "duration": 78,
       "id": 24
     },
     {
@@ -776,7 +776,7 @@
         "created": "2021-03-15T19:33:55.332Z"
       },
       "created": "2021-03-15T19:43:02.874Z",
-      "duration" : 45,
+      "duration": 45,
       "id": 25
     },
     {
@@ -800,42 +800,9 @@
         "created": "2021-03-15T19:33:55.332Z"
       },
       "created": "2021-03-15T19:46:00.718Z",
-      "duration" : 59,
+      "duration": 59,
       "id": 26
     }
   ],
-  "comments": [
-    {
-      "comment": "ez valami nagyon szupi recept! meg soha nem csinaltam ilyen jo palacsintat!\nkoszonom Orsi a receptet hala neked mar tudom hogyan kell a vilag legjobb palijat :D",
-      "recipeid": 1,
-      "profile": {
-        "id": 1,
-        "email": "bodzsarorsolya@gmail.com",
-        "firstname": "Orsi",
-        "lastname": "Bodzsár",
-        "bio": "I am new here...",
-        "password": "$2a$10$cdaDomqyJDf05SDJuVroUODl0gkeII0Xjm6kgpkTQkNu8yrH//u1i",
-        "image": "/assets/user_default.png",
-        "created": "2021-03-14T16:13:52.455Z"
-      },
-      "created": "2021-03-14T16:17:23.496Z",
-      "id": 1
-    },
-    {
-      "comment": "remelem minel tobb receptet fogsz ide feltolteni mert nagyon izlik ez a pali recept! \nkiraly vagy",
-      "recipeid": 1,
-      "profile": {
-        "id": 1,
-        "email": "bodzsarorsolya@gmail.com",
-        "firstname": "Orsi",
-        "lastname": "Bodzsár",
-        "bio": "I am new here...",
-        "password": "$2a$10$hrmm9dAcwXzou8bDVhVeFeNYCqUCbgOYNrmRYr0h0L5l8Rx5ClncW",
-        "image": "https://static.promotions.hu/article/77314/crop/1588179309_fleh/1588179309_fleh_1180_550_5.jpg",
-        "created": "2021-03-14T16:13:52.455Z"
-      },
-      "created": "2021-03-14T16:34:53.482Z",
-      "id": 2
-    }
-  ]
+  "comments": []
 }

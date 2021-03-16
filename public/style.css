@@ -434,3 +434,33 @@ ol li::before {
   margin: 10px auto;
   border-radius: 10px;
 }
+
+.submit_button_small{
+  background-color: #4CAF50;
+  border: 1px solid;
+  border-radius: 20px;
+  color: white;
+  padding: 7.5px 16px;
+  text-align: center;
+  margin-bottom: 10px;
+  outline: 0;
+  display: inline-block;
+  transition: all 0.3s ease 0s;
+}
+
+.submit_button_small:hover{
+  background-color: #ffffff;
+  color: #24252a;
+  cursor: pointer;
+}
+
+.delete_button {
+  background-color: transparent;
+  color: rgb(255, 75, 75);
+  padding: 3px 8px;
+  margin-left: 10px;
+  text-align: center;
+  outline: 0;
+  display: inline-block;
+  cursor: pointer;
+}

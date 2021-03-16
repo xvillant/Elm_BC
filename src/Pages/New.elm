@@ -39,19 +39,33 @@ page =
 -- INIT
 
 
+type alias Ingredient =
+    { id : Int
+    , name : String
+    }
+
+
 type alias Params =
     ()
 
 
 type alias Model =
-    { name : String
+    { ingredientId : Int
+    , name : String
     , ingredients : String
-    , ingredientsList : List String
+    , ingredientsList : List Ingredient
     , recipe : String
     , warning : String
     , duration : String
     , key : Key
     , user : Maybe User
+    }
+
+
+newIngredient : Int -> String -> Ingredient
+newIngredient id name =
+    { id = id
+    , name = name
     }
 
 
@@ -69,7 +83,7 @@ init shared { params } =
 
 initialModel : Shared.Model -> Model
 initialModel shared =
-    { name = "", ingredients = "", recipe = "", warning = "", key = shared.key, user = shared.user, duration = "", ingredientsList = [] }
+    { ingredientId = 0, name = "", ingredients = "", recipe = "", warning = "", key = shared.key, user = shared.user, duration = "", ingredientsList = [] }
 
 
 
@@ -85,6 +99,7 @@ type Msg
     | GetTime (Time.Posix -> Msg)
     | Response (Data Article)
     | AddToIngredients
+    | DeleteIngredient Int
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -134,12 +149,13 @@ update msg model =
         AddToIngredients ->
             ( { model
                 | ingredients = ""
+                , ingredientId = model.ingredientId + 1
                 , ingredientsList =
                     if String.isEmpty model.ingredients then
                         model.ingredientsList
 
                     else
-                        model.ingredientsList ++ [ String.trim <| String.toLower model.ingredients ]
+                        model.ingredientsList ++ [ newIngredient model.ingredientId (String.trim <| String.toLower model.ingredients) ]
                 , warning =
                     if String.isEmpty model.ingredients then
                         "Enter ingredient!"
@@ -147,6 +163,11 @@ update msg model =
                     else
                         ""
               }
+            , Cmd.none
+            )
+
+        DeleteIngredient id ->
+            ( { model | ingredientsList = List.filter (\t -> t.id /= id) model.ingredientsList }
             , Cmd.none
             )
 
@@ -196,25 +217,27 @@ view model =
                     ]
                     []
                 ]
-            , div []
-                [ input
-                    [ id "ingredients"
-                    , type_ "text"
-                    , autocomplete False
-                    , placeholder "Type your ingredient"
-                    , value model.ingredients
-                    , onInput Ingredients
-                    , class "form"
-                    ]
-                    []
-                ]
-            , button [ class "submit_button", onClick AddToIngredients ] [ text "Add ingredient" ]
             , div [ class "ingerdients__container" ]
-                [ if List.isEmpty model.ingredientsList then
-                    text "No ingredients added yet..."
+                [ div []
+                    [ input
+                        [ id "ingredients"
+                        , type_ "text"
+                        , autocomplete False
+                        , placeholder "Type your ingredient"
+                        , value model.ingredients
+                        , onInput Ingredients
+                        , class "form"
+                        ]
+                        []
+                    ]
+                , button [ class "submit_button_small", onClick AddToIngredients ] [ text "Add ingredient" ]
+                , div []
+                    [ if List.isEmpty model.ingredientsList then
+                        text "No ingredients added yet..."
 
-                  else
-                    renderList model.ingredientsList
+                      else
+                        renderList model.ingredientsList
+                    ]
                 ]
             , div []
                 [ textarea
@@ -255,7 +278,8 @@ postArticle nowTime model options =
     let
         body =
             [ ( "name", E.string <| String.Extra.toSentenceCase <| String.toLower <| model.name )
-            , ( "ingredients", E.list E.string model.ingredientsList )
+
+            , ( "ingredients", E.list E.string <| listString model.ingredientsList )
             , ( "recipe", E.string model.recipe )
             , ( "duration"
               , E.int
@@ -315,7 +339,12 @@ postArticle nowTime model options =
         }
 
 
-renderList : List String -> Html msg
+renderList : List Ingredient -> Html Msg
 renderList lst =
     ol [ class "ingredients__" ]
-        (List.map (\l -> li [ class "list__ingredients" ] [ text l ]) lst)
+        (List.map (\l -> li [ class "list__ingredients" ] [ text l.name, p [ class "delete_button", onClick (DeleteIngredient l.id) ] [ i [ class "fas fa-window-close" ] [] ] ]) lst)
+
+
+listString : List Ingredient -> List String
+listString lst = 
+    (List.map (\l -> l.name) lst)
