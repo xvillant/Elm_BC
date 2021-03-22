@@ -498,6 +498,7 @@ button.page_numbers_active {
 }
 
 .justify__content {
-  text-align: left;
-  margin-left: 38%;
+  text-align: justify;
+  margin: 0 38%;
+  width: 800px;
 }
