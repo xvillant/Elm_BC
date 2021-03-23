@@ -88,9 +88,9 @@ footer.footer a:hover{
 .page { 
   margin: auto;
   width: 1000px;
-   word-wrap: break-word;
+  word-wrap: break-word;
   text-align: center;
-  flex: 1;
+  top: 50%;
   /*animation: pagefade 2s;*/
 }
 
@@ -233,6 +233,7 @@ h1 {
 
  .value {
    color: rgba(0, 0, 0, 0.6);
+   margin: 0 auto;
  }
 
  .title {
@@ -498,7 +499,9 @@ button.page_numbers_active {
 }
 
 .justify__content {
+  display: flex;
+  justify-content: space-between;
   text-align: justify;
-  margin: 0 38%;
-  width: 800px;
+  margin: 0 auto;
+  width: 600px;
 }

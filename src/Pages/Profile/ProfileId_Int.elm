@@ -151,7 +151,7 @@ viewProfile tz profile =
                     , p [ class "value" ] [ text value.bio ]
                     ]
                 , div []
-                    [ p [ class "title" ] [ text "created at" ]
+                    [ p [ class "title" ] [ text "registered at" ]
                     , p [ class "datetime" ] [ text (formatDate tz value.created) ]
                     , p [ class "datetime" ] [ text (formatTime tz value.created) ]
                     ]

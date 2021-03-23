@@ -2,7 +2,9 @@ module Pages.Users exposing (Model, Msg, Params, page)
 
 import Api.Data exposing (Data(..))
 import Api.Profile exposing (Profile, profilesDecoder)
+import Browser.Dom as Dom
 import Browser.Navigation exposing (pushUrl)
+import Dict
 import Html exposing (..)
 import Html.Attributes exposing (class, height, href, placeholder, src, type_, value, width)
 import Html.Events exposing (onClick, onInput)
@@ -12,6 +14,7 @@ import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
+import Task
 import Time
 
 
@@ -27,6 +30,10 @@ page =
         }
 
 
+numberUsersLimit =
+    5
+
+
 
 -- INIT
 
@@ -39,6 +46,8 @@ type alias Model =
     { search : String
     , sorting : String
     , profiles : Data (List Profile)
+    , totalCount : Int
+    , paging : Int
     }
 
 
@@ -47,7 +56,7 @@ init shared { params } =
     ( initialModel
     , case shared.user of
         Just user_ ->
-            getUsers "" "lastname" { onResponse = ProfilesReceived }
+            Cmd.batch [ getUsers 1 "" "lastname" { onResponse = ProfilesReceived }, getContentRequestHeader 1 "" "created" ]
 
         Nothing ->
             pushUrl shared.key "/login"
@@ -56,7 +65,7 @@ init shared { params } =
 
 initialModel : Model
 initialModel =
-    { search = "", sorting = "lastname", profiles = Loading }
+    { search = "", sorting = "lastname", profiles = Loading, totalCount = 0, paging = 1 }
 
 
 
@@ -68,22 +77,39 @@ type Msg
     | Search String
     | ChangeSorting String
     | Tick Time.Posix
+    | NoOp
+    | WatchCount (Result Http.Error Int)
+    | ChangePaging Int
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        NoOp ->
+            ( model, Cmd.none )
+
         ProfilesReceived profiles ->
             ( { model | profiles = profiles }, Cmd.none )
 
         Search searching ->
-            ( { model | search = searching }, getUsers searching model.sorting { onResponse = ProfilesReceived } )
+            ( { model | search = searching }, Cmd.batch[getUsers model.paging searching model.sorting { onResponse = ProfilesReceived }, getContentRequestHeader model.paging searching model.sorting] )
 
         ChangeSorting sorting ->
-            ( { model | sorting = sorting }, getUsers model.search sorting { onResponse = ProfilesReceived } )
+            ( { model | sorting = sorting }, Cmd.batch[getUsers model.paging model.search sorting { onResponse = ProfilesReceived }, getContentRequestHeader model.paging model.search sorting])
+
+        ChangePaging number ->
+            ( { model | paging = number }, Cmd.batch [ getUsers number model.search model.sorting { onResponse = ProfilesReceived }, getContentRequestHeader number model.search model.sorting, resetViewport ] )
 
         Tick time ->
-            ( model, getUsers model.search model.sorting { onResponse = ProfilesReceived } )
+            ( model, Cmd.batch[getUsers model.paging model.search model.sorting { onResponse = ProfilesReceived }, getContentRequestHeader model.paging model.search model.sorting ])
+
+        WatchCount resp ->
+            case resp of
+                Ok value ->
+                    ( { model | totalCount = value }, Cmd.none )
+
+                Err _ ->
+                    ( model, Cmd.none )
 
 
 save : Model -> Shared.Model -> Shared.Model
@@ -112,10 +138,10 @@ view model =
     }
 
 
-getUsers : String -> String -> { onResponse : Data (List Profile) -> Msg } -> Cmd Msg
-getUsers searched sorting options =
+getUsers : Int -> String -> String -> { onResponse : Data (List Profile) -> Msg } -> Cmd Msg
+getUsers paging searched sorting options =
     Http.get
-        { url = url ++ "/users?_sort=" ++ sorting ++ "&_order=asc&q=" ++ searched
+        { url = url ++ "/users?_sort=" ++ sorting ++ "&_order=asc&q=" ++ searched ++ "&_page=" ++ String.fromInt paging ++ "&_limit=" ++ String.fromInt numberUsersLimit
         , expect = Api.Data.expectJson options.onResponse profilesDecoder
         }
 
@@ -163,12 +189,37 @@ viewProfiles model =
                         ]
 
                   else
-                    div [ class "profiles_list" ]
-                        (List.map viewProfile actualProfiles)
+                    div []
+                        [ div [ class "profiles_list" ]
+                            (List.map viewProfile actualProfiles)
+                        , div []
+                            (List.range 1
+                                (if modBy numberUsersLimit model.totalCount == 0 then
+                                    model.totalCount // numberUsersLimit
+
+                                 else
+                                    (model.totalCount // numberUsersLimit) + 1
+                                )
+                                |> List.map (viewPages model)
+                            )
+                        ]
                 ]
 
         Failure _ ->
             viewFetchError "Something went wrong!"
+
+
+viewPages : Model -> Int -> Html Msg
+viewPages model number =
+    button
+        [ if model.paging == number then
+            class "page_numbers_active"
+
+          else
+            class "page_numbers"
+        , onClick (ChangePaging number)
+        ]
+        [ text <| String.fromInt number ]
 
 
 viewFetchError : String -> Html Msg
@@ -192,3 +243,49 @@ viewProfile profile =
         , a [ href ("/profile/" ++ String.fromInt profile.id) ] [ p [ class "value" ] [ text profile.email ] ]
         , div [ class "line_after_recipes" ] []
         ]
+
+
+resetViewport : Cmd Msg
+resetViewport =
+    Task.perform (\_ -> NoOp) (Dom.setViewport 0 0)
+
+
+getContentRequestHeader : Int -> String -> String -> Cmd Msg
+getContentRequestHeader paging searched sorting =
+    Http.get
+        { url = url ++ "/users?_sort=" ++ sorting ++ "&_order=asc&q=" ++ searched ++ "&_page=" ++ String.fromInt paging ++ "&_limit=" ++ String.fromInt numberUsersLimit
+        , expect = expectHeader WatchCount
+        }
+
+
+expectHeader : (Result Http.Error Int -> msg) -> Http.Expect msg
+expectHeader toMsg =
+    Http.expectStringResponse toMsg <|
+        \response ->
+            case response of
+                Http.BadUrl_ url ->
+                    Err (Http.BadUrl url)
+
+                Http.Timeout_ ->
+                    Err Http.Timeout
+
+                Http.NetworkError_ ->
+                    Err Http.NetworkError
+
+                Http.BadStatus_ metadata body ->
+                    Err (Http.BadStatus metadata.statusCode)
+
+                Http.GoodStatus_ metadata body ->
+                    case Dict.get "x-total-count" metadata.headers of
+                        Just number ->
+                            Ok
+                                (case String.toInt <| number of
+                                    Nothing ->
+                                        0
+
+                                    Just number_ ->
+                                        number_
+                                )
+
+                        Nothing ->
+                            Ok 0
