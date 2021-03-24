@@ -59,7 +59,6 @@ type alias Model =
     , user : Maybe User
     , mImage : Maybe Image
     , imageId : String
-    , image : String
     }
 
 
@@ -70,7 +69,6 @@ init shared { params } =
             ( { imageId = "ImageInputId"
               , mImage = Nothing
               , firstname = user.firstname
-              , image = user.image
               , lastname = user.lastname
               , bio = user.bio
               , email = user.email
@@ -87,7 +85,6 @@ init shared { params } =
         Nothing ->
             ( { mImage = Nothing
               , imageId = ""
-              , image = ""
               , firstname = ""
               , lastname = ""
               , bio = ""
@@ -181,8 +178,7 @@ load : Shared.Model -> Model -> ( Model, Cmd Msg )
 load shared model =
     ( case shared.user of
         Just user ->
-            { image = user.image
-            , mImage = Nothing
+            { mImage = Nothing
             , imageId = "ImageInputId"
             , firstname = user.firstname
             , lastname = user.lastname
@@ -197,8 +193,7 @@ load shared model =
             }
 
         Nothing ->
-            { image = ""
-            , firstname = ""
+            { firstname = ""
             , lastname = ""
             , mImage = Nothing
             , imageId = ""
