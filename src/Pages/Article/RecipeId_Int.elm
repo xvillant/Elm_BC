@@ -9,7 +9,7 @@ import Api.User exposing (User)
 import Browser.Navigation exposing (pushUrl)
 import Components.TimeFormatting exposing (formatDate, formatTime)
 import Html exposing (..)
-import Html.Attributes exposing (class, cols, href, placeholder, rows, src)
+import Html.Attributes exposing (class, cols, href, placeholder, rows, src, width)
 import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
 import Iso8601
@@ -313,8 +313,9 @@ viewArticle model =
                 , p [ class "datetime" ] [ text (formatTime model.zone value.created) ]
                 , div []
                     [ p [ class "title" ] [ text "ingredients " ]
-                    , div [ class "justify__content" ][
-                    p [ class "value" ] [ renderList value.ingredients ]]
+                    , div [ class "justify__content" ]
+                        [ p [ class "value" ] [ renderList value.ingredients ]
+                        ]
                     ]
                 , div []
                     [ p [ class "title" ] [ text "recipe " ]
@@ -330,6 +331,7 @@ viewArticle model =
                     , p [ class "value" ]
                         [ text <| String.fromInt value.duration ++ " minutes" ]
                     ]
+                , div [] [ img [ class "recipe__image", src value.image, width 500 ] [] ]
                 , div []
                     [ textarea [ placeholder "Type your comment here...", cols 70, rows 10, Html.Attributes.value model.commentString, onInput AddComment, class "form" ] []
                     ]

@@ -7,7 +7,7 @@ import Browser.Navigation exposing (pushUrl)
 import Components.TimeFormatting exposing (formatDate, formatTime)
 import Dict
 import Html exposing (..)
-import Html.Attributes exposing (class, classList, href, placeholder, src, type_, value)
+import Html.Attributes exposing (class, href, placeholder, src, type_, value, width)
 import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
 import Server exposing (url)
@@ -274,6 +274,7 @@ viewPost post =
         , li [ class "recipe_names" ]
             [ a [ class "link", href ("/profile/" ++ String.fromInt post.profile.id) ] [ text (post.profile.firstname ++ " " ++ post.profile.lastname) ]
             ]
+        , img [ class "recipe__image", src post.image, width 500 ] []
         , br [] []
         , a [ href ("/article/" ++ String.fromInt post.id) ] [ button [ class "submit_button" ] [ text "Comment" ] ]
         , div [ class "line_after_recipes" ] []

@@ -5,12 +5,13 @@ import Api.User exposing (User, userDecoder)
 import Browser.Navigation exposing (Key, pushUrl)
 import Components.Validity exposing (isValidEmail, isValidPassword)
 import Html exposing (..)
-import Html.Attributes exposing (class, cols, id, placeholder, rows, type_, value)
-import Html.Events exposing (onClick, onInput)
+import Html.Attributes exposing (accept, class, cols, id, placeholder, rows, type_, value)
+import Html.Events exposing (on, onClick, onInput)
 import Http exposing (..)
 import Iso8601
+import Json.Decode as D
 import Json.Encode as E exposing (..)
-import Ports exposing (saveUser)
+import Ports exposing (ImagePortData, fileContentRead, fileSelected, saveUser)
 import Server exposing (url)
 import Shared
 import Spa.Document exposing (Document)
@@ -35,6 +36,12 @@ page =
 -- INIT
 
 
+type alias Image =
+    { contents : String
+    , filename : String
+    }
+
+
 type alias Params =
     ()
 
@@ -42,7 +49,6 @@ type alias Params =
 type alias Model =
     { id : Int
     , email : String
-    , image : String
     , bio : String
     , firstname : String
     , lastname : String
@@ -51,6 +57,9 @@ type alias Model =
     , warning : String
     , key : Key
     , user : Maybe User
+    , mImage : Maybe Image
+    , imageId : String
+    , image : String
     }
 
 
@@ -58,8 +67,10 @@ init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
     case shared.user of
         Just user ->
-            ( { image = user.image
+            ( { imageId = "ImageInputId"
+              , mImage = Nothing
               , firstname = user.firstname
+              , image = user.image
               , lastname = user.lastname
               , bio = user.bio
               , email = user.email
@@ -74,7 +85,9 @@ init shared { params } =
             )
 
         Nothing ->
-            ( { image = ""
+            ( { mImage = Nothing
+              , imageId = ""
+              , image = ""
               , firstname = ""
               , lastname = ""
               , bio = ""
@@ -96,10 +109,11 @@ init shared { params } =
 
 type Msg
     = Email String
-    | Image String
     | Password String
     | Bio String
     | SubmitUpdate
+    | ImageSelected
+    | ImageRead ImagePortData
     | Updated (Data User)
 
 
@@ -115,9 +129,6 @@ update msg model =
         Bio bio ->
             ( { model | bio = bio, warning = "" }, Cmd.none )
 
-        Image image ->
-            ( { model | image = image, warning = "" }, Cmd.none )
-
         SubmitUpdate ->
             if String.isEmpty model.firstname then
                 ( { model | warning = "Type your first name!" }, Cmd.none )
@@ -130,9 +141,6 @@ update msg model =
 
             else if isValidEmail model.email /= True then
                 ( { model | warning = "Enter a valid email!" }, Cmd.none )
-
-            else if String.isEmpty model.image then
-                ( { model | warning = "Type your image URL!" }, Cmd.none )
 
             else if String.isEmpty model.password then
                 ( { model | warning = "Type your password!" }, Cmd.none )
@@ -151,6 +159,18 @@ update msg model =
                 _ ->
                     ( model, Cmd.none )
 
+        ImageSelected ->
+            ( model, fileSelected model.imageId )
+
+        ImageRead data ->
+            let
+                newImage =
+                    { contents = data.contents, filename = data.filename }
+            in
+            ( { model | mImage = Just newImage }
+            , Cmd.none
+            )
+
 
 save : Model -> Shared.Model -> Shared.Model
 save model shared =
@@ -162,6 +182,8 @@ load shared model =
     ( case shared.user of
         Just user ->
             { image = user.image
+            , mImage = Nothing
+            , imageId = "ImageInputId"
             , firstname = user.firstname
             , lastname = user.lastname
             , bio = user.bio
@@ -178,6 +200,8 @@ load shared model =
             { image = ""
             , firstname = ""
             , lastname = ""
+            , mImage = Nothing
+            , imageId = ""
             , bio = ""
             , email = ""
             , id = 0
@@ -193,7 +217,7 @@ load shared model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    fileContentRead ImageRead
 
 
 
@@ -219,11 +243,10 @@ view model =
                 ]
             , div []
                 [ input
-                    [ id "image"
-                    , type_ "text"
-                    , placeholder "Type profile picture URL"
-                    , value model.image
-                    , onInput Image
+                    [ id model.imageId
+                    , type_ "file"
+                    , on "change" (D.succeed ImageSelected)
+                    , accept ".jpg, .png, .jpeg"
                     , class "form"
                     ]
                     []
@@ -283,5 +306,23 @@ encodeUser model =
         , ( "bio", E.string model.bio )
         , ( "created", Iso8601.encode model.created )
         , ( "email", E.string model.email )
-        , ( "image", E.string model.image )
+        , ( "image"
+          , E.string
+                (if model.mImage == Nothing then
+                    case model.user of
+                        Just u ->
+                            u.image
+
+                        Nothing ->
+                            ""
+
+                 else
+                    case model.mImage of
+                        Just i ->
+                            i.contents
+
+                        Nothing ->
+                            ""
+                )
+          )
         ]

@@ -141,7 +141,7 @@ viewProfile tz profile =
         Success value ->
             div []
                 [ h1 [] [ text (value.firstname ++ " " ++ value.lastname) ]
-                , img [ src value.image, width 150, height 150 ] []
+                , img [ class "profile__image", src value.image, width 150, height 150 ] []
                 , div []
                     [ p [ class "title" ] [ text "email" ]
                     , p [ class "value" ] [ text value.email ]
@@ -220,6 +220,7 @@ viewPost post =
         , p [ class "title" ] [ text "duration" ]
         , li [ class "value" ]
             [ text <| String.fromInt post.duration ++ " minutes" ]
+        , img [ class "recipe__image", src post.image, width 500 ] []
         , br [] []
         , a [ href ("/article/" ++ String.fromInt post.id) ] [ button [ class "submit_button" ] [ text "Comment" ] ]
         , div [ class "line_after_recipes" ] []

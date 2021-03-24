@@ -5,13 +5,15 @@ import Api.Data exposing (Data(..))
 import Api.User exposing (User)
 import Browser.Navigation exposing (Key, pushUrl)
 import Elm.Module exposing (Name)
-import FeatherIcons exposing (user)
+import FeatherIcons exposing (file, user)
 import Html exposing (..)
-import Html.Attributes exposing (autocomplete, class, cols, id, placeholder, rows, type_, value)
-import Html.Events exposing (onClick, onInput)
+import Html.Attributes exposing (accept, autocomplete, class, cols, id, placeholder, rows, src, title, type_, value, width)
+import Html.Events exposing (on, onClick, onInput)
 import Http exposing (..)
 import Iso8601
+import Json.Decode as D
 import Json.Encode as E exposing (..)
+import Ports exposing (ImagePortData, fileContentRead, fileSelected)
 import Server
 import Shared exposing (Model)
 import Spa.Document exposing (Document)
@@ -38,6 +40,12 @@ page =
 -- INIT
 
 
+type alias Image =
+    { contents : String
+    , filename : String
+    }
+
+
 type alias Ingredient =
     { id : Int
     , name : String
@@ -58,6 +66,8 @@ type alias Model =
     , duration : String
     , key : Key
     , user : Maybe User
+    , mImage : Maybe Image
+    , imageId : String
     }
 
 
@@ -82,7 +92,7 @@ init shared { params } =
 
 initialModel : Shared.Model -> Model
 initialModel shared =
-    { ingredientId = 0, name = "", ingredients = "", recipe = "", warning = "", key = shared.key, user = shared.user, duration = "", ingredientsList = [] }
+    { imageId = "ImageInputId", mImage = Nothing, ingredientId = 0, name = "", ingredients = "", recipe = "", warning = "", key = shared.key, user = shared.user, duration = "", ingredientsList = [] }
 
 
 
@@ -99,6 +109,8 @@ type Msg
     | Response (Data Article)
     | AddToIngredients
     | DeleteIngredient Int
+    | ImageSelected
+    | ImageRead ImagePortData
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -142,6 +154,9 @@ update msg model =
             then
                 ( { model | warning = "Enter a valid duration in minutes!" }, Cmd.none )
 
+            else if model.mImage == Nothing then
+                ( { model | warning = "Upload image!" }, Cmd.none )
+
             else
                 ( { model | warning = "Loading..." }, postArticle time model { onResponse = Response } )
 
@@ -178,6 +193,18 @@ update msg model =
                 _ ->
                     ( { model | warning = "Something went wrong!" }, Cmd.none )
 
+        ImageSelected ->
+            ( model, fileSelected model.imageId )
+
+        ImageRead data ->
+            let
+                newImage =
+                    { contents = data.contents, filename = data.filename }
+            in
+            ( { model | mImage = Just newImage }
+            , Cmd.none
+            )
+
 
 save : Model -> Shared.Model -> Shared.Model
 save model shared =
@@ -191,7 +218,7 @@ load shared model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    fileContentRead ImageRead
 
 
 
@@ -200,6 +227,15 @@ subscriptions model =
 
 view : Model -> Document Msg
 view model =
+    let
+        previewImage =
+            case model.mImage of
+                Just i ->
+                    imagePreview i
+
+                Nothing ->
+                    text ""
+    in
     { title = "New Article | GoodFood"
     , body =
         [ div []
@@ -263,6 +299,19 @@ view model =
                     ]
                     []
                 ]
+            , br [] []
+            , div [ ]
+                [ input
+                    [ id model.imageId
+                    , type_ "file"
+                    , on "change" (D.succeed ImageSelected)
+                    , accept ".jpg, .png, .jpeg"
+                    , class "form"
+                    ]
+                    []
+                ]
+            , div []
+                [ previewImage ]
             , div []
                 [ button [ class "submit_button", onClick <| GetTime Submit ] [ text "Share recipe" ] ]
             , div [ class "warning_form" ]
@@ -277,7 +326,6 @@ postArticle nowTime model options =
     let
         body =
             [ ( "name", E.string <| String.Extra.toSentenceCase <| String.toLower <| model.name )
-
             , ( "ingredients", E.list E.string <| listString model.ingredientsList )
             , ( "recipe", E.string model.recipe )
             , ( "duration"
@@ -288,6 +336,16 @@ postArticle nowTime model options =
 
                         Just number ->
                             number
+                    )
+              )
+            , ( "image"
+              , E.string
+                    (case model.mImage of
+                        Just i ->
+                            i.contents
+
+                        Nothing ->
+                            ""
                     )
               )
             , ( "profile"
@@ -345,5 +403,10 @@ renderList lst =
 
 
 listString : List Ingredient -> List String
-listString lst = 
-    (List.map (\l -> l.name) lst)
+listString lst =
+    List.map (\l -> l.name) lst
+
+
+imagePreview : Image -> Html Msg
+imagePreview image =
+    img [ src image.contents, title image.filename, width 500 ] []

@@ -1,4 +1,4 @@
-port module Ports exposing (clearUser, saveUser)
+port module Ports exposing (ImagePortData, clearUser, fileContentRead, fileSelected, saveUser)
 
 import Api.User exposing (User, userEncode)
 import Json.Decode as D
@@ -30,3 +30,15 @@ clearUser =
 
 
 --https://github.com/ryannhg/elm-spa-realworld
+
+
+type alias ImagePortData =
+    { contents : String
+    , filename : String
+    }
+
+
+port fileSelected : String -> Cmd msg
+
+
+port fileContentRead : (ImagePortData -> msg) -> Sub msg
