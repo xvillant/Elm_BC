@@ -5,7 +5,7 @@ import Api.Data exposing (Data(..))
 import Api.User exposing (User)
 import Browser.Navigation exposing (Key, pushUrl)
 import Elm.Module exposing (Name)
-import FeatherIcons exposing (file, user)
+import FeatherIcons exposing (user)
 import Html exposing (..)
 import Html.Attributes exposing (accept, autocomplete, class, cols, id, placeholder, rows, src, title, type_, value, width)
 import Html.Events exposing (on, onClick, onInput)
@@ -22,6 +22,7 @@ import Spa.Url exposing (Url)
 import String.Extra
 import Task
 import Time
+import Components.Image as Image exposing (Image)
 
 
 page : Page Params Model Msg
@@ -38,14 +39,6 @@ page =
 
 
 -- INIT
-
-
-type alias Image =
-    { contents : String
-    , filename : String
-    }
-
-
 type alias Ingredient =
     { id : Int
     , name : String
@@ -409,4 +402,4 @@ listString lst =
 
 imagePreview : Image -> Html Msg
 imagePreview image =
-    img [ src image.contents, title image.filename, width 500 ] []
+    img [ class "recipe__image", src image.contents, title image.filename, width 500 ] []

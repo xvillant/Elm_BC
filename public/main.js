@@ -49,3 +49,5 @@ app.ports.fileSelected.subscribe(function (id) {
   // Connect our FileReader with the file that was selected in our `input` node.
   reader.readAsDataURL(file);
 });
+
+/*https://paramander.com/en/blog/using-ports-to-deal-with-files-in-elm-0-18*/

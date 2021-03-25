@@ -3,6 +3,7 @@ module Pages.Settings exposing (Model, Msg, Params, page)
 import Api.Data exposing (Data(..))
 import Api.User exposing (User, userDecoder)
 import Browser.Navigation exposing (Key, pushUrl)
+import Components.Image as Image exposing (Image)
 import Components.Validity exposing (isValidEmail, isValidPassword)
 import Html exposing (..)
 import Html.Attributes exposing (accept, class, cols, id, placeholder, rows, type_, value)
@@ -34,12 +35,6 @@ page =
 
 
 -- INIT
-
-
-type alias Image =
-    { contents : String
-    , filename : String
-    }
 
 
 type alias Params =
@@ -143,7 +138,7 @@ update msg model =
                 ( { model | warning = "Type your password!" }, Cmd.none )
 
             else if isValidPassword model.password /= True then
-                ( { model | warning = "Password must contains of at least - one uppercase letter, one lowercase letter, one digit, one special character and must have minimum eight in lenght" }, Cmd.none )
+                ( { model | warning = "Enter a valid password!" }, Cmd.none )
 
             else
                 ( { model | warning = "Loading..." }, updateProfile model { onResponse = Updated } )
@@ -225,7 +220,7 @@ view model =
     , body =
         [ div []
             [ h1 [] [ text "Settings" ]
-            , div []
+            , div [ ]
                 [ input
                     [ id "email"
                     , type_ "email"
@@ -246,7 +241,7 @@ view model =
                     ]
                     []
                 ]
-            , div []
+            , div [ ]
                 [ input
                     [ id "password"
                     , type_ "password"
@@ -257,7 +252,21 @@ view model =
                     ]
                     []
                 ]
-            , div []
+            , if isValidPassword model.password || String.isEmpty model.password then
+                div [ class "warner" ] []
+
+              else
+                div [ class "warner" ]
+                    [ p [] [ text "Password requirements:" ]
+                    , ul []
+                        [ li [ class "req__items" ] [ text "Must contain of at least one uppercase letter" ]
+                        , li [ class "req__items" ] [ text "Must contain of at least one lowercase letter" ]
+                        , li [ class "req__items" ] [ text "Must contain of at least one digit" ]
+                        , li [ class "req__items" ] [ text "Must contain of at least one special character" ]
+                        , li [ class "req__items" ] [ text "Password's minimum lenght is 8 characters" ]
+                        ]
+                    ]
+            , div [ ]
                 [ textarea
                     [ id "bio"
                     , placeholder "Type your bio"
