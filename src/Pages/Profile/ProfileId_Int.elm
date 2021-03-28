@@ -1,7 +1,7 @@
 module Pages.Profile.ProfileId_Int exposing (Model, Msg, Params, page)
 
 import Api.Article exposing (Article, articlesDecoder)
-import Api.Data exposing (Data(..))
+import Api.Data exposing (Data(..), viewFetchError)
 import Api.Profile exposing (Profile, profileDecoder)
 import Browser.Navigation exposing (pushUrl)
 import Components.TimeFormatting exposing (formatDate, formatTime)
@@ -157,8 +157,8 @@ viewProfile tz profile =
                     ]
                 ]
 
-        Failure _ ->
-            viewFetchError "profile" "Something went wrong!"
+        Failure failures ->
+            viewFetchError "profile" failures
 
 
 getContentRequest : Params -> { onResponse : Data (List Article) -> Msg } -> Cmd Msg
@@ -225,19 +225,6 @@ viewPost post =
         , a [ href ("/article/" ++ String.fromInt post.id) ] [ button [ class "submit_button" ] [ text "Comment" ] ]
         , div [ class "line_after_recipes" ] []
         ]
-
-
-viewFetchError : String -> String -> Html Msg
-viewFetchError items errorMessage =
-    let
-        errorHeading =
-            "Couldn't fetch " ++ items ++ "."
-    in
-    div []
-        [ h1 [] [ text errorHeading ]
-        , text ("Error: " ++ errorMessage)
-        ]
-
 
 renderList : List String -> Html msg
 renderList lst =

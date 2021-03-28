@@ -1,10 +1,9 @@
 module Pages.Users exposing (Model, Msg, Params, page)
 
-import Api.Data exposing (Data(..))
+import Api.Data exposing (Data(..), expectHeader, viewFetchError)
 import Api.Profile exposing (Profile, profilesDecoder)
 import Browser.Dom as Dom
 import Browser.Navigation exposing (pushUrl)
-import Dict
 import Html exposing (..)
 import Html.Attributes exposing (class, height, href, placeholder, src, type_, value, width)
 import Html.Events exposing (onClick, onInput)
@@ -92,16 +91,16 @@ update msg model =
             ( { model | profiles = profiles }, Cmd.none )
 
         Search searching ->
-            ( { model | search = searching }, Cmd.batch[getUsers model.paging searching model.sorting { onResponse = ProfilesReceived }, getContentRequestHeader model.paging searching model.sorting] )
+            ( { model | search = searching }, Cmd.batch [ getUsers model.paging searching model.sorting { onResponse = ProfilesReceived }, getContentRequestHeader model.paging searching model.sorting ] )
 
         ChangeSorting sorting ->
-            ( { model | sorting = sorting }, Cmd.batch[getUsers model.paging model.search sorting { onResponse = ProfilesReceived }, getContentRequestHeader model.paging model.search sorting])
+            ( { model | sorting = sorting }, Cmd.batch [ getUsers model.paging model.search sorting { onResponse = ProfilesReceived }, getContentRequestHeader model.paging model.search sorting ] )
 
         ChangePaging number ->
             ( { model | paging = number }, Cmd.batch [ getUsers number model.search model.sorting { onResponse = ProfilesReceived }, getContentRequestHeader number model.search model.sorting, resetViewport ] )
 
         Tick time ->
-            ( model, Cmd.batch[getUsers model.paging model.search model.sorting { onResponse = ProfilesReceived }, getContentRequestHeader model.paging model.search model.sorting ])
+            ( model, Cmd.batch [ getUsers model.paging model.search model.sorting { onResponse = ProfilesReceived }, getContentRequestHeader model.paging model.search model.sorting ] )
 
         WatchCount resp ->
             case resp of
@@ -205,8 +204,8 @@ viewProfiles model =
                         ]
                 ]
 
-        Failure _ ->
-            viewFetchError "Something went wrong!"
+        Failure failures ->
+            viewFetchError "users" failures
 
 
 viewPages : Model -> Int -> Html Msg
@@ -220,18 +219,6 @@ viewPages model number =
         , onClick (ChangePaging number)
         ]
         [ text <| String.fromInt number ]
-
-
-viewFetchError : String -> Html Msg
-viewFetchError errorMessage =
-    let
-        errorHeading =
-            "Couldn't fetch recipes."
-    in
-    div []
-        [ h1 [] [ text errorHeading ]
-        , text ("Error: " ++ errorMessage)
-        ]
 
 
 viewProfile : Profile -> Html Msg
@@ -256,36 +243,3 @@ getContentRequestHeader paging searched sorting =
         { url = url ++ "/users?_sort=" ++ sorting ++ "&_order=asc&q=" ++ searched ++ "&_page=" ++ String.fromInt paging ++ "&_limit=" ++ String.fromInt numberUsersLimit
         , expect = expectHeader WatchCount
         }
-
-
-expectHeader : (Result Http.Error Int -> msg) -> Http.Expect msg
-expectHeader toMsg =
-    Http.expectStringResponse toMsg <|
-        \response ->
-            case response of
-                Http.BadUrl_ url ->
-                    Err (Http.BadUrl url)
-
-                Http.Timeout_ ->
-                    Err Http.Timeout
-
-                Http.NetworkError_ ->
-                    Err Http.NetworkError
-
-                Http.BadStatus_ metadata body ->
-                    Err (Http.BadStatus metadata.statusCode)
-
-                Http.GoodStatus_ metadata body ->
-                    case Dict.get "x-total-count" metadata.headers of
-                        Just number ->
-                            Ok
-                                (case String.toInt <| number of
-                                    Nothing ->
-                                        0
-
-                                    Just number_ ->
-                                        number_
-                                )
-
-                        Nothing ->
-                            Ok 0

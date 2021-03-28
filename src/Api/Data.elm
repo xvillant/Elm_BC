@@ -3,10 +3,15 @@ module Api.Data exposing
     , expectJson
     , map
     , toMaybe
+    , viewFetchError
+    , expectHeader
     )
 
 import Http
 import Json.Decode as D
+import Html exposing (..)
+import Html.Attributes exposing (class)
+import Dict
 
 
 type Data value
@@ -93,3 +98,51 @@ fromResult result =
 
 
 --https://www.elm-spa.dev/guide/using-apis
+
+
+viewFetchError : String -> List String -> Html msg
+viewFetchError data errorMessage =
+    let
+        errorHeading =
+            "Couldn't fetch " ++ data ++ "."
+    in
+    div []
+        [ h1 [] [ text errorHeading ]
+        , text ("Error: ")
+        , ol [ class "errors" ]
+            (List.map (\l -> li [ class "error__value" ] [ text l ]) errorMessage)
+        ]
+
+
+
+expectHeader : (Result Http.Error Int -> msg) -> Http.Expect msg
+expectHeader toMsg =
+    Http.expectStringResponse toMsg <|
+        \response ->
+            case response of
+                Http.BadUrl_ url ->
+                    Err (Http.BadUrl url)
+
+                Http.Timeout_ ->
+                    Err Http.Timeout
+
+                Http.NetworkError_ ->
+                    Err Http.NetworkError
+
+                Http.BadStatus_ metadata body ->
+                    Err (Http.BadStatus metadata.statusCode)
+
+                Http.GoodStatus_ metadata body ->
+                    case Dict.get "x-total-count" metadata.headers of
+                        Just number ->
+                            Ok
+                                (case String.toInt <| number of
+                                    Nothing ->
+                                        0
+
+                                    Just number_ ->
+                                        number_
+                                )
+
+                        Nothing ->
+                            Ok 0

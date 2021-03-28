@@ -1,11 +1,10 @@
 module Pages.Recipes exposing (Model, Msg, Params, page)
 
 import Api.Article exposing (Article, articlesDecoder)
-import Api.Data exposing (Data(..))
+import Api.Data exposing (Data(..), expectHeader, viewFetchError)
 import Browser.Dom as Dom
 import Browser.Navigation exposing (pushUrl)
 import Components.TimeFormatting exposing (formatDate, formatTime)
-import Dict
 import Html exposing (..)
 import Html.Attributes exposing (class, href, placeholder, src, type_, value, width)
 import Html.Events exposing (onClick, onInput)
@@ -217,8 +216,8 @@ viewPosts model =
                         ]
                 ]
 
-        Failure _ ->
-            viewFetchError "Something went wrong!"
+        Failure failures ->
+            viewFetchError "recipes" failures
 
 
 viewPages : Model -> Int -> Html Msg
@@ -232,18 +231,6 @@ viewPages model number =
         , onClick (ChangePaging number)
         ]
         [ text <| String.fromInt number ]
-
-
-viewFetchError : String -> Html Msg
-viewFetchError errorMessage =
-    let
-        errorHeading =
-            "Couldn't fetch recipes."
-    in
-    div []
-        [ h1 [] [ text errorHeading ]
-        , text ("Error: " ++ errorMessage)
-        ]
 
 
 viewPost : Article -> Html Msg
@@ -285,39 +272,6 @@ renderList : List String -> Html msg
 renderList lst =
     ol [ class "ingredients__" ]
         (List.map (\l -> li [ class "value" ] [ text l ]) lst)
-
-
-expectHeader : (Result Http.Error Int -> msg) -> Expect msg
-expectHeader toMsg =
-    expectStringResponse toMsg <|
-        \response ->
-            case response of
-                Http.BadUrl_ url ->
-                    Err (Http.BadUrl url)
-
-                Http.Timeout_ ->
-                    Err Http.Timeout
-
-                Http.NetworkError_ ->
-                    Err Http.NetworkError
-
-                Http.BadStatus_ metadata body ->
-                    Err (Http.BadStatus metadata.statusCode)
-
-                Http.GoodStatus_ metadata body ->
-                    case Dict.get "x-total-count" metadata.headers of
-                        Just number ->
-                            Ok
-                                (case String.toInt <| number of
-                                    Nothing ->
-                                        0
-
-                                    Just number_ ->
-                                        number_
-                                )
-
-                        Nothing ->
-                            Ok 0
 
 
 resetViewport : Cmd Msg

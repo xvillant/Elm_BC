@@ -220,7 +220,7 @@ view model =
     , body =
         [ div []
             [ h1 [] [ text "Settings" ]
-            , div [ ]
+            , div []
                 [ input
                     [ id "email"
                     , type_ "email"
@@ -241,7 +241,7 @@ view model =
                     ]
                     []
                 ]
-            , div [ ]
+            , div []
                 [ input
                     [ id "password"
                     , type_ "password"
@@ -266,7 +266,7 @@ view model =
                         , li [ class "req__items" ] [ text "Password's minimum lenght is 8 characters" ]
                         ]
                     ]
-            , div [ ]
+            , div []
                 [ textarea
                     [ id "bio"
                     , placeholder "Type your bio"

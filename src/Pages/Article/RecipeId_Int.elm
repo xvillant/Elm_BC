@@ -1,10 +1,8 @@
 module Pages.Article.RecipeId_Int exposing (Model, Msg, Params, page)
 
---import Api.Profile exposing (Profile, profileDecoder)
-
 import Api.Article exposing (Article, articleDecoder)
 import Api.Comment exposing (Comment, commentDecoder, commentsDecoder)
-import Api.Data exposing (Data(..))
+import Api.Data exposing (Data(..), viewFetchError)
 import Api.User exposing (User)
 import Browser.Navigation exposing (pushUrl)
 import Components.TimeFormatting exposing (formatDate, formatTime)
@@ -213,16 +211,6 @@ viewComments model =
             text ""
 
 
-viewFetchError : String -> String -> Html Msg
-viewFetchError items errorMessage =
-    let
-        errorHeading =
-            "Couldn't fetch " ++ items ++ "."
-    in
-    div []
-        [ h1 [] [ text errorHeading ]
-        , text ("Error: " ++ errorMessage)
-        ]
 
 
 viewComment : Comment -> Html Msg
@@ -340,8 +328,8 @@ viewArticle model =
                     ]
                 ]
 
-        Failure _ ->
-            viewFetchError "article" "Something went wrong!"
+        Failure failures ->
+            viewFetchError "article" failures
 
 
 renderList : List String -> Html msg

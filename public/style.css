@@ -416,18 +416,14 @@ li.req__items{
   margin: 10px 0;
 }
 
-.list__ingredients{
-  color: black;
-}
-
 ol {
   list-style: none;
   counter-reset: steps;
 }
-ol li {
+ol li.value {
   counter-increment: steps;
 }
-ol li::before {
+ol li.value::before {
   content: counter(steps);
   margin-right: 0.5rem;
   background: #4CAF50;
@@ -533,5 +529,10 @@ img.recipe__image:hover{
   border: 2px solid #4CAF50;
   opacity: 1;
   cursor: pointer;
+}
+
+ol li.error__value {
+  color: black;
+  list-style-type: none;
 }
 

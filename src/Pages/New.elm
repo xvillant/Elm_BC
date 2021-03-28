@@ -4,6 +4,7 @@ import Api.Article exposing (Article, articleDecoder)
 import Api.Data exposing (Data(..))
 import Api.User exposing (User)
 import Browser.Navigation exposing (Key, pushUrl)
+import Components.Image as Image exposing (Image)
 import Elm.Module exposing (Name)
 import FeatherIcons exposing (user)
 import Html exposing (..)
@@ -22,7 +23,6 @@ import Spa.Url exposing (Url)
 import String.Extra
 import Task
 import Time
-import Components.Image as Image exposing (Image)
 
 
 page : Page Params Model Msg
@@ -39,6 +39,8 @@ page =
 
 
 -- INIT
+
+
 type alias Ingredient =
     { id : Int
     , name : String
@@ -293,7 +295,7 @@ view model =
                     []
                 ]
             , br [] []
-            , div [ ]
+            , div []
                 [ input
                     [ id model.imageId
                     , type_ "file"
@@ -392,7 +394,7 @@ postArticle nowTime model options =
 renderList : List Ingredient -> Html Msg
 renderList lst =
     ol [ class "ingredients__" ]
-        (List.map (\l -> li [ class "list__ingredients" ] [ text l.name, p [ class "delete_button", onClick (DeleteIngredient l.id) ] [ i [ class "fas fa-window-close" ] [] ] ]) lst)
+        (List.map (\l -> li [ class "value" ] [ text l.name, p [ class "delete_button", onClick (DeleteIngredient l.id) ] [ i [ class "fas fa-window-close" ] [] ] ]) lst)
 
 
 listString : List Ingredient -> List String
