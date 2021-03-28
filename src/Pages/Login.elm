@@ -3,7 +3,7 @@ module Pages.Login exposing (Model, Msg, Params, page)
 --import FeatherIcons exposing (user)
 
 import Api.Data exposing (Data(..))
-import Api.Token exposing (Token, decodeJWT)
+import Api.Token exposing (decodeJWT)
 import Api.User exposing (User, userDecoder)
 import Browser.Navigation exposing (Key, pushUrl)
 import Html exposing (..)
