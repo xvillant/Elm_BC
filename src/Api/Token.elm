@@ -1,7 +1,6 @@
 module Api.Token exposing (decodeJWT, Token)
 
-import Json.Decode as D exposing (Decoder, field)
-import Json.Decode.Extra exposing (andMap)
+import Json.Decode as D exposing (Decoder, field, map4)
 import Jwt
 
 
@@ -19,8 +18,8 @@ decodeJWT tokenString =
 
 jwtDecoder : Decoder Token
 jwtDecoder =
-    D.succeed Token
-        |> andMap (field "iat" D.int)
-        |> andMap (field "exp" D.int)
-        |> andMap (field "sub" D.string)
-        |> andMap (field "email" D.string)
+    map4 Token
+        (field "iat" D.int)
+        (field "exp" D.int)
+        (field "sub" D.string)
+        (field "email" D.string)

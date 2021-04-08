@@ -1,7 +1,5 @@
 module Pages.Login exposing (Model, Msg, Params, page)
 
---import FeatherIcons exposing (user)
-
 import Api.Data exposing (Data(..))
 import Api.Token exposing (decodeJWT)
 import Api.User exposing (User, userDecoder)
@@ -106,6 +104,19 @@ update msg model =
                 Api.Data.Success user_ ->
                     ( { model | user = Api.Data.toMaybe user }, Cmd.batch [ saveUser user_, pushUrl model.key "/recipes" ] )
 
+                Failure f ->
+                    ( { model
+                        | warning =
+                            case List.head f of
+                                Just a ->
+                                    a
+
+                                Nothing ->
+                                    ""
+                      }
+                    , Cmd.none
+                    )
+
                 _ ->
                     ( { model | warning = "Something went wrong!" }, Cmd.none )
 
@@ -120,7 +131,7 @@ httpErrorString error =
             "Http Timeout"
 
         NetworkError ->
-            "Network Error"
+            "Connection issues"
 
         BadStatus response ->
             case response of

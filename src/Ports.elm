@@ -42,3 +42,5 @@ port fileSelected : String -> Cmd msg
 
 
 port fileContentRead : (ImagePortData -> msg) -> Sub msg
+
+--https://paramander.com/en/blog/using-ports-to-deal-with-files-in-elm-0-18

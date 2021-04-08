@@ -139,7 +139,7 @@ httpErrorString error =
             "Http Timeout"
 
         NetworkError ->
-            "Network Error"
+            "Connection issues"
 
         BadStatus response ->
             case response of

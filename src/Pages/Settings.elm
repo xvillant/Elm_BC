@@ -148,6 +148,19 @@ update msg model =
                 Api.Data.Success user_ ->
                     ( { model | user = Api.Data.toMaybe user }, Cmd.batch [ saveUser user_, pushUrl model.key "/" ] )
 
+                Failure f ->
+                    ( { model
+                        | warning =
+                            case List.head f of
+                                Just a ->
+                                    a
+
+                                Nothing ->
+                                    ""
+                      }
+                    , Cmd.none
+                    )
+
                 _ ->
                     ( model, Cmd.none )
 

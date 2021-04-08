@@ -5,8 +5,6 @@ import Api.Data exposing (Data(..))
 import Api.User exposing (User)
 import Browser.Navigation exposing (Key, pushUrl)
 import Components.Image exposing (Image)
-import Elm.Module exposing (Name)
-import FeatherIcons exposing (user)
 import Html exposing (..)
 import Html.Attributes exposing (accept, autocomplete, class, cols, id, placeholder, rows, src, title, type_, value, width)
 import Html.Events exposing (on, onClick, onInput)
@@ -185,6 +183,10 @@ update msg model =
                 Success s ->
                     ( { model | warning = "Successfully added article!" }, pushUrl model.key "/recipes" )
 
+                Failure f ->
+                    ({model | warning = (case List.head f of 
+                                            Just a -> a
+                                            Nothing-> "") }, Cmd.none)
                 _ ->
                     ( { model | warning = "Something went wrong!" }, Cmd.none )
 
