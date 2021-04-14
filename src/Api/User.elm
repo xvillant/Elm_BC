@@ -3,6 +3,7 @@ module Api.User exposing (..)
 import Iso8601
 import Json.Decode as D exposing (..)
 import Json.Encode as E exposing (..)
+import Json.Decode.Pipeline
 import Time
 
 
@@ -15,20 +16,22 @@ type alias User =
     , image : String
     , password : String
     , created : Time.Posix
+    , token : String
     }
 
 
 userDecoder : Decoder User
 userDecoder =
-    map8 User
-        (field "id" D.int)
-        (field "firstname" D.string)
-        (field "lastname" D.string)
-        (field "email" D.string)
-        (field "bio" D.string)
-        (field "image" D.string)
-        (field "password" D.string)
-        (field "created" Iso8601.decoder)
+    D.succeed User
+        |> Json.Decode.Pipeline.required "id" D.int
+        |> Json.Decode.Pipeline.required "firstname" D.string
+        |> Json.Decode.Pipeline.required "lastname" D.string
+        |> Json.Decode.Pipeline.required "email" D.string
+        |> Json.Decode.Pipeline.required "bio" D.string
+        |> Json.Decode.Pipeline.required "image" D.string
+        |> Json.Decode.Pipeline.required "password" D.string
+        |> Json.Decode.Pipeline.required "created" Iso8601.decoder
+        |> Json.Decode.Pipeline.optional "token" D.string ""
 
 
 userEncode : User -> E.Value

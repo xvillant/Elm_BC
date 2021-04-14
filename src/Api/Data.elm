@@ -67,7 +67,7 @@ expectJson toMsg decoder =
                             Err errors
 
                         Err _ ->
-                            Err [ "Bad status code" ]
+                            Err [ "Unauthorized client or expired token or other bad status code" ]
 
                 Http.GoodStatus_ _ body ->
                     case D.decodeString decoder body of

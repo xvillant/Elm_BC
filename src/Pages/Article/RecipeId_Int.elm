@@ -65,7 +65,7 @@ init shared { params } =
       }
     , case shared.user of
         Just user_ ->
-            Cmd.batch [ getArticleRequest params { onResponse = ReceivedArticle }, getCommentsRequest params { onResponse = CommentsReceived }, Task.perform Timezone Time.here ]
+            Cmd.batch [ getArticleRequest user_.token params { onResponse = ReceivedArticle }, getCommentsRequest user_.token params { onResponse = CommentsReceived }, Task.perform Timezone Time.here ]
 
         Nothing ->
             pushUrl shared.key "/login"
@@ -125,7 +125,18 @@ update msg model =
             )
 
         Tick time ->
-            ( model, getCommentsRequest model.parameters { onResponse = CommentsReceived } )
+            ( model
+            , getCommentsRequest
+                (case model.user of
+                    Just u ->
+                        u.token
+
+                    Nothing ->
+                        ""
+                )
+                model.parameters
+                { onResponse = CommentsReceived }
+            )
 
 
 save : Model -> Shared.Model -> Shared.Model
@@ -169,19 +180,29 @@ view model =
             }
 
 
-getArticleRequest : Params -> { onResponse : Data Article -> Msg } -> Cmd Msg
-getArticleRequest params options =
-    Http.get
-        { url = Server.url ++ "/posts/" ++ String.fromInt params.recipeId
+getArticleRequest : String -> Params -> { onResponse : Data Article -> Msg } -> Cmd Msg
+getArticleRequest tokenString params options =
+    Http.request
+        { method = "GET"
+        , headers = [ Http.header "Authorization" ("Bearer " ++ tokenString) ]
+        , url = Server.url ++ "/posts/" ++ String.fromInt params.recipeId
+        , body = Http.emptyBody
         , expect = Api.Data.expectJson options.onResponse articleDecoder
+        , timeout = Nothing
+        , tracker = Nothing
         }
 
 
-getCommentsRequest : Params -> { onResponse : Data (List Comment) -> Msg } -> Cmd Msg
-getCommentsRequest params options =
-    Http.get
-        { url = Server.url ++ "/comments?recipeid=" ++ String.fromInt params.recipeId ++ "&_sort=created&_order=desc"
+getCommentsRequest : String -> Params -> { onResponse : Data (List Comment) -> Msg } -> Cmd Msg
+getCommentsRequest tokenString params options =
+    Http.request
+        { method = "GET"
+        , headers = [ Http.header "Authorization" ("Bearer " ++ tokenString) ]
+        , url = Server.url ++ "/comments?recipeid=" ++ String.fromInt params.recipeId ++ "&_sort=created&_order=desc"
+        , body = Http.emptyBody
         , expect = Api.Data.expectJson options.onResponse commentsDecoder
+        , timeout = Nothing
+        , tracker = Nothing
         }
 
 
@@ -211,8 +232,6 @@ viewComments model =
             text ""
 
 
-
-
 viewComment : Comment -> Html Msg
 viewComment comment =
     let
@@ -226,7 +245,7 @@ viewComment comment =
             [ p [ class "datetime" ] [ text (formatDate timezone comment.created) ]
             , p [ class "datetime" ] [ text (formatTime timezone comment.created) ]
             ]
-        , a [ class "link", href ("/profile/" ++ String.fromInt comment.profile.id) ] [ text (comment.profile.firstname ++ " " ++ comment.profile.lastname) ]
+        , a [ class "link", href ("/profile/" ++ String.fromInt comment.userId) ] [ text (comment.profile.firstname ++ " " ++ comment.profile.lastname) ]
         , div [ class "line_after_recipes" ] []
         ]
 
@@ -273,14 +292,39 @@ postComment nowTime model options =
                             ]
               )
             , ( "created", Iso8601.encode nowTime )
+            , ( "userId"
+              , E.int
+                    (case model.user of
+                        Just u ->
+                            u.id
+
+                        Nothing ->
+                            0
+                    )
+              )
             ]
                 |> E.object
                 |> Http.jsonBody
     in
-    Http.post
-        { url = Server.url ++ "/comments"
+    Http.request
+        { method = "POST"
+        , headers =
+            [ Http.header "Authorization"
+                ("Bearer "
+                    ++ (case model.user of
+                            Just u ->
+                                u.token
+
+                            Nothing ->
+                                ""
+                       )
+                )
+            ]
+        , url = Server.url ++ "/comments"
         , body = body
         , expect = Api.Data.expectJson options.onResponse commentDecoder
+        , timeout = Nothing
+        , tracker = Nothing
         }
 
 
@@ -312,7 +356,7 @@ viewArticle model =
                     ]
                 , div []
                     [ p [ class "title" ] [ text "shared by " ]
-                    , a [ class "link", href ("/profile/" ++ String.fromInt value.profile.id) ] [ text (value.profile.firstname ++ " " ++ value.profile.lastname) ]
+                    , a [ class "link", href ("/profile/" ++ String.fromInt value.userId) ] [ text (value.profile.firstname ++ " " ++ value.profile.lastname) ]
                     ]
                 , div []
                     [ p [ class "title" ] [ text "duration" ]

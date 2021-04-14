@@ -2,6 +2,7 @@ module Pages.Recipes exposing (Model, Msg, Params, page)
 
 import Api.Article exposing (Article, articlesDecoder)
 import Api.Data exposing (Data(..), expectHeader, viewFetchError)
+import Api.User exposing (User)
 import Browser.Dom as Dom
 import Browser.Navigation exposing (pushUrl)
 import Components.TimeFormatting exposing (formatDate, formatTime)
@@ -60,24 +61,18 @@ type alias Model =
     , sorting : String
     , order : String
     , totalCount : Int
+    , user : Maybe User
     }
 
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( initialModel
-    , case shared.user of
+    case shared.user of
         Just user_ ->
-            Cmd.batch [ getContentRequest 1 "" "created" "desc" { onResponse = PostsReceived }, getContentRequestHeader 1 "" "created" "desc" ]
+            ( { user = shared.user, paging = 1, posts = Loading, search = "", sorting = "created", order = "desc", totalCount = 0 }, Cmd.batch [ getContentRequest user_.token 1 "" "created" "desc" { onResponse = PostsReceived }, getContentRequestHeader user_.token 1 "" "created" "desc" ] )
 
         Nothing ->
-            pushUrl shared.key "/login"
-    )
-
-
-initialModel : Model
-initialModel =
-    { paging = 1, posts = Loading, search = "", sorting = "created", order = "desc", totalCount = 0 }
+            ( { user = Nothing, paging = 1, posts = Loading, search = "", sorting = "created", order = "desc", totalCount = 0 }, pushUrl shared.key "/login" )
 
 
 
@@ -92,6 +87,8 @@ type Msg
     | ChangePaging Int
     | Tick Time.Posix
     | WatchCount (Result Http.Error Int)
+    | DeleteArticle Int
+    | DeleteResponse (Result Http.Error String)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -104,21 +101,173 @@ update msg model =
             ( { model | posts = response }, Cmd.none )
 
         Search searched ->
-            ( { model | search = searched }, Cmd.batch [ getContentRequest model.paging searched model.sorting model.order { onResponse = PostsReceived }, getContentRequestHeader model.paging searched model.sorting model.order ] )
+            ( { model | search = searched }
+            , Cmd.batch
+                [ getContentRequest
+                    (case model.user of
+                        Just u ->
+                            u.token
+
+                        Nothing ->
+                            ""
+                    )
+                    model.paging
+                    searched
+                    model.sorting
+                    model.order
+                    { onResponse = PostsReceived }
+                , getContentRequestHeader
+                    (case model.user of
+                        Just u ->
+                            u.token
+
+                        Nothing ->
+                            ""
+                    )
+                    model.paging
+                    searched
+                    model.sorting
+                    model.order
+                ]
+            )
 
         ChangeSorting sorting order ->
-            ( { model | sorting = sorting, order = order }, Cmd.batch [ getContentRequest model.paging model.search sorting order { onResponse = PostsReceived }, getContentRequestHeader model.paging model.search sorting order ] )
+            ( { model | sorting = sorting, order = order }
+            , Cmd.batch
+                [ getContentRequest
+                    (case model.user of
+                        Just u ->
+                            u.token
+
+                        Nothing ->
+                            ""
+                    )
+                    model.paging
+                    model.search
+                    sorting
+                    order
+                    { onResponse = PostsReceived }
+                , getContentRequestHeader
+                    (case model.user of
+                        Just u ->
+                            u.token
+
+                        Nothing ->
+                            ""
+                    )
+                    model.paging
+                    model.search
+                    sorting
+                    order
+                ]
+            )
 
         Tick time ->
-            ( model, Cmd.batch [ getContentRequest model.paging model.search model.sorting model.order { onResponse = PostsReceived }, getContentRequestHeader model.paging model.search model.sorting model.order ] )
+            ( model
+            , Cmd.batch
+                [ getContentRequest
+                    (case model.user of
+                        Just u ->
+                            u.token
+
+                        Nothing ->
+                            ""
+                    )
+                    model.paging
+                    model.search
+                    model.sorting
+                    model.order
+                    { onResponse = PostsReceived }
+                , getContentRequestHeader
+                    (case model.user of
+                        Just u ->
+                            u.token
+
+                        Nothing ->
+                            ""
+                    )
+                    model.paging
+                    model.search
+                    model.sorting
+                    model.order
+                ]
+            )
 
         ChangePaging number ->
-            ( { model | paging = number }, Cmd.batch [ getContentRequest number model.search model.sorting model.order { onResponse = PostsReceived }, getContentRequestHeader number model.search model.sorting model.order, resetViewport ] )
+            ( { model | paging = number }
+            , Cmd.batch
+                [ getContentRequest
+                    (case model.user of
+                        Just u ->
+                            u.token
+
+                        Nothing ->
+                            ""
+                    )
+                    number
+                    model.search
+                    model.sorting
+                    model.order
+                    { onResponse = PostsReceived }
+                , getContentRequestHeader
+                    (case model.user of
+                        Just u ->
+                            u.token
+
+                        Nothing ->
+                            ""
+                    )
+                    number
+                    model.search
+                    model.sorting
+                    model.order
+                , resetViewport
+                ]
+            )
 
         WatchCount resp ->
             case resp of
                 Ok value ->
                     ( { model | totalCount = value }, Cmd.none )
+
+                Err _ ->
+                    ( model, Cmd.none )
+
+        DeleteArticle articleid ->
+            ( model, deleteArticle articleid )
+
+        DeleteResponse deleted ->
+            case deleted of
+                Ok value ->
+                    ( model
+                    , Cmd.batch
+                        [ getContentRequest
+                            (case model.user of
+                                Just u ->
+                                    u.token
+
+                                Nothing ->
+                                    ""
+                            )
+                            model.paging
+                            model.search
+                            model.sorting
+                            model.order
+                            { onResponse = PostsReceived }
+                        , getContentRequestHeader
+                            (case model.user of
+                                Just u ->
+                                    u.token
+
+                                Nothing ->
+                                    ""
+                            )
+                            model.paging
+                            model.search
+                            model.sorting
+                            model.order
+                        ]
+                    )
 
                 Err _ ->
                     ( model, Cmd.none )
@@ -141,19 +290,29 @@ view model =
     }
 
 
-getContentRequest : Int -> String -> String -> String -> { onResponse : Data (List Article) -> Msg } -> Cmd Msg
-getContentRequest paging searched sorting order options =
-    Http.get
-        { url = url ++ "/posts?_sort=" ++ sorting ++ "&_order=" ++ order ++ "&q=" ++ searched ++ "&_page=" ++ String.fromInt paging ++ "&_limit=" ++ String.fromInt numberRecipesLimit
+getContentRequest : String -> Int -> String -> String -> String -> { onResponse : Data (List Article) -> Msg } -> Cmd Msg
+getContentRequest tokenString paging searched sorting order options =
+    Http.request
+        { method = "GET"
+        , headers = [ Http.header "Authorization" ("Bearer " ++ tokenString) ]
+        , url = url ++ "/posts?_sort=" ++ sorting ++ "&_order=" ++ order ++ "&q=" ++ searched ++ "&_page=" ++ String.fromInt paging ++ "&_limit=" ++ String.fromInt numberRecipesLimit
+        , body = Http.emptyBody
         , expect = Api.Data.expectJson options.onResponse articlesDecoder
+        , timeout = Nothing
+        , tracker = Nothing
         }
 
 
-getContentRequestHeader : Int -> String -> String -> String -> Cmd Msg
-getContentRequestHeader paging searched sorting order =
-    Http.get
-        { url = url ++ "/posts?_sort=" ++ sorting ++ "&_order=" ++ order ++ "&q=" ++ searched ++ "&_page=" ++ String.fromInt paging ++ "&_limit=" ++ String.fromInt numberRecipesLimit
+getContentRequestHeader : String -> Int -> String -> String -> String -> Cmd Msg
+getContentRequestHeader tokenString paging searched sorting order =
+    Http.request
+        { method = "GET"
+        , headers = [ Http.header "Authorization" ("Bearer " ++ tokenString) ]
+        , url = url ++ "/posts?_sort=" ++ sorting ++ "&_order=" ++ order ++ "&q=" ++ searched ++ "&_page=" ++ String.fromInt paging ++ "&_limit=" ++ String.fromInt numberRecipesLimit
+        , body = Http.emptyBody
         , expect = expectHeader WatchCount
+        , timeout = Nothing
+        , tracker = Nothing
         }
 
 
@@ -168,6 +327,17 @@ viewPosts model =
                 [ img [ src "/assets/loading.gif" ] [] ]
 
         Success actualPosts ->
+            let
+                userid =
+                    List.repeat (List.length actualPosts)
+                        (case model.user of
+                            Just u ->
+                                u.id
+
+                            Nothing ->
+                                0
+                        )
+            in
             div []
                 [ h1 [] [ text "Recipes" ]
                 , button
@@ -202,7 +372,7 @@ viewPosts model =
                   else
                     div []
                         [ div [ class "articles_list" ]
-                            (List.map viewPost actualPosts)
+                            (List.map2 viewPost userid actualPosts)
                         , div []
                             (List.range 1
                                 (if modBy numberRecipesLimit model.totalCount == 0 then
@@ -233,8 +403,8 @@ viewPages model number =
         [ text <| String.fromInt number ]
 
 
-viewPost : Article -> Html Msg
-viewPost post =
+viewPost : Int -> Article -> Html Msg
+viewPost userid post =
     let
         timezone =
             europe__bratislava ()
@@ -259,11 +429,16 @@ viewPost post =
             [ text <| String.fromInt post.duration ++ " minutes" ]
         , p [ class "title" ] [ text "shared by" ]
         , li [ class "recipe_names" ]
-            [ a [ class "link", href ("/profile/" ++ String.fromInt post.profile.id) ] [ text (post.profile.firstname ++ " " ++ post.profile.lastname) ]
+            [ a [ class "link", href ("/profile/" ++ String.fromInt post.userId) ] [ text (post.profile.firstname ++ " " ++ post.profile.lastname) ]
             ]
         , img [ class "recipe__image", src post.image, width 500 ] []
         , br [] []
         , a [ href ("/article/" ++ String.fromInt post.id) ] [ button [ class "submit_button" ] [ text "Comment" ] ]
+        , if post.userId == userid then
+            button [ class "recipe_delete_button", onClick <| DeleteArticle post.id ] [ text "Delete" ]
+
+          else
+            text ""
         , div [ class "line_after_recipes" ] []
         ]
 
@@ -277,3 +452,16 @@ renderList lst =
 resetViewport : Cmd Msg
 resetViewport =
     Task.perform (\_ -> NoOp) (Dom.setViewport 0 0)
+
+
+deleteArticle : Int -> Cmd Msg
+deleteArticle articleid =
+    Http.request
+        { method = "DELETE"
+        , headers = [ Http.header "Authorization" ("Bearer " ++ "") ]
+        , url = Server.url ++ "/posts/" ++ String.fromInt articleid
+        , body = Http.emptyBody
+        , expect = expectString DeleteResponse
+        , timeout = Nothing
+        , tracker = Nothing
+        }

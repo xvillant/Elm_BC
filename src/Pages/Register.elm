@@ -309,8 +309,12 @@ registerUser nowTime model =
                 |> E.object
                 |> Http.jsonBody
     in
-    Http.post
-        { url = Server.url ++ "/users"
+    Http.request
+        { method = "POST"
+        , headers = []
+        , url = Server.url ++ "/users"
         , body = body
         , expect = Http.expectJson Response (field "accessToken" D.string)
+        , timeout = Nothing
+        , tracker = Nothing
         }

@@ -9,16 +9,18 @@ type alias Comment =
     , recipeid : Int
     , profile : Profile
     , created : Time.Posix
+    , userId : Int
     }
 
 
 commentDecoder : Decoder Comment
 commentDecoder =
-    map4 Comment
+    map5 Comment
         (field "comment" D.string)
         (field "recipeid" D.int)
         (field "profile" profileDecoder)
         (field "created" Iso8601.decoder)
+        (field "userId" D.int)
 
 
 commentsDecoder : Decoder (List Comment)

@@ -184,9 +184,18 @@ update msg model =
                     ( { model | warning = "Successfully added article!" }, pushUrl model.key "/recipes" )
 
                 Failure f ->
-                    ({model | warning = (case List.head f of 
-                                            Just a -> a
-                                            Nothing-> "") }, Cmd.none)
+                    ( { model
+                        | warning =
+                            case List.head f of
+                                Just a ->
+                                    a
+
+                                Nothing ->
+                                    ""
+                      }
+                    , Cmd.none
+                    )
+
                 _ ->
                     ( { model | warning = "Something went wrong!" }, Cmd.none )
 
@@ -382,14 +391,39 @@ postArticle nowTime model options =
                             number
                     )
               )
+            , ( "userId"
+              , E.int
+                    (case model.user of
+                        Just u ->
+                            u.id
+
+                        Nothing ->
+                            0
+                    )
+              )
             ]
                 |> E.object
                 |> Http.jsonBody
     in
-    Http.post
-        { url = Server.url ++ "/posts"
+    Http.request
+        { method = "POST"
+        , headers =
+            [ Http.header "Authorization"
+                ("Bearer "
+                    ++ (case model.user of
+                            Just u ->
+                                u.token
+
+                            Nothing ->
+                                ""
+                       )
+                )
+            ]
+        , url = Server.url ++ "/posts"
         , body = body
         , expect = Api.Data.expectJson options.onResponse articleDecoder
+        , timeout = Nothing
+        , tracker = Nothing
         }
 
 

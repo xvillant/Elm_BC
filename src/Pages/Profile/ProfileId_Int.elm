@@ -3,10 +3,12 @@ module Pages.Profile.ProfileId_Int exposing (Model, Msg, Params, page)
 import Api.Article exposing (Article, articlesDecoder)
 import Api.Data exposing (Data(..), viewFetchError)
 import Api.Profile exposing (Profile, profileDecoder)
+import Api.User exposing (User)
 import Browser.Navigation exposing (pushUrl)
 import Components.TimeFormatting exposing (formatDate, formatTime)
 import Html exposing (..)
 import Html.Attributes exposing (class, height, href, src, width)
+import Html.Events exposing (onClick)
 import Http exposing (..)
 import Server
 import Shared
@@ -43,6 +45,8 @@ type alias Model =
     , posts : Data (List Article)
     , warning : String
     , zone : Time.Zone
+    , params : Params
+    , user : Maybe User
     }
 
 
@@ -52,10 +56,12 @@ init shared { params } =
       , posts = Loading
       , warning = ""
       , zone = Time.utc
+      , params = params
+      , user = shared.user
       }
     , case shared.user of
         Just user_ ->
-            Cmd.batch [ getUserRequest params { onResponse = ReceivedUser }, getContentRequest params { onResponse = ReceivedPosts }, Task.perform Timezone Time.here ]
+            Cmd.batch [ getUserRequest user_.token params { onResponse = ReceivedUser }, getContentRequest user_.token params { onResponse = ReceivedPosts }, Task.perform Timezone Time.here ]
 
         Nothing ->
             pushUrl shared.key "/login"
@@ -70,6 +76,8 @@ type Msg
     = ReceivedUser (Data Profile)
     | ReceivedPosts (Data (List Article))
     | Timezone Time.Zone
+    | DeleteArticle Int
+    | DeleteResponse (Result Http.Error String)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -83,6 +91,38 @@ update msg model =
 
         Timezone tz ->
             ( { model | zone = tz }, Cmd.none )
+
+        DeleteArticle articleid ->
+            ( model
+            , deleteArticle
+                (case model.user of
+                    Just u ->
+                        u.token
+
+                    Nothing ->
+                        ""
+                )
+                articleid
+            )
+
+        DeleteResponse deleted ->
+            case deleted of
+                Ok value ->
+                    ( model
+                    , getContentRequest
+                        (case model.user of
+                            Just u ->
+                                u.token
+
+                            Nothing ->
+                                ""
+                        )
+                        model.params
+                        { onResponse = ReceivedPosts }
+                    )
+
+                Err _ ->
+                    ( model, Cmd.none )
 
 
 save : Model -> Shared.Model -> Shared.Model
@@ -113,7 +153,7 @@ view model =
                 [ viewProfile model.zone model.profile
                 , div [ class "warning_form" ]
                     [ text model.warning ]
-                , viewPosts model.posts
+                , viewPosts model
                 ]
             }
 
@@ -123,7 +163,7 @@ view model =
                 [ viewProfile model.zone model.profile
                 , div [ class "warning_form" ]
                     [ text model.warning ]
-                , viewPosts model.posts
+                , viewPosts model
                 ]
             }
 
@@ -161,17 +201,40 @@ viewProfile tz profile =
             viewFetchError "profile" failures
 
 
-getContentRequest : Params -> { onResponse : Data (List Article) -> Msg } -> Cmd Msg
-getContentRequest params options =
-    Http.get
-        { url = Server.url ++ "/posts?profile.id=" ++ String.fromInt params.profileId ++ "&_sort=created&_order=desc"
+getContentRequest : String -> Params -> { onResponse : Data (List Article) -> Msg } -> Cmd Msg
+getContentRequest tokenString params options =
+    Http.request
+        { method = "GET"
+        , headers = [ Http.header "Authorization" ("Bearer " ++ tokenString) ]
+        , url = Server.url ++ "/posts?userId=" ++ String.fromInt params.profileId ++ "&_sort=created&_order=desc"
+        , body = Http.emptyBody
         , expect = Api.Data.expectJson options.onResponse articlesDecoder
+        , timeout = Nothing
+        , tracker = Nothing
         }
 
 
-viewPosts : Data (List Article) -> Html Msg
-viewPosts posts =
-    case posts of
+viewPosts : Model -> Html Msg
+viewPosts model =
+    let
+        userid =
+            List.repeat
+                (case model.posts of
+                    Success articles ->
+                        List.length articles
+
+                    _ ->
+                        0
+                )
+                (case model.user of
+                    Just u ->
+                        u.id
+
+                    Nothing ->
+                        0
+                )
+    in
+    case model.posts of
         Success actualPosts ->
             div []
                 [ h2 [ class "my_recipes" ] [ text "My recipes" ]
@@ -184,23 +247,28 @@ viewPosts posts =
 
                   else
                     div [ class "articles_list" ]
-                        (List.map viewPost actualPosts)
+                        (List.map2 viewPost userid actualPosts)
                 ]
 
         _ ->
             text ""
 
 
-getUserRequest : Params -> { onResponse : Data Profile -> Msg } -> Cmd Msg
-getUserRequest params options =
-    Http.get
-        { url = Server.url ++ "/users/" ++ String.fromInt params.profileId
+getUserRequest : String -> Params -> { onResponse : Data Profile -> Msg } -> Cmd Msg
+getUserRequest tokenString params options =
+    Http.request
+        { method = "GET"
+        , headers = [ Http.header "Authorization" ("Bearer " ++ tokenString) ]
+        , url = Server.url ++ "/users/" ++ String.fromInt params.profileId
+        , body = Http.emptyBody
         , expect = Api.Data.expectJson options.onResponse profileDecoder
+        , timeout = Nothing
+        , tracker = Nothing
         }
 
 
-viewPost : Article -> Html Msg
-viewPost post =
+viewPost : Int -> Article -> Html Msg
+viewPost userid post =
     let
         timezone =
             europe__bratislava ()
@@ -223,10 +291,29 @@ viewPost post =
         , img [ class "recipe__image", src post.image, width 500 ] []
         , br [] []
         , a [ href ("/article/" ++ String.fromInt post.id) ] [ button [ class "submit_button" ] [ text "Comment" ] ]
+        , if post.userId == userid then
+            button [ class "recipe_delete_button", onClick <| DeleteArticle post.id ] [ text "Delete" ]
+
+          else
+            text ""
         , div [ class "line_after_recipes" ] []
         ]
+
 
 renderList : List String -> Html msg
 renderList lst =
     ol [ class "ingredients__" ]
         (List.map (\l -> li [ class "value" ] [ text l ]) lst)
+
+
+deleteArticle : String -> Int -> Cmd Msg
+deleteArticle tokenString articleid =
+    Http.request
+        { method = "DELETE"
+        , headers = [ Http.header "Authorization" ("Bearer " ++ tokenString) ]
+        , url = Server.url ++ "/posts/" ++ String.fromInt articleid
+        , body = Http.emptyBody
+        , expect = expectString DeleteResponse
+        , timeout = Nothing
+        , tracker = Nothing
+        }

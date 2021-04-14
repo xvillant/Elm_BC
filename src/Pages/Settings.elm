@@ -54,6 +54,7 @@ type alias Model =
     , user : Maybe User
     , mImage : Maybe Image
     , imageId : String
+    , token : String
     }
 
 
@@ -73,6 +74,7 @@ init shared { params } =
               , warning = ""
               , key = shared.key
               , user = shared.user
+              , token = user.token
               }
             , Cmd.none
             )
@@ -90,6 +92,7 @@ init shared { params } =
               , created = Time.millisToPosix 0
               , key = shared.key
               , user = Nothing
+              , token = ""
               }
             , pushUrl shared.key "/login"
             )
@@ -198,6 +201,7 @@ load shared model =
             , warning = ""
             , key = shared.key
             , user = shared.user
+            , token = user.token
             }
 
         Nothing ->
@@ -213,6 +217,7 @@ load shared model =
             , created = Time.millisToPosix 0
             , key = shared.key
             , user = Nothing
+            , token = ""
             }
     , Cmd.none
     )
@@ -304,7 +309,7 @@ updateProfile : Model -> { onResponse : Data User -> Msg } -> Cmd Msg
 updateProfile model options =
     Http.request
         { method = "PUT"
-        , headers = []
+        , headers = [Http.header "Authorization" ("Bearer " ++ model.token)]
         , url = url ++ "/users/" ++ String.fromInt model.id
         , body = Http.jsonBody <| encodeUser model
         , expect = Api.Data.expectJson options.onResponse userDecoder

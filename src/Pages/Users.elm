@@ -2,6 +2,7 @@ module Pages.Users exposing (Model, Msg, Params, page)
 
 import Api.Data exposing (Data(..), expectHeader, viewFetchError)
 import Api.Profile exposing (Profile, profilesDecoder)
+import Api.User exposing (User)
 import Browser.Dom as Dom
 import Browser.Navigation exposing (pushUrl)
 import Html exposing (..)
@@ -47,24 +48,18 @@ type alias Model =
     , profiles : Data (List Profile)
     , totalCount : Int
     , paging : Int
+    , token : String
     }
 
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( initialModel
-    , case shared.user of
+    case shared.user of
         Just user_ ->
-            Cmd.batch [ getUsers 1 "" "lastname" { onResponse = ProfilesReceived }, getContentRequestHeader 1 "" "created" ]
+            ( { token = user_.token, search = "", sorting = "lastname", profiles = Loading, totalCount = 0, paging = 1 }, Cmd.batch [ getUsers user_.token 1 "" "lastname" { onResponse = ProfilesReceived }, getContentRequestHeader user_.token 1 "" "created" ] )
 
         Nothing ->
-            pushUrl shared.key "/login"
-    )
-
-
-initialModel : Model
-initialModel =
-    { search = "", sorting = "lastname", profiles = Loading, totalCount = 0, paging = 1 }
+            ( { token = "", search = "", sorting = "lastname", profiles = Loading, totalCount = 0, paging = 1 }, pushUrl shared.key "/login" )
 
 
 
@@ -91,16 +86,16 @@ update msg model =
             ( { model | profiles = profiles }, Cmd.none )
 
         Search searching ->
-            ( { model | search = searching }, Cmd.batch [ getUsers model.paging searching model.sorting { onResponse = ProfilesReceived }, getContentRequestHeader model.paging searching model.sorting ] )
+            ( { model | search = searching }, Cmd.batch [ getUsers model.token model.paging searching model.sorting { onResponse = ProfilesReceived }, getContentRequestHeader model.token model.paging searching model.sorting ] )
 
         ChangeSorting sorting ->
-            ( { model | sorting = sorting }, Cmd.batch [ getUsers model.paging model.search sorting { onResponse = ProfilesReceived }, getContentRequestHeader model.paging model.search sorting ] )
+            ( { model | sorting = sorting }, Cmd.batch [ getUsers model.token model.paging model.search sorting { onResponse = ProfilesReceived }, getContentRequestHeader model.token model.paging model.search sorting ] )
 
         ChangePaging number ->
-            ( { model | paging = number }, Cmd.batch [ getUsers number model.search model.sorting { onResponse = ProfilesReceived }, getContentRequestHeader number model.search model.sorting, resetViewport ] )
+            ( { model | paging = number }, Cmd.batch [ getUsers model.token number model.search model.sorting { onResponse = ProfilesReceived }, getContentRequestHeader model.token number model.search model.sorting, resetViewport ] )
 
         Tick time ->
-            ( model, Cmd.batch [ getUsers model.paging model.search model.sorting { onResponse = ProfilesReceived }, getContentRequestHeader model.paging model.search model.sorting ] )
+            ( model, Cmd.batch [ getUsers model.token model.paging model.search model.sorting { onResponse = ProfilesReceived }, getContentRequestHeader model.token model.paging model.search model.sorting ] )
 
         WatchCount resp ->
             case resp of
@@ -137,11 +132,16 @@ view model =
     }
 
 
-getUsers : Int -> String -> String -> { onResponse : Data (List Profile) -> Msg } -> Cmd Msg
-getUsers paging searched sorting options =
-    Http.get
-        { url = url ++ "/users?_sort=" ++ sorting ++ "&_order=asc&q=" ++ searched ++ "&_page=" ++ String.fromInt paging ++ "&_limit=" ++ String.fromInt numberUsersLimit
+getUsers : String -> Int -> String -> String -> { onResponse : Data (List Profile) -> Msg } -> Cmd Msg
+getUsers tokenString paging searched sorting options =
+    Http.request
+        { method = "GET"
+        , headers = [ Http.header "Authorization" ("Bearer " ++ tokenString) ]
+        , url = url ++ "/users?_sort=" ++ sorting ++ "&_order=asc&q=" ++ searched ++ "&_page=" ++ String.fromInt paging ++ "&_limit=" ++ String.fromInt numberUsersLimit
+        , body = Http.emptyBody
         , expect = Api.Data.expectJson options.onResponse profilesDecoder
+        , timeout = Nothing
+        , tracker = Nothing
         }
 
 
@@ -237,9 +237,14 @@ resetViewport =
     Task.perform (\_ -> NoOp) (Dom.setViewport 0 0)
 
 
-getContentRequestHeader : Int -> String -> String -> Cmd Msg
-getContentRequestHeader paging searched sorting =
-    Http.get
-        { url = url ++ "/users?_sort=" ++ sorting ++ "&_order=asc&q=" ++ searched ++ "&_page=" ++ String.fromInt paging ++ "&_limit=" ++ String.fromInt numberUsersLimit
+getContentRequestHeader : String -> Int -> String -> String -> Cmd Msg
+getContentRequestHeader tokenString paging searched sorting =
+    Http.request
+        { method = "GET"
+        , headers = [ Http.header "Authorization" ("Bearer " ++ tokenString) ]
+        , url = url ++ "/users?_sort=" ++ sorting ++ "&_order=asc&q=" ++ searched ++ "&_page=" ++ String.fromInt paging ++ "&_limit=" ++ String.fromInt numberUsersLimit
+        , body = Http.emptyBody
         , expect = expectHeader WatchCount
+        , timeout = Nothing
+        , tracker = Nothing
         }

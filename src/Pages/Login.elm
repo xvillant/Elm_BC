@@ -45,6 +45,7 @@ type alias Model =
     , warning : String
     , key : Key
     , user : Maybe User
+    , token : String
     }
 
 
@@ -55,6 +56,7 @@ init shared { params } =
       , warning = ""
       , key = shared.key
       , user = shared.user
+      , token = ""
       }
     , Cmd.none
     )
@@ -94,7 +96,7 @@ update msg model =
         Response response ->
             case response of
                 Ok value ->
-                    ( { model | warning = "Loading..." }, getUser value { onResponse = GotUser } )
+                    ( { model | warning = "Loading...", token = value }, getUser value { onResponse = GotUser } )
 
                 Err err ->
                     ( { model | warning = httpErrorString err, password = "", email = "" }, Cmd.none )
@@ -214,11 +216,15 @@ loginRequest model =
             ]
                 |> E.object
                 |> Http.jsonBody
-    in
-    Http.post
-        { url = Server.url ++ "/login"
+    in    
+    Http.request
+        { method = "POST"
+        , headers = []
+        , url = Server.url ++ "/login"
         , body = body
         , expect = Http.expectJson Response (field "accessToken" D.string)
+        , timeout = Nothing
+        , tracker = Nothing
         }
 
 
