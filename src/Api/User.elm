@@ -45,4 +45,5 @@ userEncode user =
         , ( "image", E.string user.image )
         , ( "created", Iso8601.encode user.created )
         , ( "password", E.string user.password)
+        , ( "token", E.string user.token )
         ]

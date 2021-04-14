@@ -234,7 +234,17 @@ update msg model =
                     ( model, Cmd.none )
 
         DeleteArticle articleid ->
-            ( model, deleteArticle articleid )
+            ( model
+            , deleteArticle
+                (case model.user of
+                    Just u ->
+                        u.token
+
+                    Nothing ->
+                        ""
+                )
+                articleid
+            )
 
         DeleteResponse deleted ->
             case deleted of
@@ -454,11 +464,11 @@ resetViewport =
     Task.perform (\_ -> NoOp) (Dom.setViewport 0 0)
 
 
-deleteArticle : Int -> Cmd Msg
-deleteArticle articleid =
+deleteArticle : String -> Int -> Cmd Msg
+deleteArticle tokenString articleid =
     Http.request
         { method = "DELETE"
-        , headers = [ Http.header "Authorization" ("Bearer " ++ "") ]
+        , headers = [ Http.header "Authorization" ("Bearer " ++ tokenString) ]
         , url = Server.url ++ "/posts/" ++ String.fromInt articleid
         , body = Http.emptyBody
         , expect = expectString DeleteResponse

@@ -68,7 +68,7 @@ init shared { params } =
               , lastname = user.lastname
               , bio = user.bio
               , email = user.email
-              , password = ""
+              , password = user.password
               , id = user.id
               , created = user.created
               , warning = ""
@@ -104,7 +104,7 @@ init shared { params } =
 
 type Msg
     = Email String
-    | Password String
+      -- | Password String
     | Bio String
     | SubmitUpdate
     | ImageSelected
@@ -118,9 +118,8 @@ update msg model =
         Email email ->
             ( { model | email = email, warning = "" }, Cmd.none )
 
-        Password password ->
-            ( { model | password = password, warning = "" }, Cmd.none )
-
+        --Password password ->
+        --   ( { model | password = password, warning = "" }, Cmd.none )
         Bio bio ->
             ( { model | bio = bio, warning = "" }, Cmd.none )
 
@@ -136,12 +135,11 @@ update msg model =
 
             else if isValidEmail model.email /= True then
                 ( { model | warning = "Enter a valid email!" }, Cmd.none )
-
-            else if String.isEmpty model.password then
+                {--else if String.isEmpty model.password then
                 ( { model | warning = "Type your password!" }, Cmd.none )
 
             else if isValidPassword model.password /= True then
-                ( { model | warning = "Enter a valid password!" }, Cmd.none )
+                ( { model | warning = "Enter a valid password!" }, Cmd.none )--}
 
             else
                 ( { model | warning = "Loading..." }, updateProfile model { onResponse = Updated } )
@@ -149,7 +147,17 @@ update msg model =
         Updated user ->
             case user of
                 Api.Data.Success user_ ->
-                    ( { model | user = Api.Data.toMaybe user }, Cmd.batch [ saveUser user_, pushUrl model.key "/" ] )
+                    ( { model
+                        | user =
+                            case Api.Data.toMaybe user of
+                                Just u ->
+                                    Just { u | token = model.token }
+
+                                _ ->
+                                    Nothing
+                      }
+                    , Cmd.batch [ saveUser { user_ | token = model.token }, pushUrl model.key "/" ]
+                    )
 
                 Failure f ->
                     ( { model
@@ -195,7 +203,7 @@ load shared model =
             , lastname = user.lastname
             , bio = user.bio
             , email = user.email
-            , password = ""
+            , password = user.password
             , id = user.id
             , created = user.created
             , warning = ""
@@ -259,7 +267,8 @@ view model =
                     ]
                     []
                 ]
-            , div []
+
+            {--, div []
                 [ input
                     [ id "password"
                     , type_ "password"
@@ -283,7 +292,7 @@ view model =
                         , li [ class "req__items" ] [ text "Must contain of at least one special character" ]
                         , li [ class "req__items" ] [ text "Password's minimum lenght is 8 characters" ]
                         ]
-                    ]
+                    ]--}
             , div []
                 [ textarea
                     [ id "bio"
@@ -309,7 +318,7 @@ updateProfile : Model -> { onResponse : Data User -> Msg } -> Cmd Msg
 updateProfile model options =
     Http.request
         { method = "PUT"
-        , headers = [Http.header "Authorization" ("Bearer " ++ model.token)]
+        , headers = [ Http.header "Authorization" ("Bearer " ++ model.token) ]
         , url = url ++ "/users/" ++ String.fromInt model.id
         , body = Http.jsonBody <| encodeUser model
         , expect = Api.Data.expectJson options.onResponse userDecoder

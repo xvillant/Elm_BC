@@ -104,7 +104,17 @@ update msg model =
         GotUser user ->
             case user of
                 Api.Data.Success user_ ->
-                    ( { model | user = Api.Data.toMaybe user }, Cmd.batch [ saveUser user_, pushUrl model.key "/recipes" ] )
+                    ( { model
+                        | user =
+                            case Api.Data.toMaybe user of
+                                Just u ->
+                                    Just { u | token = model.token }
+
+                                _ ->
+                                    Nothing
+                      }
+                    , Cmd.batch [ saveUser { user_ | token = model.token }, pushUrl model.key "/recipes" ]
+                    )
 
                 Failure f ->
                     ( { model
@@ -216,7 +226,7 @@ loginRequest model =
             ]
                 |> E.object
                 |> Http.jsonBody
-    in    
+    in
     Http.request
         { method = "POST"
         , headers = []
