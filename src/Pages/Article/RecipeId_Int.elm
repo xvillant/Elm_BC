@@ -4,7 +4,7 @@ import Api.Article exposing (Article, articleDecoder)
 import Api.Comment exposing (Comment, commentDecoder, commentsDecoder)
 import Api.Data exposing (Data(..), viewFetchError)
 import Api.User exposing (User)
-import Browser.Navigation exposing (pushUrl)
+import Browser.Navigation exposing (Key, pushUrl)
 import Components.TimeFormatting exposing (formatDate, formatTime)
 import Html exposing (..)
 import Html.Attributes exposing (class, cols, href, placeholder, rows, src, width)
@@ -48,6 +48,7 @@ type alias Model =
     , commentString : String
     , warning : String
     , zone : Time.Zone
+    , key : Key
     , user : Maybe User
     , parameters : Params
     }
@@ -61,6 +62,7 @@ init shared { params } =
       , warning = ""
       , zone = Time.utc
       , user = shared.user
+      , key = shared.key
       , parameters = params
       }
     , case shared.user of
@@ -85,6 +87,8 @@ type Msg
     | Timezone Time.Zone
     | CommentResponse (Data Comment)
     | Tick Time.Posix
+    | DeleteArticle Int
+    | DeleteResponse (Result Http.Error String)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -137,6 +141,27 @@ update msg model =
                 model.parameters
                 { onResponse = CommentsReceived }
             )
+
+        DeleteArticle articleid ->
+            ( model
+            , deleteArticle
+                (case model.user of
+                    Just u ->
+                        u.token
+
+                    Nothing ->
+                        ""
+                )
+                articleid
+            )
+
+        DeleteResponse deleted ->
+            case deleted of
+                Ok value ->
+                    ( model, pushUrl model.key "/recipes" )
+
+                Err _ ->
+                    ( { model | warning = "Delete unsuccessful!" }, Cmd.none )
 
 
 save : Model -> Shared.Model -> Shared.Model
@@ -363,6 +388,22 @@ viewArticle model =
                     , p [ class "value" ]
                         [ text <| String.fromInt value.duration ++ " minutes" ]
                     ]
+                , br[][]
+                , if
+                    value.userId
+                        == (case model.user of
+                                Just u ->
+                                    u.id
+
+                                Nothing ->
+                                    0
+                           )
+                  then
+                    button [ class "recipe_delete_button", onClick <| DeleteArticle value.id ] [ text "Delete recipe" ]
+
+                  else
+                    text ""
+                , br [] []
                 , div [] [ img [ class "recipe__image", src value.image, width 500 ] [] ]
                 , div []
                     [ textarea [ placeholder "Type your comment here...", cols 70, rows 10, Html.Attributes.value model.commentString, onInput AddComment, class "form" ] []
@@ -380,3 +421,16 @@ renderList : List String -> Html msg
 renderList lst =
     ol [ class "ingredients__" ]
         (List.map (\l -> li [ class "value" ] [ text l ]) lst)
+
+
+deleteArticle : String -> Int -> Cmd Msg
+deleteArticle tokenString articleid =
+    Http.request
+        { method = "DELETE"
+        , headers = [ Http.header "Authorization" ("Bearer " ++ tokenString) ]
+        , url = Server.url ++ "/posts/" ++ String.fromInt articleid
+        , body = Http.emptyBody
+        , expect = expectString DeleteResponse
+        , timeout = Nothing
+        , tracker = Nothing
+        }
