@@ -264,7 +264,7 @@ viewComment comment =
             europe__bratislava ()
     in
     ul []
-        [ li [ class "value" ]
+        [ li [ class "comment_value" ]
             [ text comment.comment ]
         , li [ class "value" ]
             [ p [ class "datetime" ] [ text (formatDate timezone comment.created) ]
@@ -388,7 +388,6 @@ viewArticle model =
                     , p [ class "value" ]
                         [ text <| String.fromInt value.duration ++ " minutes" ]
                     ]
-                , br[][]
                 , if
                     value.userId
                         == (case model.user of
@@ -403,7 +402,6 @@ viewArticle model =
 
                   else
                     text ""
-                , br [] []
                 , div [] [ img [ class "recipe__image", src value.image, width 500 ] [] ]
                 , div []
                     [ textarea [ placeholder "Type your comment here...", cols 70, rows 10, Html.Attributes.value model.commentString, onInput AddComment, class "form" ] []

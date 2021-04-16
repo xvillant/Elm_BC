@@ -125,7 +125,7 @@ footer.footer a:hover{
   border-radius: 20px;
   color: white;
   padding: 15px 32px;
-  margin: 0 5px;
+  margin: 5px 5px;
   width: 200px;
   text-align: center;
   outline: 0;
@@ -258,6 +258,12 @@ h1 {
    margin: 0 auto;
  }
 
+ .comment_value{
+    color: rgba(0, 0, 0, 0.6);
+    margin: 0 auto;
+    font-size: 22px;
+ }
+
  .title {
    font-size: 20px;
    color: black;
@@ -319,6 +325,11 @@ h2.my_recipes {
 
 button.next__button:hover {
   cursor: pointer;
+}
+
+h2.post_name{
+  cursor: pointer;
+  color: black;
 }
 
 blockquote {
@@ -536,20 +547,18 @@ button.page_numbers_active {
 }
 
 img.recipe__image{
-  margin-top: 10px;
+  margin-top: 5px;
   border-radius: 5%;
-  width: 500px;
+  width: 600px;
   height: 250px;
   object-fit: cover;
   border: 2px solid transparent;
   padding: 5px;
-  opacity: 0.8;
   transition: all 0.3s ease 0s;
 }
 
 img.recipe__image:hover{
   border: 2px solid #4CAF50;
-  opacity: 1;
   cursor: pointer;
 }
 
@@ -558,3 +567,6 @@ ol li.error__value {
   list-style-type: none;
 }
 
+#ImageInputId {
+  margin: 7px auto;
+}

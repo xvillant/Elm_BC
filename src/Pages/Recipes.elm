@@ -420,8 +420,10 @@ viewPost userid post =
             europe__bratislava ()
     in
     ul [ class "post_list" ]
-        [ h2 [ class "post_name" ]
-            [ text post.name ]
+        [ a [ href ("/article/" ++ String.fromInt post.id) ]
+            [ h2 [ class "post_name" ]
+                [ text post.name ]
+            ]
         , p [ class "datetime" ] [ text (formatDate timezone post.created) ]
         , p [ class "datetime" ] [ text (formatTime timezone post.created) ]
         , p [ class "title" ] [ text "ingredients" ]
