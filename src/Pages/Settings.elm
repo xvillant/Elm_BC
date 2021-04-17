@@ -3,8 +3,8 @@ module Pages.Settings exposing (Model, Msg, Params, page)
 import Api.Data exposing (Data(..))
 import Api.User exposing (User, userDecoder)
 import Browser.Navigation exposing (Key, pushUrl)
-import Components.Image as Image exposing (Image)
-import Components.Validity exposing (isValidEmail, isValidPassword)
+import Components.Image exposing (Image)
+import Components.Validity exposing (isValidEmail)
 import Html exposing (..)
 import Html.Attributes exposing (accept, class, cols, id, placeholder, rows, type_, value)
 import Html.Events exposing (on, onClick, onInput)
@@ -104,7 +104,6 @@ init shared { params } =
 
 type Msg
     = Email String
-      -- | Password String
     | Bio String
     | SubmitUpdate
     | ImageSelected
@@ -118,8 +117,6 @@ update msg model =
         Email email ->
             ( { model | email = email, warning = "" }, Cmd.none )
 
-        --Password password ->
-        --   ( { model | password = password, warning = "" }, Cmd.none )
         Bio bio ->
             ( { model | bio = bio, warning = "" }, Cmd.none )
 
@@ -135,11 +132,6 @@ update msg model =
 
             else if isValidEmail model.email /= True then
                 ( { model | warning = "Enter a valid email!" }, Cmd.none )
-                {--else if String.isEmpty model.password then
-                ( { model | warning = "Type your password!" }, Cmd.none )
-
-            else if isValidPassword model.password /= True then
-                ( { model | warning = "Enter a valid password!" }, Cmd.none )--}
 
             else
                 ( { model | warning = "Loading..." }, updateProfile model { onResponse = Updated } )
@@ -267,32 +259,6 @@ view model =
                     ]
                     []
                 ]
-
-            {--, div []
-                [ input
-                    [ id "password"
-                    , type_ "password"
-                    , placeholder "Type your new password"
-                    , value model.password
-                    , onInput Password
-                    , class "form"
-                    ]
-                    []
-                ]
-            , if isValidPassword model.password || String.isEmpty model.password then
-                div [ class "warner" ] []
-
-              else
-                div [ class "warner" ]
-                    [ p [] [ text "Password requirements:" ]
-                    , ul []
-                        [ li [ class "req__items" ] [ text "Must contain of at least one uppercase letter" ]
-                        , li [ class "req__items" ] [ text "Must contain of at least one lowercase letter" ]
-                        , li [ class "req__items" ] [ text "Must contain of at least one digit" ]
-                        , li [ class "req__items" ] [ text "Must contain of at least one special character" ]
-                        , li [ class "req__items" ] [ text "Password's minimum lenght is 8 characters" ]
-                        ]
-                    ]--}
             , div []
                 [ textarea
                     [ id "bio"

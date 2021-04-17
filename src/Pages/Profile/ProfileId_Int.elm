@@ -52,20 +52,28 @@ type alias Model =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( { profile = Loading
-      , posts = Loading
-      , warning = ""
-      , zone = Time.utc
-      , params = params
-      , user = shared.user
-      }
-    , case shared.user of
+    case shared.user of
         Just user_ ->
-            Cmd.batch [ getUserRequest user_.token params { onResponse = ReceivedUser }, getContentRequest user_.token params { onResponse = ReceivedPosts }, Task.perform Timezone Time.here ]
+            ( { profile = Loading
+              , posts = Loading
+              , warning = ""
+              , zone = Time.utc
+              , params = params
+              , user = shared.user
+              }
+            , Cmd.batch [ getUserRequest user_.token params { onResponse = ReceivedUser }, getContentRequest user_.token params { onResponse = ReceivedPosts }, Task.perform Timezone Time.here ]
+            )
 
         Nothing ->
-            pushUrl shared.key "/login"
-    )
+            ( { profile = Loading
+              , posts = Loading
+              , warning = ""
+              , zone = Time.utc
+              , params = params
+              , user = Nothing
+              }
+            , pushUrl shared.key "/login"
+            )
 
 
 

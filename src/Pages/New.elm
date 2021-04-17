@@ -73,19 +73,12 @@ newIngredient id name =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( initialModel shared
-    , case shared.user of
+    case shared.user of
         Just user_ ->
-            Cmd.none
+            ( { imageId = "ImageInputId", mImage = Nothing, ingredientId = 0, name = "", ingredients = "", recipe = "", warning = "", key = shared.key, user = shared.user, duration = "", ingredientsList = [] }, Cmd.none )
 
         Nothing ->
-            pushUrl shared.key "/login"
-    )
-
-
-initialModel : Shared.Model -> Model
-initialModel shared =
-    { imageId = "ImageInputId", mImage = Nothing, ingredientId = 0, name = "", ingredients = "", recipe = "", warning = "", key = shared.key, user = shared.user, duration = "", ingredientsList = [] }
+            ( { imageId = "", mImage = Nothing, ingredientId = 0, name = "", ingredients = "", recipe = "", warning = "", key = shared.key, user = Nothing, duration = "", ingredientsList = [] }, pushUrl shared.key "/login" )
 
 
 

@@ -2,7 +2,6 @@ module Pages.Users exposing (Model, Msg, Params, page)
 
 import Api.Data exposing (Data(..), expectHeader, viewFetchError)
 import Api.Profile exposing (Profile, profilesDecoder)
-import Api.User exposing (User)
 import Browser.Dom as Dom
 import Browser.Navigation exposing (pushUrl)
 import Html exposing (..)

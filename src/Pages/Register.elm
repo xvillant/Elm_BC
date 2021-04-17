@@ -53,7 +53,7 @@ type alias Model =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( Model "" "" "" "" "" "" shared.key, Cmd.none )
+    ( { email = "", password = "", passwordAgain = "", firstname = "", lastname = "", warning = "", key = shared.key }, Cmd.none )
 
 
 
