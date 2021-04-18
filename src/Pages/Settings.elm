@@ -6,7 +6,7 @@ import Browser.Navigation exposing (Key, pushUrl)
 import Components.Image exposing (Image)
 import Components.Validity exposing (isValidEmail)
 import Html exposing (..)
-import Html.Attributes exposing (accept, class, cols, id, placeholder, rows, type_, value)
+import Html.Attributes exposing (accept, class, cols, height, id, placeholder, rows, src, title, type_, value, width)
 import Html.Events exposing (on, onClick, onInput)
 import Http exposing (..)
 import Iso8601
@@ -234,6 +234,15 @@ subscriptions model =
 
 view : Model -> Document Msg
 view model =
+    let
+        previewImage =
+            case model.mImage of
+                Just i ->
+                    imagePreview i
+
+                Nothing ->
+                    text ""
+    in
     { title = "Settings | GoodFood"
     , body =
         [ div []
@@ -259,6 +268,8 @@ view model =
                     ]
                     []
                 ]
+            , div []
+                [ previewImage ]
             , div []
                 [ textarea
                     [ id "bio"
@@ -323,3 +334,8 @@ encodeUser model =
                 )
           )
         ]
+
+
+imagePreview : Image -> Html Msg
+imagePreview image =
+    img [ class "profile__image", src image.contents, title image.filename, width 150, height 150 ] []

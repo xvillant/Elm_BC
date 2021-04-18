@@ -1,9 +1,9 @@
 module Pages.Register exposing (Model, Msg, Params, page)
 
 import Browser.Navigation as Nav exposing (Key)
-import Components.Validity exposing (isValidEmail, isValidPassword)
+import Components.Validity exposing (containsChar, containsDigit, containsLowerCase, containsUpperCase, isValidEmail, isValidPassword)
 import Html exposing (a, br, button, div, h1, i, input, li, p, text, time, ul)
-import Html.Attributes exposing (class, href, id, placeholder, type_, value)
+import Html.Attributes exposing (class, href, id, placeholder, style, type_, value)
 import Html.Events exposing (onClick, onInput)
 import Http exposing (..)
 import Iso8601
@@ -274,11 +274,51 @@ view model =
                 div [ class "warner" ]
                     [ p [] [ text "Password requirements:" ]
                     , ul []
-                        [ li [ class "req__items" ] [ text "Must contain of at least one uppercase letter" ]
-                        , li [ class "req__items" ] [ text "Must contain of at least one lowercase letter" ]
-                        , li [ class "req__items" ] [ text "Must contain of at least one digit" ]
-                        , li [ class "req__items" ] [ text "Must contain of at least one special character" ]
-                        , li [ class "req__items" ] [ text "Password's minimum lenght is 8 characters" ]
+                        [ li
+                            [ class "req__items"
+                            , if containsUpperCase model.password then
+                                style "color" "#4CAF50"
+
+                              else
+                                style "color" "#ff4b4b"
+                            ]
+                            [ text "Must contain of at least one uppercase letter" ]
+                        , li
+                            [ class "req__items"
+                            , if containsLowerCase model.password then
+                                style "color" "#4CAF50"
+
+                              else
+                                style "color" "#ff4b4b"
+                            ]
+                            [ text "Must contain of at least one lowercase letter" ]
+                        , li
+                            [ class "req__items"
+                            , if containsDigit model.password then
+                                style "color" "#4CAF50"
+
+                              else
+                                style "color" "#ff4b4b"
+                            ]
+                            [ text "Must contain of at least one digit" ]
+                        , li
+                            [ class "req__items"
+                            , if containsChar model.password then
+                                style "color" "#4CAF50"
+
+                              else
+                                style "color" "#ff4b4b"
+                            ]
+                            [ text "Must contain of at least one special character" ]
+                        , li
+                            [ class "req__items"
+                            , if String.length model.password > 7 then
+                                style "color" "#4CAF50"
+
+                              else
+                                style "color" "#ff4b4b"
+                            ]
+                            [ text "Password's minimum lenght is 8 characters" ]
                         ]
                     ]
             , div []

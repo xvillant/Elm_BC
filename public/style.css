@@ -191,7 +191,7 @@ input:focus{
 .warning_form{
   font-size: 25px;
   font-weight: bold;
-  color: rgb(255, 75, 75);
+  color: #ff4b4b;
   margin-top: 20px;
 }
 
@@ -330,6 +330,12 @@ button.next__button:hover {
 h2.post_name{
   cursor: pointer;
   color: black;
+  transition: all 0.3s ease 0s;
+}
+
+h2.post_name:hover{
+  cursor: pointer;
+  color: #4CAF50;
 }
 
 blockquote {
@@ -445,7 +451,7 @@ i.red__check, i.green__check, i.check, input.form {
 li.req__items{
   color: rgb(255, 75, 75);
   font-size: 14px;
-  list-style-type: disc;
+  list-style-type: none;
   margin: 10px 0;
 }
 
