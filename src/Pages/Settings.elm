@@ -48,6 +48,7 @@ type alias Model =
     , firstname : String
     , lastname : String
     , password : String
+    , profilePicture : String
     , created : Time.Posix
     , warning : String
     , key : Key
@@ -66,6 +67,7 @@ init shared { params } =
               , mImage = Nothing
               , firstname = user.firstname
               , lastname = user.lastname
+              , profilePicture = user.image
               , bio = user.bio
               , email = user.email
               , password = user.password
@@ -84,6 +86,7 @@ init shared { params } =
               , imageId = ""
               , firstname = ""
               , lastname = ""
+              , profilePicture = ""
               , bio = ""
               , email = ""
               , id = 0
@@ -148,7 +151,7 @@ update msg model =
                                 _ ->
                                     Nothing
                       }
-                    , Cmd.batch [ saveUser { user_ | token = model.token }, pushUrl model.key "/" ]
+                    , Cmd.batch [ saveUser { user_ | token = model.token }, pushUrl model.key ("/profile/" ++ String.fromInt user_.id) ]
                     )
 
                 Failure f ->
@@ -198,6 +201,7 @@ load shared model =
             , password = user.password
             , id = user.id
             , created = user.created
+            , profilePicture = user.image
             , warning = ""
             , key = shared.key
             , user = shared.user
@@ -211,6 +215,7 @@ load shared model =
             , imageId = ""
             , bio = ""
             , email = ""
+            , profilePicture = ""
             , id = 0
             , password = ""
             , warning = ""
@@ -234,15 +239,6 @@ subscriptions model =
 
 view : Model -> Document Msg
 view model =
-    let
-        previewImage =
-            case model.mImage of
-                Just i ->
-                    imagePreview i
-
-                Nothing ->
-                    text ""
-    in
     { title = "Settings | GoodFood"
     , body =
         [ div []
@@ -269,7 +265,7 @@ view model =
                     []
                 ]
             , div []
-                [ previewImage ]
+                [ imagePreview model ]
             , div []
                 [ textarea
                     [ id "bio"
@@ -336,6 +332,26 @@ encodeUser model =
         ]
 
 
-imagePreview : Image -> Html Msg
-imagePreview image =
-    img [ class "profile__image", src image.contents, title image.filename, width 150, height 150 ] []
+imagePreview : Model -> Html Msg
+imagePreview model =
+    div []
+        [ p [class "title"] [ text "Profile picture preview" ]
+        , img
+            [ class "profile__image"
+            , case model.mImage of
+                Just i ->
+                    src i.contents
+
+                Nothing ->
+                    src model.profilePicture
+            , case model.mImage of
+                Just i ->
+                    title i.filename
+
+                Nothing ->
+                    title "Current profile picture"
+            , width 150
+            , height 150
+            ]
+            []
+        ]
