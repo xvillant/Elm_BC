@@ -375,9 +375,16 @@ viewArticle model =
 
         Success value ->
             div []
-                [ h1 [] [ text value.name ]
-                , p [ class "datetime" ] [ text (formatDate model.zone value.created) ]
-                , p [ class "datetime" ] [ text (formatTime model.zone value.created) ]
+                [ div [] [ h1 [] [ text value.name ] ]
+                , div []
+                    [ p [ class "datetime" ] [ text (formatDate model.zone value.created) ]
+                    , p [ class "datetime" ] [ text (formatTime model.zone value.created) ]
+                    ]
+                , div []
+                    [ p [ class "title" ] [ text "shared by " ]
+                    , a [ class "link", href ("/profile/" ++ String.fromInt value.userId) ] [ text (value.profile.firstname ++ " " ++ value.profile.lastname) ]
+                    ]
+                , div [] [ img [ class "recipe__image", src value.image, width 500 ] [] ]
                 , div []
                     [ p [ class "title" ] [ text "ingredients " ]
                     , div [ class "justify__content" ]
@@ -388,10 +395,6 @@ viewArticle model =
                     [ p [ class "title" ] [ text "recipe " ]
                     , div [ class "justify__content__recipe" ]
                         [ p [ class "value" ] [ text value.recipe ] ]
-                    ]
-                , div []
-                    [ p [ class "title" ] [ text "shared by " ]
-                    , a [ class "link", href ("/profile/" ++ String.fromInt value.userId) ] [ text (value.profile.firstname ++ " " ++ value.profile.lastname) ]
                     ]
                 , div []
                     [ p [ class "title" ] [ text "duration" ]
@@ -412,7 +415,6 @@ viewArticle model =
 
                   else
                     text ""
-                , div [] [ img [ class "recipe__image", src value.image, width 500 ] [] ]
                 , div []
                     [ textarea [ placeholder "Type your comment here...", cols 70, rows 10, Html.Attributes.value model.commentString, onInput AddComment, class "form" ] []
                     ]

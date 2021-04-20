@@ -188,8 +188,8 @@ viewProfile tz profile =
 
         Success value ->
             div []
-                [ h1 [] [ text (value.firstname ++ " " ++ value.lastname) ]
-                , img [ class "profile__image", src value.image, width 150, height 150 ] []
+                [ div [] [ h1 [] [ text (value.firstname ++ " " ++ value.lastname) ] ]
+                , div [] [ img [ class "profile__image", src value.image, width 150, height 150 ] [] ]
                 , div []
                     [ p [ class "title" ] [ text "email" ]
                     , p [ class "value" ] [ text value.email ]
@@ -282,28 +282,37 @@ viewPost userid post =
             europe__bratislava ()
     in
     ul [ class "post_list" ]
-        [ a [ href ("/article/" ++ String.fromInt post.id) ] [ h2 [ class "post_name" ] [ text post.name ] ]
-        , p [ class "datetime" ] [ text (formatDate timezone post.created) ]
-        , p [ class "datetime" ] [ text (formatTime timezone post.created) ]
-        , p [ class "title" ] [ text "ingredients" ]
-        , div [ class "justify__content" ]
-            [ li [ class "value" ] [ renderList post.ingredients ]
+        [ div [] [ a [ href ("/article/" ++ String.fromInt post.id) ] [ h2 [ class "post_name" ] [ text post.name ] ] ]
+        , div []
+            [ p [ class "datetime" ] [ text (formatDate timezone post.created) ]
+            , p [ class "datetime" ] [ text (formatTime timezone post.created) ]
             ]
-        , p [ class "title" ] [ text "recipe" ]
-        , div [ class "justify__content__recipe" ]
-            [ li [ class "value" ] [ text post.recipe ]
+        , div [] [ img [ class "recipe__image", src post.image, width 500 ] [] ]
+        , div []
+            [ p [ class "title" ] [ text "ingredients" ]
+            , div [ class "justify__content" ]
+                [ li [ class "value" ] [ renderList post.ingredients ]
+                ]
             ]
-        , p [ class "title" ] [ text "duration" ]
-        , li [ class "value" ]
-            [ text <| String.fromInt post.duration ++ " minutes" ]
-        , img [ class "recipe__image", src post.image, width 500 ] []
-        , br [] []
-        , a [ href ("/article/" ++ String.fromInt post.id) ] [ button [ class "submit_button" ] [ text "Comment" ] ]
-        , if post.userId == userid then
-            button [ class "recipe_delete_button", onClick <| DeleteArticle post.id ] [ text "Delete" ]
+        , div []
+            [ p [ class "title" ] [ text "recipe" ]
+            , div [ class "justify__content__recipe" ]
+                [ li [ class "value" ] [ text post.recipe ]
+                ]
+            ]
+        , div []
+            [ p [ class "title" ] [ text "duration" ]
+            , li [ class "value" ]
+                [ text <| String.fromInt post.duration ++ " minutes" ]
+            ]
+        , div []
+            [ a [ href ("/article/" ++ String.fromInt post.id) ] [ button [ class "submit_button" ] [ text "Comment" ] ]
+            , if post.userId == userid then
+                button [ class "recipe_delete_button", onClick <| DeleteArticle post.id ] [ text "Delete" ]
 
-          else
-            text ""
+              else
+                text ""
+            ]
         , div [ class "line_after_recipes" ] []
         ]
 

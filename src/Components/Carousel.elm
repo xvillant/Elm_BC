@@ -122,14 +122,16 @@ view model =
             in
             div
                 [ class "container-fluid text-center image"
-                , style "height" "400px"
+                , style "height" "350px"
                 , style "postion" "static"
-                , style "width" "100%"
+                , style "margin" "0 auto"
+                , style "width" "80%"
                 , style "background-image" url
                 , style "background-color" "gray"
                 , style "background-size" "cover"
                 , style "overflow" "hidden"
                 , style "transition" "all .5s ease-in-out"
+                , style "border-radius" "5px"
                 ]
                 [ div [ style "margin-top" "150px" ]
                     [ button
@@ -165,7 +167,7 @@ view model =
                     ]
 
                 --display bullets (the small dots) which allow jumping to a specific image in carousel
-                , div [ style "margin-top" "378px" ] (Array.toList (Array.indexedMap (viewBullet model) model.source))
+                , div [ style "margin-top" "325px" ] (Array.toList (Array.indexedMap (viewBullet model) model.source))
                 ]
 
         Nothing ->

@@ -335,7 +335,7 @@ encodeUser model =
 imagePreview : Model -> Html Msg
 imagePreview model =
     div []
-        [ p [class "title", class "profile_pict_preview"] [ text "Profile picture preview" ]
+        [ p [ class "title", class "profile_pict_preview" ] [ text "Profile picture preview" ]
         , img
             [ class "profile__image"
             , case model.mImage of

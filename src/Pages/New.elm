@@ -298,7 +298,6 @@ view model =
                     ]
                     []
                 ]
-            , br [] []
             , div []
                 [ input
                     [ id model.imageId
