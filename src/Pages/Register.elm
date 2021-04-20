@@ -1,6 +1,6 @@
 module Pages.Register exposing (Model, Msg, Params, page)
 
-import Browser.Navigation as Nav exposing (Key)
+import Browser.Navigation as Nav exposing (Key, pushUrl)
 import Components.Validity exposing (containsChar, containsDigit, containsLowerCase, containsUpperCase, isValidEmail, isValidPassword)
 import Html exposing (a, br, button, div, h1, i, input, li, p, text, time, ul)
 import Html.Attributes exposing (class, href, id, placeholder, style, type_, value)
@@ -53,7 +53,12 @@ type alias Model =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( { email = "", password = "", passwordAgain = "", firstname = "", lastname = "", warning = "", key = shared.key }, Cmd.none )
+    case shared.user of
+        Just u ->
+            ( { email = "", password = "", passwordAgain = "", firstname = "", lastname = "", warning = "", key = shared.key }, pushUrl shared.key "/" )
+
+        Nothing ->
+            ( { email = "", password = "", passwordAgain = "", firstname = "", lastname = "", warning = "", key = shared.key }, Cmd.none )
 
 
 

@@ -51,15 +51,28 @@ type alias Model =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( { email = ""
-      , password = ""
-      , warning = ""
-      , key = shared.key
-      , user = shared.user
-      , token = ""
-      }
-    , Cmd.none
-    )
+    case shared.user of
+        Just u ->
+            ( { email = ""
+              , password = ""
+              , warning = ""
+              , key = shared.key
+              , user = shared.user
+              , token = ""
+              }
+            , pushUrl shared.key "/"
+            )
+
+        Nothing ->
+            ( { email = ""
+              , password = ""
+              , warning = ""
+              , key = shared.key
+              , user = Nothing
+              , token = ""
+              }
+            , Cmd.none
+            )
 
 
 

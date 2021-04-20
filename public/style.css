@@ -554,18 +554,12 @@ button.page_numbers_active {
 
 img.recipe__image{
   margin-top: 5px;
-  border-radius: 5%;
   width: 600px;
   height: 250px;
   object-fit: cover;
-  border: 2px solid transparent;
-  padding: 5px;
-  transition: all 0.3s ease 0s;
-}
-
-img.recipe__image:hover{
   border: 2px solid #4CAF50;
-  cursor: pointer;
+  border-radius: 5px;
+  padding: 5px;
 }
 
 ol li.error__value {
@@ -575,4 +569,8 @@ ol li.error__value {
 
 #ImageInputId {
   margin: 7px auto;
+}
+
+.profile_pict_preview{
+  color: #4CAF50;
 }
