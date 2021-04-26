@@ -306,23 +306,39 @@ view model =
 
 getContentRequest : String -> Int -> String -> String -> String -> { onResponse : Data (List Article) -> Msg } -> Cmd Msg
 getContentRequest tokenString paging searched sorting order options =
+    let
+        listQ = makeListOfQueries searched
+    in
+    
     Http.request
         { method = "GET"
         , headers = [ Http.header "Authorization" ("Bearer " ++ tokenString) ]
-        , url = url ++ "/posts?_sort=" ++ sorting ++ "&_order=" ++ order ++ "&q=" ++ searched ++ "&_page=" ++ String.fromInt paging ++ "&_limit=" ++ String.fromInt numberRecipesLimit
+        , url = url ++ "/posts?_sort=" ++ sorting ++ "&_order=" ++ order ++ "&q=" ++ String.join "&q=" listQ ++ "&_page=" ++ String.fromInt paging ++ "&_limit=" ++ String.fromInt numberRecipesLimit
         , body = Http.emptyBody
         , expect = Api.Data.expectJson options.onResponse articlesDecoder
         , timeout = Nothing
         , tracker = Nothing
         }
 
+makeListOfQueries : String -> List String
+makeListOfQueries searched =
+    String.split " " searched |> makeClear
+
+makeClear : List String -> List String
+makeClear lst =
+    (List.map (\l -> String.trim l) lst)
+    
+
 
 getContentRequestHeader : String -> Int -> String -> String -> String -> Cmd Msg
 getContentRequestHeader tokenString paging searched sorting order =
+    let
+        listQ = makeListOfQueries searched
+    in
     Http.request
         { method = "GET"
         , headers = [ Http.header "Authorization" ("Bearer " ++ tokenString) ]
-        , url = url ++ "/posts?_sort=" ++ sorting ++ "&_order=" ++ order ++ "&q=" ++ searched ++ "&_page=" ++ String.fromInt paging ++ "&_limit=" ++ String.fromInt numberRecipesLimit
+        , url = url ++ "/posts?_sort=" ++ sorting ++ "&_order=" ++ order ++ "&q=" ++ String.join "&q=" listQ ++ "&_page=" ++ String.fromInt paging ++ "&_limit=" ++ String.fromInt numberRecipesLimit
         , body = Http.emptyBody
         , expect = expectHeader WatchCount
         , timeout = Nothing

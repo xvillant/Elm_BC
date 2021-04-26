@@ -28,6 +28,7 @@ page =
         , load = load
         }
 
+
 numberUsersLimit : Int
 numberUsersLimit =
     5
@@ -133,15 +134,29 @@ view model =
 
 getUsers : String -> Int -> String -> String -> { onResponse : Data (List Profile) -> Msg } -> Cmd Msg
 getUsers tokenString paging searched sorting options =
+    let
+        listQ =
+            makeListOfQueries searched
+    in
     Http.request
         { method = "GET"
         , headers = [ Http.header "Authorization" ("Bearer " ++ tokenString) ]
-        , url = url ++ "/users?_sort=" ++ sorting ++ "&_order=asc&q=" ++ searched ++ "&_page=" ++ String.fromInt paging ++ "&_limit=" ++ String.fromInt numberUsersLimit
+        , url = url ++ "/users?_sort=" ++ sorting ++ "&_order=asc&q=" ++ String.join "&q=" listQ ++ "&_page=" ++ String.fromInt paging ++ "&_limit=" ++ String.fromInt numberUsersLimit
         , body = Http.emptyBody
         , expect = Api.Data.expectJson options.onResponse profilesDecoder
         , timeout = Nothing
         , tracker = Nothing
         }
+
+
+makeListOfQueries : String -> List String
+makeListOfQueries searched =
+    String.split " " searched |> makeClear
+
+
+makeClear : List String -> List String
+makeClear lst =
+    List.map (\l -> String.trim l) lst
 
 
 viewProfiles : Model -> Html Msg
@@ -238,10 +253,14 @@ resetViewport =
 
 getContentRequestHeader : String -> Int -> String -> String -> Cmd Msg
 getContentRequestHeader tokenString paging searched sorting =
+    let
+        listQ =
+            makeListOfQueries searched
+    in
     Http.request
         { method = "GET"
         , headers = [ Http.header "Authorization" ("Bearer " ++ tokenString) ]
-        , url = url ++ "/users?_sort=" ++ sorting ++ "&_order=asc&q=" ++ searched ++ "&_page=" ++ String.fromInt paging ++ "&_limit=" ++ String.fromInt numberUsersLimit
+        , url = url ++ "/users?_sort=" ++ sorting ++ "&_order=asc&q=" ++ String.join "&q=" listQ ++ "&_page=" ++ String.fromInt paging ++ "&_limit=" ++ String.fromInt numberUsersLimit
         , body = Http.emptyBody
         , expect = expectHeader WatchCount
         , timeout = Nothing
