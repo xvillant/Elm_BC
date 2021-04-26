@@ -19,7 +19,6 @@ import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
 import Task
 import Time
-import TimeZone exposing (europe__bratislava)
 
 
 page : Page Params Model Msg
@@ -67,7 +66,7 @@ init shared { params } =
               , key = shared.key
               , parameters = params
               }
-            , Cmd.batch [ getArticleRequest user_.token params { onResponse = ReceivedArticle }, getCommentsRequest user_.token params { onResponse = CommentsReceived }, Task.perform Timezone Time.here ]
+            , Cmd.batch [ getArticleRequest user_.token params { onResponse = ReceivedArticle }, getCommentsRequest user_.token params { onResponse = CommentsReceived }, Task.perform TimeZone Time.here ]
             )
 
         Nothing ->
@@ -94,7 +93,7 @@ type Msg
     | AddComment String
     | SubmitComment Time.Posix
     | GetTime (Time.Posix -> Msg)
-    | Timezone Time.Zone
+    | TimeZone Time.Zone
     | CommentResponse (Data Comment)
     | Tick Time.Posix
     | DeleteArticle Int
@@ -122,7 +121,7 @@ update msg model =
                 , postComment time model { onResponse = CommentResponse }
                 )
 
-        Timezone tz ->
+        TimeZone tz ->
             ( { model | zone = tz }, Cmd.none )
 
         GetTime time ->
@@ -233,7 +232,7 @@ getCommentsRequest tokenString params options =
     Http.request
         { method = "GET"
         , headers = [ Http.header "Authorization" ("Bearer " ++ tokenString) ]
-        , url = Server.url ++ "/comments?recipeid=" ++ String.fromInt params.recipeId ++ "&_sort=created&_order=desc"
+        , url = Server.url ++ "/comments?postId=" ++ String.fromInt params.recipeId ++ "&_sort=created&_order=desc"
         , body = Http.emptyBody
         , expect = Api.Data.expectJson options.onResponse commentsDecoder
         , timeout = Nothing
@@ -245,6 +244,10 @@ viewComments : Model -> Html Msg
 viewComments model =
     case model.comments of
         Success actualComments ->
+            let
+                tzarray =
+                    List.repeat (List.length actualComments) model.zone
+            in
             if List.isEmpty actualComments then
                 div []
                     [ h2 [] [ text "Comments" ]
@@ -260,25 +263,21 @@ viewComments model =
                     [ h2 [] [ text "Comments" ]
                     , div [ class "line_after_recipes" ] []
                     , div [ class "comments_list" ]
-                        (List.map viewComment actualComments)
+                        (List.map2 viewComment actualComments tzarray)
                     ]
 
         _ ->
             text ""
 
 
-viewComment : Comment -> Html Msg
-viewComment comment =
-    let
-        timezone =
-            europe__bratislava ()
-    in
+viewComment : Comment -> Time.Zone -> Html Msg
+viewComment comment tz =
     ul []
         [ li [ class "comment_value" ]
             [ text comment.comment ]
         , li [ class "value" ]
-            [ p [ class "datetime" ] [ text (formatDate timezone comment.created) ]
-            , p [ class "datetime" ] [ text (formatTime timezone comment.created) ]
+            [ p [ class "datetime" ] [ text (formatDate tz comment.created) ]
+            , p [ class "datetime" ] [ text (formatTime tz comment.created) ]
             ]
         , a [ class "link", href ("/profile/" ++ String.fromInt comment.userId) ] [ text (comment.profile.firstname ++ " " ++ comment.profile.lastname) ]
         , div [ class "line_after_recipes" ] []
@@ -290,7 +289,7 @@ postComment nowTime model options =
     let
         body =
             [ ( "comment", E.string model.commentString )
-            , ( "recipeid"
+            , ( "postId"
               , E.int
                     (case model.article of
                         Success article ->

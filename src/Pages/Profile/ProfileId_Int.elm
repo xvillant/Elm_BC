@@ -17,7 +17,6 @@ import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
 import Task
 import Time
-import TimeZone exposing (europe__bratislava)
 
 
 page : Page Params Model Msg
@@ -61,7 +60,7 @@ init shared { params } =
               , params = params
               , user = shared.user
               }
-            , Cmd.batch [ getUserRequest user_.token params { onResponse = ReceivedUser }, getContentRequest user_.token params { onResponse = ReceivedPosts }, Task.perform Timezone Time.here ]
+            , Cmd.batch [ getUserRequest user_.token params { onResponse = ReceivedUser }, getContentRequest user_.token params { onResponse = ReceivedPosts }, Task.perform TimeZone Time.here ]
             )
 
         Nothing ->
@@ -83,7 +82,7 @@ init shared { params } =
 type Msg
     = ReceivedUser (Data Profile)
     | ReceivedPosts (Data (List Article))
-    | Timezone Time.Zone
+    | TimeZone Time.Zone
     | DeleteArticle Int
     | DeleteResponse (Result Http.Error String)
 
@@ -97,7 +96,7 @@ update msg model =
         ReceivedPosts posts ->
             ( { model | posts = posts }, Cmd.none )
 
-        Timezone tz ->
+        TimeZone tz ->
             ( { model | zone = tz }, Cmd.none )
 
         DeleteArticle articleid ->
@@ -224,26 +223,22 @@ getContentRequest tokenString params options =
 
 viewPosts : Model -> Html Msg
 viewPosts model =
-    let
-        userid =
-            List.repeat
-                (case model.posts of
-                    Success articles ->
-                        List.length articles
-
-                    _ ->
-                        0
-                )
-                (case model.user of
-                    Just u ->
-                        u.id
-
-                    Nothing ->
-                        0
-                )
-    in
     case model.posts of
         Success actualPosts ->
+            let
+                userid =
+                    List.repeat (List.length actualPosts)
+                        (case model.user of
+                            Just u ->
+                                u.id
+
+                            Nothing ->
+                                0
+                        )
+
+                tzarray =
+                    List.repeat (List.length actualPosts) model.zone
+            in
             div []
                 [ h2 [ class "my_recipes" ] [ text "My recipes" ]
                 , div [ class "line_after_recipes" ] []
@@ -255,7 +250,7 @@ viewPosts model =
 
                   else
                     div [ class "articles_list" ]
-                        (List.map2 viewPost userid actualPosts)
+                        (List.map3 viewPost userid actualPosts tzarray)
                 ]
 
         _ ->
@@ -275,17 +270,13 @@ getUserRequest tokenString params options =
         }
 
 
-viewPost : Int -> Article -> Html Msg
-viewPost userid post =
-    let
-        timezone =
-            europe__bratislava ()
-    in
+viewPost : Int -> Article -> Time.Zone -> Html Msg
+viewPost userid post tz =
     ul [ class "post_list" ]
         [ div [] [ a [ href ("/article/" ++ String.fromInt post.id) ] [ h2 [ class "post_name" ] [ text post.name ] ] ]
         , div []
-            [ p [ class "datetime" ] [ text (formatDate timezone post.created) ]
-            , p [ class "datetime" ] [ text (formatTime timezone post.created) ]
+            [ p [ class "datetime" ] [ text (formatDate tz post.created) ]
+            , p [ class "datetime" ] [ text (formatTime tz post.created) ]
             ]
         , div [] [ img [ class "recipe__image", src post.image, width 500 ] [] ]
         , div []

@@ -17,7 +17,6 @@ import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)
 import Task
 import Time
-import TimeZone exposing (europe__bratislava)
 
 
 page : Page Params Model Msg
@@ -62,6 +61,7 @@ type alias Model =
     , order : String
     , totalCount : Int
     , user : Maybe User
+    , zone : Time.Zone
     }
 
 
@@ -69,10 +69,10 @@ init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
     case shared.user of
         Just user_ ->
-            ( { user = shared.user, paging = 1, posts = Loading, search = "", sorting = "created", order = "desc", totalCount = 0 }, Cmd.batch [ getContentRequest user_.token 1 "" "created" "desc" { onResponse = PostsReceived }, getContentRequestHeader user_.token 1 "" "created" "desc" ] )
+            ( { user = shared.user, paging = 1, posts = Loading, search = "", sorting = "created", order = "desc", totalCount = 0, zone = Time.utc }, Cmd.batch [ getContentRequest user_.token 1 "" "created" "desc" { onResponse = PostsReceived }, getContentRequestHeader user_.token 1 "" "created" "desc", Task.perform TimeZone Time.here ] )
 
         Nothing ->
-            ( { user = Nothing, paging = 1, posts = Loading, search = "", sorting = "created", order = "desc", totalCount = 0 }, pushUrl shared.key "/login" )
+            ( { user = Nothing, paging = 1, posts = Loading, search = "", sorting = "created", order = "desc", totalCount = 0, zone = Time.utc }, pushUrl shared.key "/login" )
 
 
 
@@ -89,6 +89,7 @@ type Msg
     | WatchCount (Result Http.Error Int)
     | DeleteArticle Int
     | DeleteResponse (Result Http.Error String)
+    | TimeZone Time.Zone
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -99,6 +100,9 @@ update msg model =
 
         PostsReceived response ->
             ( { model | posts = response }, Cmd.none )
+
+        TimeZone newTz ->
+            ( { model | zone = newTz }, Cmd.none )
 
         Search searched ->
             ( { model | search = searched }
@@ -347,6 +351,9 @@ viewPosts model =
                             Nothing ->
                                 0
                         )
+
+                tzarray =
+                    List.repeat (List.length actualPosts) model.zone
             in
             div []
                 [ h1 [] [ text "Recipes" ]
@@ -382,7 +389,7 @@ viewPosts model =
                   else
                     div []
                         [ div [ class "articles_list" ]
-                            (List.map2 viewPost userid actualPosts)
+                            (List.map3 viewPost userid actualPosts tzarray)
                         , div []
                             (List.range 1
                                 (if modBy numberRecipesLimit model.totalCount == 0 then
@@ -413,12 +420,8 @@ viewPages model number =
         [ text <| String.fromInt number ]
 
 
-viewPost : Int -> Article -> Html Msg
-viewPost userid post =
-    let
-        timezone =
-            europe__bratislava ()
-    in
+viewPost : Int -> Article -> Time.Zone -> Html Msg
+viewPost userid post tz =
     ul [ class "post_list" ]
         [ div []
             [ a [ href ("/article/" ++ String.fromInt post.id) ]
@@ -427,8 +430,8 @@ viewPost userid post =
                 ]
             ]
         , div []
-            [ p [ class "datetime" ] [ text (formatDate timezone post.created) ]
-            , p [ class "datetime" ] [ text (formatTime timezone post.created) ]
+            [ p [ class "datetime" ] [ text (formatDate tz post.created) ]
+            , p [ class "datetime" ] [ text (formatTime tz post.created) ]
             ]
         , div []
             [ p [ class "title" ] [ text "shared by" ]
