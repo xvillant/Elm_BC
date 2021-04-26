@@ -157,7 +157,7 @@ view model =
         Success profile ->
             { title = "Profile | " ++ profile.email ++ " | GoodFood"
             , body =
-                [ viewProfile model.zone model.profile
+                [ viewProfile model
                 , div [ class "warning_form" ]
                     [ text model.warning ]
                 , viewPosts model
@@ -167,7 +167,7 @@ view model =
         _ ->
             { title = "Profile | GoodFood"
             , body =
-                [ viewProfile model.zone model.profile
+                [ viewProfile model
                 , div [ class "warning_form" ]
                     [ text model.warning ]
                 , viewPosts model
@@ -175,9 +175,9 @@ view model =
             }
 
 
-viewProfile : Time.Zone -> Data Profile -> Html Msg
-viewProfile tz profile =
-    case profile of
+viewProfile : Model -> Html Msg
+viewProfile model =
+    case model.profile of
         NotAsked ->
             text ""
 
@@ -199,8 +199,8 @@ viewProfile tz profile =
                     ]
                 , div []
                     [ p [ class "title" ] [ text "registered at" ]
-                    , p [ class "datetime" ] [ text (formatDate tz value.created) ]
-                    , p [ class "datetime" ] [ text (formatTime tz value.created) ]
+                    , p [ class "datetime" ] [ text (formatDate model.zone value.created) ]
+                    , p [ class "datetime" ] [ text (formatTime model.zone value.created) ]
                     ]
                 ]
 
