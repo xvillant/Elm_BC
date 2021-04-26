@@ -323,7 +323,7 @@ postArticle : Time.Posix -> Model -> { onResponse : Data Article -> Msg } -> Cmd
 postArticle nowTime model options =
     let
         body =
-            [ ( "name", E.string <| String.Extra.toSentenceCase <| String.toLower <| model.name )
+            [ ( "name", E.string <| String.Extra.toSentenceCase <| String.toLower <| String.trim <| model.name )
             , ( "ingredients", E.list E.string <| listString model.ingredientsList )
             , ( "recipe", E.string model.recipe )
             , ( "duration"
@@ -427,7 +427,7 @@ renderList lst =
 
 listString : List Ingredient -> List String
 listString lst =
-    List.map (\l -> l.name) lst
+    List.map (\l -> String.trim l.name) lst
 
 
 imagePreview : Image -> Html Msg

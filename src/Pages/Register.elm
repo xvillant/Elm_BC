@@ -343,10 +343,10 @@ registerUser : Time.Posix -> Model -> Cmd Msg
 registerUser nowTime model =
     let
         body =
-            [ ( "firstname", E.string <| String.Extra.toSentenceCase <| String.toLower <| model.firstname )
-            , ( "lastname", E.string <| String.Extra.toSentenceCase <| String.toLower <| model.lastname )
+            [ ( "firstname", E.string <| String.Extra.toSentenceCase <| String.toLower <| String.trim <| model.firstname )
+            , ( "lastname", E.string <| String.Extra.toSentenceCase <| String.toLower <| String.trim <| model.lastname )
             , ( "password", E.string model.password )
-            , ( "email", E.string model.email )
+            , ( "email", E.string <| String.trim <| model.email )
             , ( "bio", E.string "I am new here..." )
             , ( "image", E.string "/assets/user_default.png" )
             , ( "created", Iso8601.encode nowTime )

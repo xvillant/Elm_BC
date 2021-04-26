@@ -309,7 +309,7 @@ encodeUser model =
         , ( "password", E.string model.password )
         , ( "bio", E.string model.bio )
         , ( "created", Iso8601.encode model.created )
-        , ( "email", E.string model.email )
+        , ( "email", E.string <| String.trim model.email )
         , ( "image"
           , E.string
                 (if model.mImage == Nothing then
