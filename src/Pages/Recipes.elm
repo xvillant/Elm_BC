@@ -44,7 +44,7 @@ load shared model =
 
 -- INIT
 
-
+numberRecipesLimit : Int
 numberRecipesLimit =
     5
 

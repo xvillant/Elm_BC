@@ -28,7 +28,7 @@ page =
         , load = load
         }
 
-
+numberUsersLimit : Int
 numberUsersLimit =
     5
 
