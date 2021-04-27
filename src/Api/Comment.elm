@@ -1,5 +1,4 @@
 module Api.Comment exposing (Comment, commentDecoder, commentsDecoder)
-import Api.Profile exposing (Profile, profileDecoder)
 import Json.Decode as D exposing (..) 
 import Time
 import Iso8601
@@ -7,7 +6,7 @@ import Iso8601
 type alias Comment =
     { comment : String
     , postId : Int
-    , profile : Profile
+    , fullname : String
     , created : Time.Posix
     , userId : Int
     }
@@ -18,7 +17,7 @@ commentDecoder =
     map5 Comment
         (field "comment" D.string)
         (field "postId" D.int)
-        (field "profile" profileDecoder)
+        (field "fullname" D.string)
         (field "created" Iso8601.decoder)
         (field "userId" D.int)
 

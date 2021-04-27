@@ -452,7 +452,7 @@ viewPost userid post tz =
         , div []
             [ p [ class "title" ] [ text "shared by" ]
             , li [ class "recipe_names" ]
-                [ a [ class "link", href ("/profile/" ++ String.fromInt post.userId) ] [ text (post.profile.firstname ++ " " ++ post.profile.lastname) ]
+                [ a [ class "link", href ("/profile/" ++ String.fromInt post.userId) ] [ text post.fullname ]
                 ]
             ]
         , div [] [ img [ class "recipe__image", src post.image, width 500 ] [] ]

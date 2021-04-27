@@ -346,31 +346,15 @@ postArticle nowTime model options =
                             ""
                     )
               )
-            , ( "profile"
-              , case model.user of
-                    Just user ->
-                        E.object
-                            [ ( "id", E.int user.id )
-                            , ( "email", E.string user.email )
-                            , ( "firstname", E.string user.firstname )
-                            , ( "lastname", E.string user.lastname )
-                            , ( "bio", E.string user.bio )
-                            , ( "password", E.string user.password )
-                            , ( "image", E.string user.image )
-                            , ( "created", Iso8601.encode user.created )
-                            ]
+            , ( "fullname"
+              , E.string
+                    (case model.user of
+                        Just user ->
+                            user.firstname ++ " " ++ user.lastname
 
-                    Nothing ->
-                        E.object
-                            [ ( "id", E.int 0 )
-                            , ( "email", E.string "" )
-                            , ( "firstname", E.string "" )
-                            , ( "lastname", E.string "" )
-                            , ( "bio", E.string "" )
-                            , ( "password", E.string "" )
-                            , ( "image", E.string "" )
-                            , ( "created", E.string "" )
-                            ]
+                        Nothing ->
+                            ""
+                    )
               )
             , ( "created", Iso8601.encode nowTime )
             , ( "duration"
