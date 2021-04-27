@@ -106,8 +106,7 @@ init shared { params } =
 
 
 type Msg
-    = Email String
-    | Bio String
+    = Bio String
     | SubmitUpdate
     | ImageSelected
     | ImageRead ImagePortData
@@ -117,27 +116,11 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Email email ->
-            ( { model | email = email, warning = "" }, Cmd.none )
-
         Bio bio ->
             ( { model | bio = bio, warning = "" }, Cmd.none )
 
         SubmitUpdate ->
-            if String.isEmpty model.firstname then
-                ( { model | warning = "Type your first name!" }, Cmd.none )
-
-            else if String.isEmpty model.lastname then
-                ( { model | warning = "Type your last name!" }, Cmd.none )
-
-            else if String.isEmpty model.email then
-                ( { model | warning = "Type your email!" }, Cmd.none )
-
-            else if isValidEmail model.email /= True then
-                ( { model | warning = "Enter a valid email!" }, Cmd.none )
-
-            else
-                ( { model | warning = "Loading..." }, updateProfile model { onResponse = Updated } )
+            ( { model | warning = "Loading..." }, updateProfile model { onResponse = Updated } )
 
         Updated user ->
             case user of
@@ -243,17 +226,6 @@ view model =
     , body =
         [ div []
             [ h1 [] [ text "Settings" ]
-            , div []
-                [ input
-                    [ id "email"
-                    , type_ "email"
-                    , placeholder "Type email"
-                    , value model.email
-                    , onInput Email
-                    , class "form"
-                    ]
-                    []
-                ]
             , div []
                 [ input
                     [ id model.imageId
