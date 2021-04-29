@@ -3,8 +3,6 @@ module Pages.Settings exposing (Model, Msg, Params, page)
 import Api.Data exposing (Data(..))
 import Api.User exposing (User, userDecoder)
 import Browser.Navigation exposing (Key, pushUrl)
-import Components.Image exposing (Image)
-import Components.Validity exposing (isValidEmail)
 import Html exposing (..)
 import Html.Attributes exposing (accept, class, cols, height, id, placeholder, rows, src, title, type_, value, width)
 import Html.Events exposing (on, onClick, onInput)
@@ -39,6 +37,11 @@ page =
 
 type alias Params =
     ()
+
+type alias Image =
+    { contents : String
+    , filename : String
+    }
 
 
 type alias Model =

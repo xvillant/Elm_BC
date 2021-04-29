@@ -4,7 +4,6 @@ import Api.Article exposing (Article, articleDecoder)
 import Api.Data exposing (Data(..))
 import Api.User exposing (User)
 import Browser.Navigation exposing (Key, pushUrl)
-import Components.Image exposing (Image)
 import Html exposing (..)
 import Html.Attributes exposing (accept, autocomplete, class, cols, id, placeholder, rows, src, title, type_, value, width)
 import Html.Events exposing (on, onClick, onInput)
@@ -37,6 +36,10 @@ page =
 
 
 -- INIT
+type alias Image =
+    { contents : String
+    , filename : String
+    }
 
 
 type alias Ingredient =
