@@ -1,3 +1,6 @@
+# GoodFood
+A web application focused on a recipe forum. In this application you can share your recipes and comment on them, etc.
+
 # elm-spa project
 > This web application was created with https://elm-spa.dev
 
